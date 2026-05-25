@@ -1,0 +1,33 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://api.regal.ai/v1/brandedPhoneNumbers",
+    "headers": {
+      "Authorization": "Bearer YOUR_REGAL_API_KEY",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "phoneNumber": "+18005550100",
+      "businessProfileId": "bp_01HZ0000000001",
+      "brandingNameShort": "Acme",
+      "brandingNameLong": "Acme Customer Care",
+      "internalName": "Acme Care Line",
+      "reportingGroup": "support",
+      "carrierFeatures": [
+        { "carrier": "att", "brandedCallerId": true, "spamRemediation": true },
+        { "carrier": "verizon", "brandedCallerId": true }
+      ]
+    }
+  },
+  "response": {
+    "status": 201,
+    "body": {
+      "phoneNumber": "+18005550100",
+      "businessProfileId": "bp_01HZ0000000001",
+      "carrierFeatures": [
+        { "carrier": "att", "brandedCallerId": true, "spamRemediation": true, "status": "submitted.optIn" },
+        { "carrier": "verizon", "brandedCallerId": true, "status": "submitted.optIn" }
+      ]
+    }
+  }
+}

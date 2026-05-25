@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-structure.org/draft-00/schema",
+  "name": "RegalEvent",
+  "description": "Structural description of a Regal custom event payload.",
+  "fields": [
+    { "name": "userId", "type": "string" },
+    { "name": "traits", "type": "RegalContact" },
+    { "name": "name", "type": "string", "required": true, "description": "Event name. Used to trigger matching Journeys." },
+    { "name": "eventId", "type": "string", "description": "Unique event identifier (present on webhook deliveries)." },
+    { "name": "properties", "type": "map<string, any>" },
+    { "name": "originalTimestamp", "type": "string" },
+    { "name": "eventSource", "type": "string" }
+  ]
+}

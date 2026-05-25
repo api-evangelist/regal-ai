@@ -1,0 +1,44 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://events.regalvoice.com/events",
+    "headers": {
+      "Authorization": "Bearer YOUR_REGAL_API_KEY",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "userId": "12345",
+      "traits": {
+        "firstName": "Jane",
+        "lastName": "Doe",
+        "phones": [
+          {
+            "phoneNumber": "+15551234567",
+            "isPrimary": true,
+            "label": "mobile",
+            "voiceOptIn": { "subscribed": true, "source": "lead-form" },
+            "smsOptIn": { "subscribed": true, "source": "lead-form" }
+          }
+        ],
+        "emails": [
+          {
+            "emailAddress": "jane.doe@example.com",
+            "isPrimary": true,
+            "emailOptIn": { "subscribed": true }
+          }
+        ]
+      },
+      "name": "Lead Form Submitted",
+      "properties": {
+        "course": "Intro to AI",
+        "source": "marketing-site"
+      },
+      "originalTimestamp": "2026-05-24T15:00:00Z",
+      "eventSource": "Website"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": { "status": "accepted" }
+  }
+}

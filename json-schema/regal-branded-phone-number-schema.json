@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/regal-ai/refs/heads/main/json-schema/regal-branded-phone-number-schema.json",
+  "title": "RegalBrandedPhoneNumber",
+  "type": "object",
+  "required": ["phoneNumber", "businessProfileId", "carrierFeatures"],
+  "properties": {
+    "phoneNumber": { "type": "string" },
+    "businessProfileId": { "type": "string" },
+    "brandingNameShort": { "type": "string" },
+    "brandingNameLong": { "type": "string" },
+    "internalName": { "type": "string" },
+    "reportingGroup": { "type": "string" },
+    "carrierFeatures": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "carrier": { "type": "string" },
+          "spamRemediation": { "type": "boolean" },
+          "brandedCallerId": { "type": "boolean" },
+          "status": {
+            "type": "string",
+            "enum": [
+              "submitted.optIn",
+              "submitted.optOut",
+              "approved.optIn",
+              "approved.optOut",
+              "pending.optIn",
+              "pending.optOut"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

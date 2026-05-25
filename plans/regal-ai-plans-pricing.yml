@@ -1,0 +1,45 @@
+plans: 0.1
+provider: regal-ai
+url: https://www.regal.ai/pricing
+description: >-
+  Regal does not publish a public pricing tier sheet. Pricing is custom and
+  scoped to each customer's volume, features in use, and contract term.
+  Discounts are offered for higher spending commitments and multi-year
+  contracts. Regal targets enterprises with at least 75 agents or 150,000+
+  monthly calls in financial services, healthcare, education, local services,
+  and eCommerce.
+created: '2026-05-24'
+modified: '2026-05-24'
+sources:
+  - https://www.regal.ai/pricing
+plans:
+  - id: custom
+    name: Custom Enterprise
+    type: Custom
+    audience: Enterprise (75+ agents or 150k+ calls/month)
+    entries:
+      - geo: US
+        unit: 1
+        label: Quote
+        price: Call
+        metric: contract
+        timeFrame: year
+        description: Custom pricing — contact Regal sales.
+    elements:
+      - name: AI Phone Agents (inbound and outbound)
+      - name: AI SMS Agents
+      - name: AI Chat Agents
+      - name: AI WebRTC Agents
+      - name: Sales Dialer
+      - name: Journey Builder
+      - name: Conversation Intelligence (AI analysis, transcripts, dashboards)
+      - name: Copilot for agent design
+      - name: Branded Caller ID and Spam Remediation registration
+      - name: Custom Actions framework
+      - name: 40+ Reporting Webhook event types
+      - name: 25+ native data and CCaaS integrations
+      - name: SSO (Google, Okta, Azure) and SCIM (Okta)
+      - name: SOC 2 / HIPAA / GDPR / CCPA / DPA
+    description: >-
+      Single custom plan negotiated with Regal sales. Volume-based discounts
+      and longer-term contract discounts are available.

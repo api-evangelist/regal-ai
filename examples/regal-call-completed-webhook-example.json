@@ -1,0 +1,32 @@
+{
+  "userId": "12345",
+  "traits": {
+    "phones": [{ "phoneNumber": "+15551234567" }]
+  },
+  "name": "call.completed",
+  "eventId": "evt_01HZX0000000001",
+  "properties": {
+    "call_id": "call_01HZX0000000001",
+    "task_id": "task_01HZX0000000001",
+    "channel": "voice",
+    "direction": "OUTBOUND",
+    "disposition": "answered_human",
+    "campaign_id": "12345",
+    "campaign_friendly_id": "support-callback-2026",
+    "campaign_name": "Support Callback 2026",
+    "journey_uuid": "journey_01HZX0000000001",
+    "journey_name": "Post-Purchase Survey",
+    "started_at": "2026-05-24T15:00:00Z",
+    "ended_at": "2026-05-24T15:04:32Z",
+    "talk_time": 272,
+    "wrapup_time": 8,
+    "contact_phone": "+15551234567",
+    "contact_email": "jane.doe@example.com",
+    "agent_id": "ai_agent_01",
+    "agent_email": "ai-agent@regal.ai",
+    "notes": "Customer confirmed satisfaction with order #A-9876.",
+    "objections": []
+  },
+  "originalTimestamp": "2026-05-24T15:04:32Z",
+  "eventSource": "Regal Voice"
+}

@@ -1,0 +1,78 @@
+extends:
+  - spectral:oas
+rules:
+  regal-info-contact:
+    description: All Regal OpenAPI specs must declare an info.contact block pointing to Regal Support.
+    given: $.info.contact
+    severity: error
+    then:
+      - field: name
+        function: truthy
+      - field: email
+        function: truthy
+      - field: url
+        function: truthy
+  regal-server-https:
+    description: Regal API servers must use HTTPS.
+    given: $.servers[*].url
+    severity: error
+    then:
+      function: pattern
+      functionOptions:
+        match: '^https://'
+  regal-server-host:
+    description: Regal servers must be one of api.regal.ai or events.regalvoice.com.
+    given: $.servers[*].url
+    severity: error
+    then:
+      function: pattern
+      functionOptions:
+        match: '^https://(api\.regal\.ai/v1|events\.regalvoice\.com)(/.*)?$'
+  regal-auth-api-key:
+    description: Regal APIs use an Authorization-header API key.
+    given: $.components.securitySchemes
+    severity: error
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          minProperties: 1
+          additionalProperties:
+            type: object
+            properties:
+              type:
+                enum:
+                  - apiKey
+              in:
+                enum:
+                  - header
+              name:
+                enum:
+                  - Authorization
+            required:
+              - type
+              - in
+              - name
+  regal-operation-summary-title-case:
+    description: Operation summaries should use Title Case.
+    given: $.paths[*][*].summary
+    severity: warn
+    then:
+      function: pattern
+      functionOptions:
+        match: '^([A-Z][a-z0-9]*)([ /-][A-Z0-9][a-zA-Z0-9]*)*$'
+  regal-operation-id-required:
+    description: Every operation must declare an operationId.
+    given: $.paths[*][*]
+    severity: error
+    then:
+      field: operationId
+      function: truthy
+  regal-rate-limit-response:
+    description: Each operation should document a 429 response.
+    given: $.paths[*][*].responses
+    severity: warn
+    then:
+      field: '429'
+      function: truthy

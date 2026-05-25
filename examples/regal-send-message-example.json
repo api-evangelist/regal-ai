@@ -1,0 +1,22 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://api.regal.ai/v1/messages/send",
+    "headers": {
+      "Authorization": "Bearer YOUR_REGAL_API_KEY",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "channel": "sms",
+      "campaignId": 12345,
+      "to": { "phoneNumber": "+15551234567" }
+    }
+  },
+  "response": {
+    "status": 202,
+    "body": {
+      "messageId": "msg_01HZX1234567890",
+      "status": "queued"
+    }
+  }
+}

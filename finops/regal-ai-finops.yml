@@ -1,0 +1,75 @@
+finops: 0.1
+provider: regal-ai
+description: >-
+  FinOps-aligned description of Regal's billable surface. Regal does not
+  publish public per-unit pricing; cost recovery is custom per contract and
+  scopes to features used (AI Voice Agent minutes, AI SMS Agent messages, AI
+  Chat sessions, AI WebRTC sessions, conversation intelligence analyses,
+  agent seats) with discounts for committed volume and term length.
+created: '2026-05-24'
+modified: '2026-05-24'
+sources:
+  - https://www.regal.ai/pricing
+  - https://developer.regal.ai/reference/overview
+  - https://developer.regal.ai/docs/reporting-webhooks
+focus:
+  - capability: Cost Allocation
+    notes: >-
+      Regal exposes campaign_id, campaign_friendly_id, journey_uuid, and
+      reporting_group fields on call, SMS, and webhook events. These map
+      cleanly to FinOps showback dimensions for customer-side reporting.
+  - capability: Anomaly Management
+    notes: >-
+      The 40+ reporting webhook event types (call.placed, sms.sent,
+      sms.failed, sms.undelivered, call.completed, voicemail.completed)
+      provide near-real-time spend signal. Snowflake Data Share and S3
+      reports provide reconciliation grain.
+  - capability: Forecasting
+    notes: >-
+      List Campaigns + List Dispositions can be combined with historical
+      webhook deliveries to forecast monthly outbound minute and SMS volume.
+  - capability: Workload Management & Automation
+    notes: >-
+      Branded Phone Number registrations carry reportingGroup for grouping
+      cost by business unit; Custom Actions allow injecting customer-side
+      cost controls (e.g., budget gates) into voice conversations.
+billingDimensions:
+  - id: voice-minutes
+    name: AI Voice Agent Minutes
+    unit: minute
+    notes: Primary cost driver. Aggregated from call.completed talk_time.
+  - id: sms-messages
+    name: AI SMS Messages
+    unit: message
+    notes: Counted by sms.sent and mms.sent webhook events.
+  - id: chat-sessions
+    name: AI Chat Sessions
+    unit: session
+  - id: webrtc-sessions
+    name: AI WebRTC Sessions
+    unit: session
+  - id: ai-analyses
+    name: AI Call Analyses
+    unit: analysis
+    notes: Counted by call.analysis.available webhook events.
+  - id: branded-numbers
+    name: Branded Phone Number Registrations
+    unit: phoneNumber
+    notes: Per-carrier per-feature registration; subject to carrier fees.
+  - id: agent-seats
+    name: Agent Seats
+    unit: seat
+    notes: Human agent seats for blended human + AI deployments.
+exports:
+  - type: Webhook
+    url: https://developer.regal.ai/docs/reporting-webhooks
+    description: 40+ reporting webhook event types feed real-time spend telemetry.
+  - type: Snowflake Data Share
+    url: https://developer.regal.ai/docs/snowflake-data-share
+    description: Curated event share for warehouse-side cost analysis.
+  - type: Amazon S3
+    url: https://developer.regal.ai/docs/amazon-s3
+    description: Periodic S3 drops for batch reconciliation.
+  - type: Emailed Reports
+    url: https://developer.regal.ai/docs/emailed-reports
+    description: Scheduled CSV reports delivered by email.

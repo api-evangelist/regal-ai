@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/regal-ai/refs/heads/main/json-schema/regal-event-schema.json",
+  "title": "RegalEvent",
+  "description": "A custom event submitted to the Regal Events API.",
+  "type": "object",
+  "required": ["name"],
+  "properties": {
+    "userId": { "type": "string" },
+    "traits": { "$ref": "https://raw.githubusercontent.com/api-evangelist/regal-ai/refs/heads/main/json-schema/regal-contact-schema.json" },
+    "name": { "type": "string", "description": "Event name. Triggers Journeys when matched." },
+    "properties": { "type": "object", "additionalProperties": true },
+    "originalTimestamp": { "type": "string" },
+    "eventSource": { "type": "string" }
+  }
+}

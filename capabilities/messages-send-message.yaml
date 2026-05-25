@@ -1,0 +1,75 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Regal Messages — Send Message
+  description: Send outbound SMS messages tied to a Regal SMS campaign.
+  tags:
+    - Regal
+    - SMS
+    - Messaging
+  created: '2026-05-24'
+  modified: '2026-05-24'
+binds:
+  - namespace: env
+    keys:
+      REGAL_API_KEY: REGAL_API_KEY
+capability:
+  consumes:
+    - type: http
+      namespace: messages-send-message
+      baseUri: https://api.regal.ai/v1
+      resources:
+        - name: messagesSend
+          path: /messages/send
+          operations:
+            - name: sendmessage
+              method: POST
+              description: Queue an outbound SMS message for delivery.
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+              inputParameters:
+                - name: body
+                  in: body
+                  type: object
+                  required: true
+      authentication:
+        type: apikey
+        key: Authorization
+        value: '{{env.REGAL_API_KEY}}'
+        placement: header
+  exposes:
+    - type: rest
+      namespace: messages-send-message-rest
+      port: 8080
+      resources:
+        - path: /v1/messages/send
+          name: messagesSend
+          operations:
+            - method: POST
+              name: sendmessage
+              description: Send an outbound SMS message.
+              call: messages-send-message.sendmessage
+              with:
+                body: rest.body
+              outputParameters:
+                - type: object
+                  mapping: $.
+    - type: mcp
+      namespace: messages-send-message-mcp
+      port: 9090
+      transport: http
+      tools:
+        - name: regal-send-sms-message
+          description: Queue an outbound SMS via a Regal campaign or explicit from/content.
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: false
+          call: messages-send-message.sendmessage
+          with:
+            body: tools.body
+          outputParameters:
+            - type: object
+              mapping: $.

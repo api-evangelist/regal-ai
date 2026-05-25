@@ -1,0 +1,28 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "https://api.regal.ai/v1/campaigns",
+    "headers": {
+      "Authorization": "Bearer YOUR_REGAL_API_KEY"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": [
+      {
+        "campaignId": 12345,
+        "campaignFriendlyId": "support-callback-2026",
+        "name": "Support Callback 2026",
+        "channel": "voice",
+        "status": "active"
+      },
+      {
+        "campaignId": 67890,
+        "campaignFriendlyId": "appointment-reminders",
+        "name": "Appointment Reminders",
+        "channel": "sms",
+        "status": "active"
+      }
+    ]
+  }
+}

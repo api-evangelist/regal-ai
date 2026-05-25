@@ -1,0 +1,163 @@
+openapi: 3.1.0
+info:
+  title: Regal Messages API
+  version: '1.0'
+  summary: Send outbound SMS messages tied to Regal campaigns.
+  description: >-
+    The Messages API delivers outbound SMS messages tied to a Regal SMS
+    campaign. Either a campaignId (which supplies default from-number and
+    content) must be provided, or an explicit from object and content object
+    must accompany the to recipient. Unknown destination phone numbers are
+    automatically resolved to new contact profiles. Returns 202 Accepted for
+    queued messages and is rate limited to 10 requests per second.
+  contact:
+    name: Regal Support
+    email: support@regal.ai
+    url: https://support.regal.ai
+  license:
+    name: Proprietary
+    url: https://www.regal.ai/terms-of-service
+servers:
+  - url: https://api.regal.ai/v1
+    description: Production v1 Regal API
+security:
+  - ApiKeyAuth: []
+tags:
+  - name: Messages
+paths:
+  /messages/send:
+    post:
+      summary: Send Message
+      operationId: sendMessage
+      description: Queue an outbound SMS message for delivery.
+      tags:
+        - Messages
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendMessageRequest'
+            examples:
+              campaignDriven:
+                summary: Send via campaign defaults
+                value:
+                  channel: sms
+                  campaignId: 12345
+                  to:
+                    phoneNumber: '+15551234567'
+              explicit:
+                summary: Explicit from + content
+                value:
+                  channel: sms
+                  to:
+                    phoneNumber: '+15551234567'
+                  from:
+                    phoneNumber: '+18005550100'
+                  content:
+                    body: 'Hi Jane, this is Regal confirming your appointment.'
+      responses:
+        '202':
+          description: Accepted (queued for delivery).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendMessageResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+  schemas:
+    SendMessageRequest:
+      type: object
+      required:
+        - to
+        - channel
+      properties:
+        to:
+          $ref: '#/components/schemas/Recipient'
+        from:
+          $ref: '#/components/schemas/Sender'
+        channel:
+          type: string
+          enum:
+            - sms
+        content:
+          $ref: '#/components/schemas/MessageContent'
+        campaignId:
+          type: integer
+          format: int32
+          description: Campaign ID for attribution and defaults. Required if from/content omitted.
+    Recipient:
+      type: object
+      required:
+        - phoneNumber
+      properties:
+        phoneNumber:
+          type: string
+        contactId:
+          type: string
+    Sender:
+      type: object
+      properties:
+        phoneNumber:
+          type: string
+    MessageContent:
+      type: object
+      properties:
+        body:
+          type: string
+        mediaUrl:
+          type: string
+          format: uri
+    SendMessageResponse:
+      type: object
+      properties:
+        messageId:
+          type: string
+        status:
+          type: string
+          examples:
+            - queued
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: string
+  responses:
+    BadRequest:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    RateLimited:
+      description: Rate Limit Exceeded (10 RPS)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'

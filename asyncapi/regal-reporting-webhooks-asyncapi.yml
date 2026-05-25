@@ -1,0 +1,526 @@
+asyncapi: 3.0.0
+info:
+  title: Regal Reporting Webhooks
+  version: '1.0'
+  description: >-
+    Regal Reporting Webhooks deliver 40+ event types covering agent activity,
+    call lifecycle, recordings and transcripts, AI analysis, tasks, SMS, MMS,
+    email, voicemail, contact lifecycle, scheduling, and custom tasks. Events
+    are POSTed to a customer-configured endpoint. There are no automatic
+    retries; events are dropped if the endpoint does not respond within 5
+    seconds. Endpoint or filter changes take up to 5 minutes to propagate due
+    to caching.
+  contact:
+    name: Regal Support
+    email: support@regal.ai
+    url: https://support.regal.ai
+servers:
+  customer:
+    host: customer-configured-host
+    protocol: https
+    description: Customer-hosted HTTPS endpoint registered in Settings > Integrations.
+defaultContentType: application/json
+channels:
+  agent.activity.updated:
+    address: /
+    messages:
+      AgentActivityUpdated:
+        $ref: '#/components/messages/AgentActivityUpdated'
+  task.created:
+    address: /
+    messages:
+      TaskCreated:
+        $ref: '#/components/messages/TaskCreated'
+  task.canceled:
+    address: /
+    messages:
+      TaskCanceled:
+        $ref: '#/components/messages/TaskCanceled'
+  task.reservation.accepted:
+    address: /
+    messages:
+      TaskReservationAccepted:
+        $ref: '#/components/messages/TaskReservationAccepted'
+  task.reservation.created:
+    address: /
+    messages:
+      TaskReservationCreated:
+        $ref: '#/components/messages/TaskReservationCreated'
+  call.placed:
+    address: /
+    messages:
+      CallPlaced:
+        $ref: '#/components/messages/CallEvent'
+  call.completed:
+    address: /
+    messages:
+      CallCompleted:
+        $ref: '#/components/messages/CallEvent'
+  call.ivr.triggered:
+    address: /
+    messages:
+      CallIvrTriggered:
+        $ref: '#/components/messages/CallEvent'
+  call.wrapup:
+    address: /
+    messages:
+      CallWrapup:
+        $ref: '#/components/messages/CallEvent'
+  call.recording.available:
+    address: /
+    messages:
+      CallRecordingAvailable:
+        $ref: '#/components/messages/RecordingEvent'
+  call.transcript.available:
+    address: /
+    messages:
+      CallTranscriptAvailable:
+        $ref: '#/components/messages/TranscriptEvent'
+  call.analysis.available:
+    address: /
+    messages:
+      CallAnalysisAvailable:
+        $ref: '#/components/messages/AnalysisEvent'
+  sms.queued:
+    address: /
+    messages:
+      SmsQueued:
+        $ref: '#/components/messages/SmsEvent'
+  sms.sent:
+    address: /
+    messages:
+      SmsSent:
+        $ref: '#/components/messages/SmsEvent'
+  sms.received:
+    address: /
+    messages:
+      SmsReceived:
+        $ref: '#/components/messages/SmsEvent'
+  sms.failed:
+    address: /
+    messages:
+      SmsFailed:
+        $ref: '#/components/messages/SmsEvent'
+  sms.undelivered:
+    address: /
+    messages:
+      SmsUndelivered:
+        $ref: '#/components/messages/SmsEvent'
+  sms.conversation.completed:
+    address: /
+    messages:
+      SmsConversationCompleted:
+        $ref: '#/components/messages/SmsEvent'
+  mms.sent:
+    address: /
+    messages:
+      MmsSent:
+        $ref: '#/components/messages/MmsEvent'
+  mms.received:
+    address: /
+    messages:
+      MmsReceived:
+        $ref: '#/components/messages/MmsEvent'
+  email.sent:
+    address: /
+    messages:
+      EmailSent:
+        $ref: '#/components/messages/EmailEvent'
+  email.received:
+    address: /
+    messages:
+      EmailReceived:
+        $ref: '#/components/messages/EmailEvent'
+  email.conversation.completed:
+    address: /
+    messages:
+      EmailConversationCompleted:
+        $ref: '#/components/messages/EmailEvent'
+  voicemail.recording.available:
+    address: /
+    messages:
+      VoicemailRecordingAvailable:
+        $ref: '#/components/messages/RecordingEvent'
+  voicemail.transcript.available:
+    address: /
+    messages:
+      VoicemailTranscriptAvailable:
+        $ref: '#/components/messages/TranscriptEvent'
+  voicemail.completed:
+    address: /
+    messages:
+      VoicemailCompleted:
+        $ref: '#/components/messages/CallEvent'
+  contact.created:
+    address: /
+    messages:
+      ContactCreated:
+        $ref: '#/components/messages/ContactEvent'
+  contact.subscribed:
+    address: /
+    messages:
+      ContactSubscribed:
+        $ref: '#/components/messages/ContactEvent'
+  contact.unsubscribed:
+    address: /
+    messages:
+      ContactUnsubscribed:
+        $ref: '#/components/messages/ContactEvent'
+  contact.attribute.edited:
+    address: /
+    messages:
+      ContactAttributeEdited:
+        $ref: '#/components/messages/ContactEvent'
+  contact.phone.created:
+    address: /
+    messages:
+      ContactPhoneCreated:
+        $ref: '#/components/messages/ContactEvent'
+  contact.email.created:
+    address: /
+    messages:
+      ContactEmailCreated:
+        $ref: '#/components/messages/ContactEvent'
+  contact.experiment.assigned:
+    address: /
+    messages:
+      ContactExperimentAssigned:
+        $ref: '#/components/messages/ContactEvent'
+  scheduled.callback.requested:
+    address: /
+    messages:
+      ScheduledCallbackRequested:
+        $ref: '#/components/messages/ScheduleEvent'
+  scheduled.reminder.created:
+    address: /
+    messages:
+      ScheduledReminderCreated:
+        $ref: '#/components/messages/ScheduleEvent'
+  custom.task.completed:
+    address: /
+    messages:
+      CustomTaskCompleted:
+        $ref: '#/components/messages/TaskEvent'
+  contacted.after.hours:
+    address: /
+    messages:
+      ContactedAfterHours:
+        $ref: '#/components/messages/CallEvent'
+  object.created:
+    address: /
+    messages:
+      ObjectCreated:
+        $ref: '#/components/messages/CustomObjectEvent'
+  object.attribute.edited:
+    address: /
+    messages:
+      ObjectAttributeEdited:
+        $ref: '#/components/messages/CustomObjectEvent'
+  cancel.all.automated.tasks:
+    address: /
+    messages:
+      CancelAllAutomatedTasks:
+        $ref: '#/components/messages/TaskEvent'
+operations:
+  receiveAllWebhookEvents:
+    action: receive
+    channel:
+      $ref: '#/channels/call.completed'
+    summary: Receive all Regal reporting webhook events on a customer-hosted endpoint.
+components:
+  messages:
+    BaseEnvelope:
+      payload:
+        $ref: '#/components/schemas/EventEnvelope'
+    AgentActivityUpdated:
+      payload:
+        $ref: '#/components/schemas/AgentActivityPayload'
+    TaskCreated:
+      payload:
+        $ref: '#/components/schemas/TaskPayload'
+    TaskCanceled:
+      payload:
+        $ref: '#/components/schemas/TaskPayload'
+    TaskReservationAccepted:
+      payload:
+        $ref: '#/components/schemas/TaskPayload'
+    TaskReservationCreated:
+      payload:
+        $ref: '#/components/schemas/TaskPayload'
+    CallEvent:
+      payload:
+        $ref: '#/components/schemas/CallPayload'
+    RecordingEvent:
+      payload:
+        $ref: '#/components/schemas/RecordingPayload'
+    TranscriptEvent:
+      payload:
+        $ref: '#/components/schemas/TranscriptPayload'
+    AnalysisEvent:
+      payload:
+        $ref: '#/components/schemas/AnalysisPayload'
+    SmsEvent:
+      payload:
+        $ref: '#/components/schemas/SmsPayload'
+    MmsEvent:
+      payload:
+        $ref: '#/components/schemas/SmsPayload'
+    EmailEvent:
+      payload:
+        $ref: '#/components/schemas/EmailPayload'
+    ContactEvent:
+      payload:
+        $ref: '#/components/schemas/ContactPayload'
+    ScheduleEvent:
+      payload:
+        $ref: '#/components/schemas/SchedulePayload'
+    TaskEvent:
+      payload:
+        $ref: '#/components/schemas/TaskPayload'
+    CustomObjectEvent:
+      payload:
+        $ref: '#/components/schemas/CustomObjectPayload'
+  schemas:
+    EventEnvelope:
+      type: object
+      required:
+        - name
+        - eventId
+      properties:
+        userId:
+          type: string
+        traits:
+          type: object
+          additionalProperties: true
+        name:
+          type: string
+        eventId:
+          type: string
+        properties:
+          type: object
+          additionalProperties: true
+        originalTimestamp:
+          type: string
+        eventSource:
+          type: string
+    AgentActivityPayload:
+      allOf:
+        - $ref: '#/components/schemas/EventEnvelope'
+        - type: object
+          properties:
+            properties:
+              type: object
+              properties:
+                agent_id:
+                  type: string
+                agent_email:
+                  type: string
+                agent_fullname:
+                  type: string
+                activity:
+                  type: string
+                timestamp:
+                  type: string
+    CallPayload:
+      allOf:
+        - $ref: '#/components/schemas/EventEnvelope'
+        - type: object
+          properties:
+            properties:
+              type: object
+              properties:
+                call_id:
+                  type: string
+                task_id:
+                  type: string
+                channel:
+                  type: string
+                direction:
+                  type: string
+                  enum:
+                    - INBOUND
+                    - OUTBOUND
+                disposition:
+                  type: string
+                campaign_id:
+                  type: string
+                campaign_friendly_id:
+                  type: string
+                campaign_name:
+                  type: string
+                journey_uuid:
+                  type: string
+                journey_name:
+                  type: string
+                journey_friendly_id:
+                  type: string
+                started_at:
+                  type: string
+                ended_at:
+                  type: string
+                talk_time:
+                  type: integer
+                wrapup_time:
+                  type: integer
+                contact_phone:
+                  type: string
+                contact_email:
+                  type: string
+                agent_id:
+                  type: string
+                agent_email:
+                  type: string
+                notes:
+                  type: string
+                objections:
+                  type: array
+                  items:
+                    type: string
+    RecordingPayload:
+      allOf:
+        - $ref: '#/components/schemas/EventEnvelope'
+        - type: object
+          properties:
+            properties:
+              type: object
+              properties:
+                call_id:
+                  type: string
+                recording_url:
+                  type: string
+                  format: uri
+                duration:
+                  type: integer
+    TranscriptPayload:
+      allOf:
+        - $ref: '#/components/schemas/EventEnvelope'
+        - type: object
+          properties:
+            properties:
+              type: object
+              properties:
+                call_id:
+                  type: string
+                transcript_url:
+                  type: string
+                  format: uri
+                language:
+                  type: string
+    AnalysisPayload:
+      allOf:
+        - $ref: '#/components/schemas/EventEnvelope'
+        - type: object
+          properties:
+            properties:
+              type: object
+              properties:
+                call_id:
+                  type: string
+                analysis:
+                  type: object
+                  additionalProperties: true
+    SmsPayload:
+      allOf:
+        - $ref: '#/components/schemas/EventEnvelope'
+        - type: object
+          properties:
+            properties:
+              type: object
+              properties:
+                message_id:
+                  type: string
+                content:
+                  type: string
+                media_url:
+                  type: string
+                  format: uri
+                channel:
+                  type: string
+                direction:
+                  type: string
+                campaign_id:
+                  type: string
+                contact_phone:
+                  type: string
+    EmailPayload:
+      allOf:
+        - $ref: '#/components/schemas/EventEnvelope'
+        - type: object
+          properties:
+            properties:
+              type: object
+              properties:
+                message_id:
+                  type: string
+                subject:
+                  type: string
+                contact_email:
+                  type: string
+                direction:
+                  type: string
+    ContactPayload:
+      allOf:
+        - $ref: '#/components/schemas/EventEnvelope'
+        - type: object
+          properties:
+            properties:
+              type: object
+              properties:
+                contact_id:
+                  type: string
+                contact_phone:
+                  type: string
+                contact_email:
+                  type: string
+                attribute:
+                  type: string
+                value:
+                  type: string
+    SchedulePayload:
+      allOf:
+        - $ref: '#/components/schemas/EventEnvelope'
+        - type: object
+          properties:
+            properties:
+              type: object
+              properties:
+                contact_id:
+                  type: string
+                scheduled_for:
+                  type: string
+                callback_phone:
+                  type: string
+                reminder_channel:
+                  type: string
+    TaskPayload:
+      allOf:
+        - $ref: '#/components/schemas/EventEnvelope'
+        - type: object
+          properties:
+            properties:
+              type: object
+              properties:
+                task_id:
+                  type: string
+                type:
+                  type: string
+                disposition:
+                  type: string
+                agent_id:
+                  type: string
+    CustomObjectPayload:
+      allOf:
+        - $ref: '#/components/schemas/EventEnvelope'
+        - type: object
+          properties:
+            properties:
+              type: object
+              properties:
+                object_type:
+                  type: string
+                object_id:
+                  type: string
+                attribute:
+                  type: string
+                value:
+                  type: string

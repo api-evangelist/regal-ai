@@ -1,0 +1,75 @@
+rateLimits: 0.1
+provider: regal-ai
+description: >-
+  Documented rate limits and concurrency policies for the Regal Events,
+  Management, Messages, and Branded Phone Numbers APIs, plus the Reporting
+  Webhooks delivery surface.
+created: '2026-05-24'
+modified: '2026-05-24'
+sources:
+  - https://developer.regal.ai/reference/overview
+  - https://developer.regal.ai/reference/post-branded-phone-number
+  - https://developer.regal.ai/reference/send-message
+  - https://developer.regal.ai/docs/reporting-webhooks
+policies:
+  - id: events-ingest
+    api: regal-events-api
+    scope: per-tenant
+    limit: 300
+    unit: requests
+    window: 1s
+    enforcement: 429
+    description: >-
+      Custom Events ingest endpoint (events.regalvoice.com/events) is rate
+      limited to 300 requests per second by default. Higher limits available
+      on request to support@regal.ai.
+  - id: branded-phone-numbers
+    api: regal-branded-phone-numbers-api
+    scope: per-tenant
+    limit: 10
+    unit: requests
+    window: 1s
+    enforcement: 429
+    description: >-
+      The Branded Phone Numbers endpoints (POST, PATCH, DELETE) are limited
+      to 10 requests per second per tenant.
+  - id: messages-send
+    api: regal-messages-api
+    scope: per-tenant
+    limit: 10
+    unit: requests
+    window: 1s
+    enforcement: 429
+    description: >-
+      The Messages send endpoint is limited to 10 requests per second per
+      tenant.
+  - id: management-listings
+    api: regal-management-api
+    scope: per-tenant
+    limit: 10
+    unit: requests
+    window: 1s
+    enforcement: 429
+    description: >-
+      Management API listing endpoints (businessProfiles, activePhoneNumbers,
+      campaigns, dispositions) share the v1 management surface rate budget.
+  - id: webhook-delivery-budget
+    api: regal-reporting-webhooks
+    scope: per-endpoint
+    limit: 5
+    unit: seconds
+    window: per-event
+    enforcement: drop
+    description: >-
+      Reporting Webhook receivers must respond within 5 seconds. There are no
+      automatic retries; non-responding deliveries are dropped.
+  - id: webhook-config-propagation
+    api: regal-reporting-webhooks
+    scope: tenant-config
+    limit: 5
+    unit: minutes
+    window: per-change
+    enforcement: cache
+    description: >-
+      Endpoint or event filter changes take up to 5 minutes to propagate due
+      to caching.

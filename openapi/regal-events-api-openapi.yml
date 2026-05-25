@@ -1,0 +1,221 @@
+openapi: 3.1.0
+info:
+  title: Regal Events API
+  version: '1.0'
+  summary: Custom Events ingestion endpoint for contacts and event tracking on Regal.
+  description: >-
+    The Regal Events API is a single ingest endpoint that creates a contact,
+    updates a contact, or adds a custom event to an existing contact profile.
+    Identity resolution iterates identifiers in the order primary phone > any
+    other phone > primary email > any other email > userId. A contact must have
+    at least one phone or email to be considered contactable in Regal. The same
+    endpoint triggers Journeys (and outbound calls / SMS sequences) when the
+    event name matches a configured Journey trigger and the destination phone
+    carries a voiceOptIn or smsOptIn subscription flag for TCPA compliance.
+  contact:
+    name: Regal Support
+    email: support@regal.ai
+    url: https://support.regal.ai
+  license:
+    name: Proprietary
+    url: https://www.regal.ai/terms-of-service
+servers:
+  - url: https://events.regalvoice.com
+    description: Production custom events ingest endpoint
+security:
+  - ApiKeyAuth: []
+tags:
+  - name: Events
+    description: Contact creation, update, and custom event tracking
+paths:
+  /events:
+    post:
+      summary: Post Custom Event
+      operationId: postCustomEvent
+      description: >-
+        Creates or updates a contact profile and records a custom event against
+        the resolved profile. At least one phone or email must be present in
+        traits for the contact to be considered contactable. Events whose name
+        matches a Journey trigger will enroll the contact into that Journey.
+      tags:
+        - Events
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomEvent'
+            examples:
+              leadFormSubmitted:
+                summary: Lead Form Submitted
+                value:
+                  userId: '12345'
+                  traits:
+                    firstName: Jane
+                    lastName: Doe
+                    phones:
+                      - phoneNumber: '+15551234567'
+                        isPrimary: true
+                        label: mobile
+                        voiceOptIn:
+                          subscribed: true
+                        smsOptIn:
+                          subscribed: true
+                    emails:
+                      - emailAddress: jane.doe@example.com
+                        isPrimary: true
+                        emailOptIn:
+                          subscribed: true
+                  name: Lead Form Submitted
+                  properties:
+                    course: Intro to AI
+                    source: marketing-site
+                  originalTimestamp: '2026-05-24T15:00:00Z'
+                  eventSource: Website
+      responses:
+        '200':
+          description: Request Accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    examples:
+                      - accepted
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: >-
+        API key issued by Regal Support (support@regal.ai). Must be sent in the
+        Authorization header on every request.
+  schemas:
+    CustomEvent:
+      type: object
+      required:
+        - traits
+      properties:
+        userId:
+          type: string
+          description: External system identifier for the contact.
+        traits:
+          $ref: '#/components/schemas/ContactTraits'
+        name:
+          type: string
+          description: Event name. Used to enroll contacts into matching Journeys.
+        properties:
+          type: object
+          additionalProperties: true
+          description: Event-specific properties.
+        originalTimestamp:
+          type: string
+          description: ISO 8601 timestamp when the event originally occurred.
+        eventSource:
+          type: string
+          description: Source system that emitted the event (e.g., Website, CRM, Backend).
+    ContactTraits:
+      type: object
+      description: Identifiers and attributes describing the contact.
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        phones:
+          type: array
+          items:
+            $ref: '#/components/schemas/PhoneTrait'
+        emails:
+          type: array
+          items:
+            $ref: '#/components/schemas/EmailTrait'
+        address:
+          $ref: '#/components/schemas/Address'
+      additionalProperties: true
+    PhoneTrait:
+      type: object
+      required:
+        - phoneNumber
+      properties:
+        phoneNumber:
+          type: string
+        isPrimary:
+          type: boolean
+        label:
+          type: string
+          description: Label such as mobile, home, work.
+        voiceOptIn:
+          $ref: '#/components/schemas/OptInState'
+        smsOptIn:
+          $ref: '#/components/schemas/OptInState'
+    EmailTrait:
+      type: object
+      required:
+        - emailAddress
+      properties:
+        emailAddress:
+          type: string
+        isPrimary:
+          type: boolean
+        label:
+          type: string
+        emailOptIn:
+          $ref: '#/components/schemas/OptInState'
+    OptInState:
+      type: object
+      properties:
+        subscribed:
+          type: boolean
+        timestamp:
+          type: string
+        source:
+          type: string
+    Address:
+      type: object
+      properties:
+        street:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        zipcode:
+          type: string
+        country:
+          type: string
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: string
+  responses:
+    BadRequest:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    RateLimited:
+      description: Rate Limit Exceeded (300 RPS default)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'

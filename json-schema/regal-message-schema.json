@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/regal-ai/refs/heads/main/json-schema/regal-message-schema.json",
+  "title": "RegalMessage",
+  "description": "An outbound SMS message sent via the Regal Messages API.",
+  "type": "object",
+  "required": ["to", "channel"],
+  "properties": {
+    "to": {
+      "type": "object",
+      "required": ["phoneNumber"],
+      "properties": {
+        "phoneNumber": { "type": "string" },
+        "contactId": { "type": "string" }
+      }
+    },
+    "from": {
+      "type": "object",
+      "properties": {
+        "phoneNumber": { "type": "string" }
+      }
+    },
+    "channel": { "type": "string", "enum": ["sms"] },
+    "content": {
+      "type": "object",
+      "properties": {
+        "body": { "type": "string" },
+        "mediaUrl": { "type": "string", "format": "uri" }
+      }
+    },
+    "campaignId": { "type": "integer" }
+  }
+}

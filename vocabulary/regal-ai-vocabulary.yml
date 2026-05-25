@@ -1,0 +1,152 @@
+vocabulary: 0.1
+name: Regal AI Vocabulary
+description: >-
+  Vocabulary mapping the operational and capability dimensions of the Regal AI
+  contact center platform: voice/SMS/chat/WebRTC AI agents, Journey
+  orchestration, branded caller ID, conversation intelligence, and the public
+  REST + webhook surface.
+created: '2026-05-24'
+modified: '2026-05-24'
+dimensions:
+  - id: domain
+    name: Domain
+    terms:
+      - AI Voice Agent
+      - AI SMS Agent
+      - AI Chat Agent
+      - AI WebRTC Agent
+      - Contact Center
+      - Outbound Calling
+      - Inbound Calling
+      - Sales Dialer
+      - Journey Orchestration
+      - Conversation Intelligence
+      - Branded Caller ID
+      - Spam Remediation
+  - id: resources
+    name: Resources
+    terms:
+      - Contact
+      - Event
+      - Phone
+      - Email
+      - Address
+      - OptIn
+      - Campaign
+      - Journey
+      - Disposition
+      - Task
+      - Reservation
+      - Call
+      - Recording
+      - Transcript
+      - Analysis
+      - Message
+      - Conversation
+      - Voicemail
+      - Reminder
+      - Callback
+      - CustomObject
+      - BrandedPhoneNumber
+      - BusinessProfile
+      - CarrierFeature
+      - ActivePhoneNumber
+      - Webhook
+      - CustomAction
+      - Variant
+      - KnowledgeBase
+      - DynamicVariable
+  - id: operations
+    name: Operations
+    terms:
+      - Create
+      - Read
+      - List
+      - Update
+      - Patch
+      - Delete
+      - Send
+      - Subscribe
+      - Trigger
+      - Enroll
+      - Resolve
+  - id: channels
+    name: Channels
+    terms:
+      - voice
+      - sms
+      - mms
+      - email
+      - chat
+      - webrtc
+  - id: directions
+    name: Directions
+    terms:
+      - INBOUND
+      - OUTBOUND
+  - id: protocols
+    name: Protocols
+    terms:
+      - HTTPS
+      - REST
+      - JSON
+      - Webhooks
+      - SIP
+      - WebRTC
+  - id: authentication
+    name: Authentication
+    terms:
+      - API Key (Authorization header)
+      - SSO (Google)
+      - SSO (Okta)
+      - SSO (Azure)
+      - SCIM (Okta)
+  - id: compliance
+    name: Compliance
+    terms:
+      - SOC 2
+      - HIPAA
+      - GDPR
+      - CCPA
+      - DPA
+      - TCPA Opt-In
+      - No LLM Training on Customer Data
+  - id: integrations
+    name: Integrations
+    terms:
+      - Salesforce
+      - HubSpot
+      - Segment
+      - mParticle
+      - Zendesk
+      - Kustomer
+      - Klaviyo
+      - Braze
+      - Marketo
+      - Customer.io
+      - Iterable
+      - Microsoft Dynamics 365
+      - Zoho
+      - Hightouch
+      - Cal.com
+      - Calendly
+      - Zapier
+      - SendGrid
+      - Slack
+      - Microsoft Teams
+      - 8x8
+      - Five9
+      - Talkdesk
+      - Snowflake
+      - Amazon S3
+      - Freshdesk
+      - Gong
+      - Balto
+      - Kindly
+  - id: rate-limits
+    name: Rate Limits
+    terms:
+      - 300 RPS (Events ingest)
+      - 10 RPS (v1 management endpoints)
+      - 5 second webhook response budget
+      - No webhook retries

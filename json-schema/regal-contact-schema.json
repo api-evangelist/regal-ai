@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/regal-ai/refs/heads/main/json-schema/regal-contact-schema.json",
+  "title": "RegalContact",
+  "description": "A Regal contact profile. Identity resolution iterates identifiers in the order primary phone > any other phone > primary email > any other email > userId.",
+  "type": "object",
+  "properties": {
+    "userId": { "type": "string" },
+    "firstName": { "type": "string" },
+    "lastName": { "type": "string" },
+    "phones": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["phoneNumber"],
+        "properties": {
+          "phoneNumber": { "type": "string" },
+          "isPrimary": { "type": "boolean" },
+          "label": { "type": "string" },
+          "voiceOptIn": { "$ref": "#/$defs/OptIn" },
+          "smsOptIn": { "$ref": "#/$defs/OptIn" }
+        }
+      }
+    },
+    "emails": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["emailAddress"],
+        "properties": {
+          "emailAddress": { "type": "string", "format": "email" },
+          "isPrimary": { "type": "boolean" },
+          "label": { "type": "string" },
+          "emailOptIn": { "$ref": "#/$defs/OptIn" }
+        }
+      }
+    },
+    "address": {
+      "type": "object",
+      "properties": {
+        "street": { "type": "string" },
+        "city": { "type": "string" },
+        "state": { "type": "string" },
+        "zipcode": { "type": "string" },
+        "country": { "type": "string" }
+      }
+    }
+  },
+  "anyOf": [
+    { "required": ["phones"] },
+    { "required": ["emails"] }
+  ],
+  "$defs": {
+    "OptIn": {
+      "type": "object",
+      "properties": {
+        "subscribed": { "type": "boolean" },
+        "timestamp": { "type": "string" },
+        "source": { "type": "string" }
+      }
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-structure.org/draft-00/schema",
+  "name": "RegalContact",
+  "description": "Structural description of a Regal contact profile.",
+  "fields": [
+    { "name": "userId", "type": "string", "description": "External system identifier." },
+    { "name": "firstName", "type": "string" },
+    { "name": "lastName", "type": "string" },
+    {
+      "name": "phones",
+      "type": "array<Phone>",
+      "description": "Telephone numbers attached to the contact. Identity resolution prefers the primary phone."
+    },
+    {
+      "name": "emails",
+      "type": "array<Email>",
+      "description": "Email addresses attached to the contact."
+    },
+    {
+      "name": "address",
+      "type": "Address",
+      "description": "Physical address attributes."
+    }
+  ],
+  "types": {
+    "Phone": [
+      { "name": "phoneNumber", "type": "string", "required": true },
+      { "name": "isPrimary", "type": "boolean" },
+      { "name": "label", "type": "string" },
+      { "name": "voiceOptIn", "type": "OptIn" },
+      { "name": "smsOptIn", "type": "OptIn" }
+    ],
+    "Email": [
+      { "name": "emailAddress", "type": "string", "required": true },
+      { "name": "isPrimary", "type": "boolean" },
+      { "name": "label", "type": "string" },
+      { "name": "emailOptIn", "type": "OptIn" }
+    ],
+    "OptIn": [
+      { "name": "subscribed", "type": "boolean" },
+      { "name": "timestamp", "type": "string" },
+      { "name": "source", "type": "string" }
+    ],
+    "Address": [
+      { "name": "street", "type": "string" },
+      { "name": "city", "type": "string" },
+      { "name": "state", "type": "string" },
+      { "name": "zipcode", "type": "string" },
+      { "name": "country", "type": "string" }
+    ]
+  }
+}
