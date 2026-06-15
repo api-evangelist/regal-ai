@@ -1,0 +1,14 @@
+{
+  "repo": "regal-ai",
+  "feeds": [
+    {
+      "source": "https://www.regal.ai/blog",
+      "feed_url": "https://www.regal.ai/blog",
+      "title": "",
+      "saved": 1,
+      "method": "html"
+    }
+  ],
+  "post_count": 26,
+  "fetched": "2026-06-07T00:00:00Z"
+}

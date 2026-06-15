@@ -1,0 +1,94 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Regal Management API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Business Profiles",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Business Profiles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.regal.ai/v1/businessProfiles"
+          },
+          "docs": "List business profiles registered in the tenant."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Phone Numbers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Active Phone Numbers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.regal.ai/v1/activePhoneNumbers"
+          },
+          "docs": "List phone numbers currently active in the tenant."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Campaigns",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Campaigns",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.regal.ai/v1/campaigns"
+          },
+          "docs": "List outbound campaigns configured in the tenant."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Dispositions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Dispositions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.regal.ai/v1/dispositions"
+          },
+          "docs": "List AI call dispositions configured in the tenant."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

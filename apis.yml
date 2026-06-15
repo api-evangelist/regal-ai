@@ -2,27 +2,19 @@ aid: regal-ai
 name: Regal
 url: https://raw.githubusercontent.com/api-evangelist/regal-ai/refs/heads/main/apis.yml
 description: >-
-  Regal is a New York City-based AI Agent Platform purpose-built for contact
-  center operations. The Regal platform lets enterprises design, test, deploy,
-  monitor, and continuously improve AI Phone Agents, SMS Agents, Chat Agents,
-  and WebRTC Voice Agents for inbound and outbound use cases including sales,
-  customer support, scheduling, collections, and lead qualification. The product
-  surface includes an Agent Builder (no-code prompts, actions, knowledge base,
-  variants, languages, LLM models), a Sales Dialer, Journey Builder for
-  orchestrating multi-channel customer experiences, Conversation Intelligence
-  for QA and analytics, and a Copilot that automates agent design. Regal
-  exposes a public REST API spanning a Custom Events ingest endpoint
-  (events.regalvoice.com/events) for contact and event ingestion plus a v1
-  management API (api.regal.ai/v1) covering Branded Phone Numbers, Business
-  Profiles, Active Phone Numbers, Campaigns, Dispositions, and outbound SMS
-  message sending. The platform also publishes 40+ reporting webhook event
-  types covering calls, SMS, MMS, email, voicemail, agent activity, contacts,
-  and journey state, plus a Custom Actions framework that lets voice agents
-  call out to customer-owned HTTP endpoints during conversations. Regal
-  integrates natively with Segment, mParticle, HubSpot, Salesforce, Zendesk,
-  Kustomer, Klaviyo, Braze, Marketo, Customer.io, Iterable, Microsoft Dynamics
-  365, Zoho, Hightouch, Cal.com, Calendly, Snowflake, S3, Slack, Microsoft
-  Teams, Five9, Talkdesk, and 8x8.
+  Regal is a New York City-based AI Agent Platform purpose-built for contact center operations. The Regal platform lets
+  enterprises design, test, deploy, monitor, and continuously improve AI Phone Agents, SMS Agents, Chat Agents, and
+  WebRTC Voice Agents for inbound and outbound use cases including sales, customer support, scheduling, collections, and
+  lead qualification. The product surface includes an Agent Builder (no-code prompts, actions, knowledge base, variants,
+  languages, LLM models), a Sales Dialer, Journey Builder for orchestrating multi-channel customer experiences,
+  Conversation Intelligence for QA and analytics, and a Copilot that automates agent design. Regal exposes a public REST
+  API spanning a Custom Events ingest endpoint (events.regalvoice.com/events) for contact and event ingestion plus a v1
+  management API (api.regal.ai/v1) covering Branded Phone Numbers, Business Profiles, Active Phone Numbers, Campaigns,
+  Dispositions, and outbound SMS message sending. The platform also publishes 40+ reporting webhook event types covering
+  calls, SMS, MMS, email, voicemail, agent activity, contacts, and journey state, plus a Custom Actions framework that
+  lets voice agents call out to customer-owned HTTP endpoints during conversations. Regal integrates natively with
+  Segment, mParticle, HubSpot, Salesforce, Zendesk, Kustomer, Klaviyo, Braze, Marketo, Customer.io, Iterable, Microsoft
+  Dynamics 365, Zoho, Hightouch, Cal.com, Calendly, Snowflake, S3, Slack, Microsoft Teams, Five9, Talkdesk, and 8x8.
 tags:
   - AI
   - AI Agents
@@ -75,22 +67,15 @@ apis:
         type: JSONSchema
       - url: json-ld/regal-ai-context.jsonld
         type: JSONLD
-      - url: capabilities/events-events.yaml
-        type: NaftikoCapability
     description: >-
-      The Regal Events API is a single high-throughput ingest endpoint
-      (POST https://events.regalvoice.com/events) that creates or updates a
-      contact and records a custom event on the contact profile. The body
-      uses a userId plus a traits object (phones, emails, firstName,
-      lastName, address, custom properties) and a top-level name/properties
-      pair describing the event. Identity resolution iterates identifiers in
-      the order primary phone > any other phone > primary email > any other
-      email > userId. A contact must have at least one phone or email to be
-      considered contactable. Authenticated via API key in the Authorization
-      header. Rate limited to 300 requests per second by default. This is
-      the same endpoint that triggers Journeys (and therefore outbound
-      calls, SMS journeys, and reminder sequences) when paired with the
-      correct event name and TCPA opt-in flags.
+      The Regal Events API is a single high-throughput ingest endpoint (POST https://events.regalvoice.com/events) that
+      creates or updates a contact and records a custom event on the contact profile. The body uses a userId plus a
+      traits object (phones, emails, firstName, lastName, address, custom properties) and a top-level name/properties
+      pair describing the event. Identity resolution iterates identifiers in the order primary phone > any other phone >
+      primary email > any other email > userId. A contact must have at least one phone or email to be considered
+      contactable. Authenticated via API key in the Authorization header. Rate limited to 300 requests per second by
+      default. This is the same endpoint that triggers Journeys (and therefore outbound calls, SMS journeys, and
+      reminder sequences) when paired with the correct event name and TCPA opt-in flags.
   - aid: regal-ai:regal-branded-phone-numbers-api
     name: Regal Branded Phone Numbers API
     tags:
@@ -110,18 +95,13 @@ apis:
         type: OpenAPI
       - url: json-schema/regal-branded-phone-number-schema.json
         type: JSONSchema
-      - url: capabilities/branded-phone-numbers.yaml
-        type: NaftikoCapability
     description: >-
-      The Branded Phone Numbers API at api.regal.ai/v1/brandedPhoneNumbers
-      lets you register, update, and remove branded caller ID and spam
-      remediation entries on a per-carrier, per-feature basis. POST creates
-      a new registration tying a phoneNumber to a businessProfileId and a
-      carrierFeatures array (with brandingNameShort, brandingNameLong,
-      internalName, reportingGroup, and one of spamRemediation or
-      brandedCallerId enabled). PATCH updates the registration partially.
-      DELETE removes it once all carrier submissions are inactive. The
-      surface is rate limited to 10 requests per second.
+      The Branded Phone Numbers API at api.regal.ai/v1/brandedPhoneNumbers lets you register, update, and remove branded
+      caller ID and spam remediation entries on a per-carrier, per-feature basis. POST creates a new registration tying
+      a phoneNumber to a businessProfileId and a carrierFeatures array (with brandingNameShort, brandingNameLong,
+      internalName, reportingGroup, and one of spamRemediation or brandedCallerId enabled). PATCH updates the
+      registration partially. DELETE removes it once all carrier submissions are inactive. The surface is rate limited
+      to 10 requests per second.
   - aid: regal-ai:regal-management-api
     name: Regal Management API
     tags:
@@ -138,22 +118,11 @@ apis:
         type: ChangeLog
       - url: openapi/regal-management-api-openapi.yml
         type: OpenAPI
-      - url: capabilities/management-business-profiles.yaml
-        type: NaftikoCapability
-      - url: capabilities/management-active-phone-numbers.yaml
-        type: NaftikoCapability
-      - url: capabilities/management-campaigns.yaml
-        type: NaftikoCapability
-      - url: capabilities/management-dispositions.yaml
-        type: NaftikoCapability
     description: >-
-      The Management API exposes read-only listing endpoints over
-      api.regal.ai/v1 covering Business Profiles (used to drive branded
-      caller ID), Active Phone Numbers in your tenant, Outbound Campaigns,
-      and AI Call Dispositions. These endpoints were introduced in the
-      January 2025 release to enable programmatic onboarding, audit, and
-      reporting against the tenant's configuration without screen-scraping
-      the Regal app UI.
+      The Management API exposes read-only listing endpoints over api.regal.ai/v1 covering Business Profiles (used to
+      drive branded caller ID), Active Phone Numbers in your tenant, Outbound Campaigns, and AI Call Dispositions. These
+      endpoints were introduced in the January 2025 release to enable programmatic onboarding, audit, and reporting
+      against the tenant's configuration without screen-scraping the Regal app UI.
   - aid: regal-ai:regal-messages-api
     name: Regal Messages API
     tags:
@@ -169,17 +138,12 @@ apis:
         type: OpenAPI
       - url: json-schema/regal-message-schema.json
         type: JSONSchema
-      - url: capabilities/messages-send-message.yaml
-        type: NaftikoCapability
     description: >-
-      The Messages API at POST https://api.regal.ai/v1/messages/send
-      delivers outbound SMS messages tied to a Regal SMS campaign. The body
-      requires a to recipient object, a channel value of "sms", and either
-      a campaignId (which supplies default from-number and content) or an
-      explicit from object and content object. Unknown destination numbers
-      are automatically resolved to new contact profiles. Returns 202
-      Accepted for queued messages and is rate limited to 10 requests per
-      second.
+      The Messages API at POST https://api.regal.ai/v1/messages/send delivers outbound SMS messages tied to a Regal SMS
+      campaign. The body requires a to recipient object, a channel value of "sms", and either a campaignId (which
+      supplies default from-number and content) or an explicit from object and content object. Unknown destination
+      numbers are automatically resolved to new contact profiles. Returns 202 Accepted for queued messages and is rate
+      limited to 10 requests per second.
   - aid: regal-ai:regal-reporting-webhooks
     name: Regal Reporting Webhooks
     tags:
@@ -196,22 +160,15 @@ apis:
         type: Documentation
       - url: asyncapi/regal-reporting-webhooks-asyncapi.yml
         type: AsyncAPI
-      - url: capabilities/reporting-webhooks.yaml
-        type: NaftikoCapability
     description: >-
-      Regal publishes 40+ reporting webhook event types covering agent
-      activity, call lifecycle (placed, completed, IVR triggered, wrapup),
-      call recording and transcript availability, AI call analysis, task
-      reservations, SMS lifecycle (queued, sent, received, failed,
-      undelivered, conversation completed), MMS, email, voicemail (recording
-      and transcript availability, completion), contact lifecycle (created,
-      subscribed, unsubscribed, attribute and phone/email edits, experiment
-      assignment), scheduled callbacks and reminders, custom tasks, custom
-      objects, and cancel-all-automated-tasks signals. Each event carries a
-      common envelope (userId, traits, name, eventId, properties,
-      originalTimestamp, eventSource) plus event-specific properties.
-      Webhooks must respond within five seconds or the event is dropped (no
-      retries); endpoint changes take up to five minutes to propagate.
+      Regal publishes 40+ reporting webhook event types covering agent activity, call lifecycle (placed, completed, IVR
+      triggered, wrapup), call recording and transcript availability, AI call analysis, task reservations, SMS lifecycle
+      (queued, sent, received, failed, undelivered, conversation completed), MMS, email, voicemail (recording and
+      transcript availability, completion), contact lifecycle (created, subscribed, unsubscribed, attribute and
+      phone/email edits, experiment assignment), scheduled callbacks and reminders, custom tasks, custom objects, and
+      cancel-all-automated-tasks signals. Each event carries a common envelope (userId, traits, name, eventId,
+      properties, originalTimestamp, eventSource) plus event-specific properties. Webhooks must respond within five
+      seconds or the event is dropped (no retries); endpoint changes take up to five minutes to propagate.
 common:
   - type: Portal
     url: https://www.regal.ai
@@ -393,39 +350,39 @@ common:
     url: vocabulary/regal-ai-vocabulary.yml
   - type: Features
     data:
-      - AI Phone Agents for 24/7 inbound and outbound voice with sub-second
-        latency and 30+ languages
-      - SMS, Chat, and WebRTC AI Agents sharing the same prompt, knowledge
-        base, and action library
-      - No-code Agent Builder with prompts, dynamic variables, actions,
-        action sequences, branching, and agent variants
-      - Custom Actions framework that lets voice agents POST structured
-        payloads to customer HTTP endpoints and branch on the response
-      - Journey Builder for multi-channel customer journeys including
-        triggered outbound calls gated by TCPA opt-in flags
-      - Conversation Intelligence with AI call analysis, custom AI analysis
-        and reporting, coverage gap dashboard, and cross-transcript search
-      - Sales Dialer with batch dialing, outbound routing, branded caller
-        ID, spam remediation, and iOS call screening handling
+      - AI Phone Agents for 24/7 inbound and outbound voice with sub-second latency and 30+ languages
+      - SMS, Chat, and WebRTC AI Agents sharing the same prompt, knowledge base, and action library
+      - No-code Agent Builder with prompts, dynamic variables, actions, action sequences, branching, and agent variants
+      - >-
+        Custom Actions framework that lets voice agents POST structured payloads to customer HTTP endpoints and branch
+        on the response
+      - >-
+        Journey Builder for multi-channel customer journeys including triggered outbound calls gated by TCPA opt-in
+        flags
+      - >-
+        Conversation Intelligence with AI call analysis, custom AI analysis and reporting, coverage gap dashboard, and
+        cross-transcript search
+      - >-
+        Sales Dialer with batch dialing, outbound routing, branded caller ID, spam remediation, and iOS call screening
+        handling
       - Copilot for AI-assisted agent design and tuning
-      - Single Custom Events ingestion endpoint
-        (events.regalvoice.com/events) with userId/phone/email identity
+      - >-
+        Single Custom Events ingestion endpoint (events.regalvoice.com/events) with userId/phone/email identity
         resolution at 300 RPS
-      - v1 Management API for Business Profiles, Active Phone Numbers,
-        Campaigns, Dispositions, Branded Phone Numbers, and SMS sending
-      - 40+ reporting webhook event types covering calls, SMS, MMS, email,
-        voicemail, contact lifecycle, scheduling, and custom tasks
-      - Native data integrations with Segment, mParticle, HubSpot,
-        Salesforce, Zendesk, Kustomer, Klaviyo, Braze, Marketo,
-        Customer.io, Iterable, Microsoft Dynamics 365, Zoho, Hightouch,
-        Cal.com, Calendly, Snowflake Data Share, Amazon S3, Slack,
-        Microsoft Teams, SendGrid, Zapier
+      - >-
+        v1 Management API for Business Profiles, Active Phone Numbers, Campaigns, Dispositions, Branded Phone Numbers,
+        and SMS sending
+      - >-
+        40+ reporting webhook event types covering calls, SMS, MMS, email, voicemail, contact lifecycle, scheduling, and
+        custom tasks
+      - >-
+        Native data integrations with Segment, mParticle, HubSpot, Salesforce, Zendesk, Kustomer, Klaviyo, Braze,
+        Marketo, Customer.io, Iterable, Microsoft Dynamics 365, Zoho, Hightouch, Cal.com, Calendly, Snowflake Data
+        Share, Amazon S3, Slack, Microsoft Teams, SendGrid, Zapier
       - CCaaS integrations with 8x8, Five9, and Talkdesk
-      - Embeddable iframe for Salesforce, Kustomer, Retool, and Chrome
-        Extension
+      - Embeddable iframe for Salesforce, Kustomer, Retool, and Chrome Extension
       - SSO via Google, Okta, and Azure; SCIM via Okta
-      - SOC 2, HIPAA, GDPR, CCPA, and DPA compliance with no customer data
-        used for LLM training
+      - SOC 2, HIPAA, GDPR, CCPA, and DPA compliance with no customer data used for LLM training
     sources:
       - https://www.regal.ai
       - https://developer.regal.ai

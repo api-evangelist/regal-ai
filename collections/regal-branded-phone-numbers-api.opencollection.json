@@ -1,0 +1,83 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Regal Branded Phone Numbers API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Branded Phone Numbers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Post Branded Phone Number",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.regal.ai/v1/brandedPhoneNumbers",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Register a new branded phone number with one or more carriers."
+        },
+        {
+          "info": {
+            "name": "Patch Branded Phone Number",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.regal.ai/v1/brandedPhoneNumbers/:phoneNumber",
+            "params": [
+              {
+                "name": "phoneNumber",
+                "value": "",
+                "type": "path",
+                "description": "The branded phone number identifier (E.164)."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Partially update a branded phone number registration."
+        },
+        {
+          "info": {
+            "name": "Delete Branded Phone Number",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.regal.ai/v1/brandedPhoneNumbers/:phoneNumber",
+            "params": [
+              {
+                "name": "phoneNumber",
+                "value": "",
+                "type": "path",
+                "description": "The branded phone number identifier (E.164)."
+              }
+            ]
+          },
+          "docs": "Remove a branded phone number registration. Phone numbers with active carrier submissions cannot be deleted; opt out of all carrier features and wait for approval before retrying."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
