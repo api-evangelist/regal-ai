@@ -3,12 +3,12 @@
   "feeds": [
     {
       "source": "https://www.regal.ai/blog",
-      "feed_url": "https://www.regal.ai/blog",
-      "title": "",
-      "saved": 1,
-      "method": "html"
+      "feed_url": "https://www.regal.ai/blog/rss.xml",
+      "title": "Regal Blog",
+      "saved": 4,
+      "method": "rss"
     }
   ],
-  "post_count": 26,
-  "fetched": "2026-06-07T00:00:00Z"
+  "post_count": 30,
+  "fetched": "2026-06-21T17:00:00Z"
 }

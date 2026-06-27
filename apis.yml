@@ -190,7 +190,7 @@ common:
     url: https://support.regal.ai/hc/en-us/articles/5725458229531-Integration-Guides-API-Docs
   - type: Login
     url: https://app.regal.io
-  - type: SignUp
+  - type: Signup
     url: https://www.regal.ai/get-a-demo
   - type: Pricing
     url: https://www.regal.ai/pricing
