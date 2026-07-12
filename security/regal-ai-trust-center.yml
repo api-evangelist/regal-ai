@@ -1,0 +1,15 @@
+generated: '2026-07-11'
+method: searched
+probe: true
+source: https://www.regal.ai/security
+url: https://www.regal.ai/security
+certifications:
+- SOC 2
+- HIPAA
+- GDPR
+evidence:
+- source: https://www.regal.ai/security
+  keywords:
+  - soc2
+  - hipaa
+  - gdpr

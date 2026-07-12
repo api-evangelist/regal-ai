@@ -170,6 +170,12 @@ apis:
       properties, originalTimestamp, eventSource) plus event-specific properties. Webhooks must respond within five
       seconds or the event is dropped (no retries); endpoint changes take up to five minutes to propagate.
 common:
+  - type: TrustCenter
+    url: security/regal-ai-trust-center.yml
+  - type: DomainSecurity
+    url: security/regal-ai-domain-security.yml
+  - type: Authentication
+    url: authentication/regal-ai-authentication.yml
   - type: Portal
     url: https://www.regal.ai
   - type: Documentation
