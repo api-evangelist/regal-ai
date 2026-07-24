@@ -1,0 +1,79 @@
+openapi: 3.1.0
+info:
+  title: Regal Branded Phone Numbers Business Profiles API
+  version: '1.0'
+  summary: Register, update, and remove branded caller ID and spam remediation entries.
+  description: Branded Phone Numbers in Regal control how a tenant's outbound numbers appear on recipients' devices via carrier-level branded caller ID and spam remediation. Each registration ties a phoneNumber to a businessProfileId and a carrierFeatures array describing which features (spamRemediation or brandedCallerId) are enabled per carrier. POST is used for first-time registration only; PATCH is used for partial updates; DELETE removes a registration once all carrier submissions are inactive.
+  contact:
+    name: Regal Support
+    email: support@regal.ai
+    url: https://support.regal.ai
+  license:
+    name: Proprietary
+    url: https://www.regal.ai/terms-of-service
+servers:
+- url: https://api.regal.ai/v1
+  description: Production v1 Regal API
+security:
+- ApiKeyAuth: []
+tags:
+- name: Business Profiles
+paths:
+  /businessProfiles:
+    get:
+      summary: List Business Profiles
+      operationId: listBusinessProfiles
+      description: List business profiles registered in the tenant.
+      tags:
+      - Business Profiles
+      responses:
+        '200':
+          description: List of business profiles.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BusinessProfile'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+components:
+  responses:
+    RateLimited:
+      description: Rate Limit Exceeded
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: string
+    BusinessProfile:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        brandName:
+          type: string
+        status:
+          type: string
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization

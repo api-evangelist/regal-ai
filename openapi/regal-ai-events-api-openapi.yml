@@ -1,0 +1,206 @@
+openapi: 3.1.0
+info:
+  title: Regal Branded Phone Numbers Events API
+  version: '1.0'
+  summary: Register, update, and remove branded caller ID and spam remediation entries.
+  description: Branded Phone Numbers in Regal control how a tenant's outbound numbers appear on recipients' devices via carrier-level branded caller ID and spam remediation. Each registration ties a phoneNumber to a businessProfileId and a carrierFeatures array describing which features (spamRemediation or brandedCallerId) are enabled per carrier. POST is used for first-time registration only; PATCH is used for partial updates; DELETE removes a registration once all carrier submissions are inactive.
+  contact:
+    name: Regal Support
+    email: support@regal.ai
+    url: https://support.regal.ai
+  license:
+    name: Proprietary
+    url: https://www.regal.ai/terms-of-service
+servers:
+- url: https://api.regal.ai/v1
+  description: Production v1 Regal API
+security:
+- ApiKeyAuth: []
+tags:
+- name: Events
+  description: Contact creation, update, and custom event tracking
+paths:
+  /events:
+    post:
+      summary: Post Custom Event
+      operationId: postCustomEvent
+      description: Creates or updates a contact profile and records a custom event against the resolved profile. At least one phone or email must be present in traits for the contact to be considered contactable. Events whose name matches a Journey trigger will enroll the contact into that Journey.
+      tags:
+      - Events
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomEvent'
+            examples:
+              leadFormSubmitted:
+                summary: Lead Form Submitted
+                value:
+                  userId: '12345'
+                  traits:
+                    firstName: Jane
+                    lastName: Doe
+                    phones:
+                    - phoneNumber: '+15551234567'
+                      isPrimary: true
+                      label: mobile
+                      voiceOptIn:
+                        subscribed: true
+                      smsOptIn:
+                        subscribed: true
+                    emails:
+                    - emailAddress: jane.doe@example.com
+                      isPrimary: true
+                      emailOptIn:
+                        subscribed: true
+                  name: Lead Form Submitted
+                  properties:
+                    course: Intro to AI
+                    source: marketing-site
+                  originalTimestamp: '2026-05-24T15:00:00Z'
+                  eventSource: Website
+      responses:
+        '200':
+          description: Request Accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    examples:
+                    - accepted
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+components:
+  responses:
+    RateLimited:
+      description: Rate Limit Exceeded (300 RPS default)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    CustomEvent:
+      type: object
+      required:
+      - traits
+      properties:
+        userId:
+          type: string
+          description: External system identifier for the contact.
+        traits:
+          $ref: '#/components/schemas/ContactTraits'
+        name:
+          type: string
+          description: Event name. Used to enroll contacts into matching Journeys.
+        properties:
+          type: object
+          additionalProperties: true
+          description: Event-specific properties.
+        originalTimestamp:
+          type: string
+          description: ISO 8601 timestamp when the event originally occurred.
+        eventSource:
+          type: string
+          description: Source system that emitted the event (e.g., Website, CRM, Backend).
+    Address:
+      type: object
+      properties:
+        street:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        zipcode:
+          type: string
+        country:
+          type: string
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: string
+    EmailTrait:
+      type: object
+      required:
+      - emailAddress
+      properties:
+        emailAddress:
+          type: string
+        isPrimary:
+          type: boolean
+        label:
+          type: string
+        emailOptIn:
+          $ref: '#/components/schemas/OptInState'
+    OptInState:
+      type: object
+      properties:
+        subscribed:
+          type: boolean
+        timestamp:
+          type: string
+        source:
+          type: string
+    PhoneTrait:
+      type: object
+      required:
+      - phoneNumber
+      properties:
+        phoneNumber:
+          type: string
+        isPrimary:
+          type: boolean
+        label:
+          type: string
+          description: Label such as mobile, home, work.
+        voiceOptIn:
+          $ref: '#/components/schemas/OptInState'
+        smsOptIn:
+          $ref: '#/components/schemas/OptInState'
+    ContactTraits:
+      type: object
+      description: Identifiers and attributes describing the contact.
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        phones:
+          type: array
+          items:
+            $ref: '#/components/schemas/PhoneTrait'
+        emails:
+          type: array
+          items:
+            $ref: '#/components/schemas/EmailTrait'
+        address:
+          $ref: '#/components/schemas/Address'
+      additionalProperties: true
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization

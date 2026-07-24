@@ -3,14 +3,7 @@ info:
   title: Regal Branded Phone Numbers API
   version: '1.0'
   summary: Register, update, and remove branded caller ID and spam remediation entries.
-  description: >-
-    Branded Phone Numbers in Regal control how a tenant's outbound numbers
-    appear on recipients' devices via carrier-level branded caller ID and spam
-    remediation. Each registration ties a phoneNumber to a businessProfileId
-    and a carrierFeatures array describing which features (spamRemediation or
-    brandedCallerId) are enabled per carrier. POST is used for first-time
-    registration only; PATCH is used for partial updates; DELETE removes a
-    registration once all carrier submissions are inactive.
+  description: Branded Phone Numbers in Regal control how a tenant's outbound numbers appear on recipients' devices via carrier-level branded caller ID and spam remediation. Each registration ties a phoneNumber to a businessProfileId and a carrierFeatures array describing which features (spamRemediation or brandedCallerId) are enabled per carrier. POST is used for first-time registration only; PATCH is used for partial updates; DELETE removes a registration once all carrier submissions are inactive.
   contact:
     name: Regal Support
     email: support@regal.ai
@@ -19,13 +12,13 @@ info:
     name: Proprietary
     url: https://www.regal.ai/terms-of-service
 servers:
-  - url: https://api.regal.ai/v1
-    description: Production v1 Regal API
+- url: https://api.regal.ai/v1
+  description: Production v1 Regal API
 security:
-  - ApiKeyAuth: []
+- ApiKeyAuth: []
 tags:
-  - name: Branded Phone Numbers
-    description: Carrier-level branded caller ID and spam remediation
+- name: Branded Phone Numbers
+  description: Carrier-level branded caller ID and spam remediation
 paths:
   /brandedPhoneNumbers:
     post:
@@ -33,7 +26,7 @@ paths:
       operationId: postBrandedPhoneNumber
       description: Register a new branded phone number with one or more carriers.
       tags:
-        - Branded Phone Numbers
+      - Branded Phone Numbers
       requestBody:
         required: true
         content:
@@ -57,18 +50,18 @@ paths:
           $ref: '#/components/responses/RateLimited'
   /brandedPhoneNumbers/{phoneNumber}:
     parameters:
-      - name: phoneNumber
-        in: path
-        required: true
-        schema:
-          type: string
-        description: The branded phone number identifier (E.164).
+    - name: phoneNumber
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The branded phone number identifier (E.164).
     patch:
       summary: Patch Branded Phone Number
       operationId: patchBrandedPhoneNumber
       description: Partially update a branded phone number registration.
       tags:
-        - Branded Phone Numbers
+      - Branded Phone Numbers
       requestBody:
         required: true
         content:
@@ -93,12 +86,9 @@ paths:
     delete:
       summary: Delete Branded Phone Number
       operationId: deleteBrandedPhoneNumber
-      description: >-
-        Remove a branded phone number registration. Phone numbers with active
-        carrier submissions cannot be deleted; opt out of all carrier features
-        and wait for approval before retrying.
+      description: Remove a branded phone number registration. Phone numbers with active carrier submissions cannot be deleted; opt out of all carrier features and wait for approval before retrying.
       tags:
-        - Branded Phone Numbers
+      - Branded Phone Numbers
       responses:
         '200':
           description: Phone number deleted.
@@ -111,96 +101,9 @@ paths:
         '429':
           $ref: '#/components/responses/RateLimited'
 components:
-  securitySchemes:
-    ApiKeyAuth:
-      type: apiKey
-      in: header
-      name: Authorization
-  schemas:
-    BrandedPhoneNumber:
-      type: object
-      properties:
-        phoneNumber:
-          type: string
-        businessProfileId:
-          type: string
-        brandingNameShort:
-          type: string
-        brandingNameLong:
-          type: string
-        internalName:
-          type: string
-        reportingGroup:
-          type: string
-        carrierFeatures:
-          type: array
-          items:
-            $ref: '#/components/schemas/CarrierFeature'
-    BrandedPhoneNumberCreate:
-      type: object
-      required:
-        - phoneNumber
-        - businessProfileId
-        - carrierFeatures
-      properties:
-        phoneNumber:
-          type: string
-        businessProfileId:
-          type: string
-        carrierFeatures:
-          type: array
-          items:
-            $ref: '#/components/schemas/CarrierFeature'
-        brandingNameShort:
-          type: string
-        brandingNameLong:
-          type: string
-        internalName:
-          type: string
-        reportingGroup:
-          type: string
-    BrandedPhoneNumberPatch:
-      type: object
-      properties:
-        businessProfileId:
-          type: string
-        carrierFeatures:
-          type: array
-          items:
-            $ref: '#/components/schemas/CarrierFeature'
-        brandingNameShort:
-          type: string
-        brandingNameLong:
-          type: string
-        internalName:
-          type: string
-        reportingGroup:
-          type: string
-    CarrierFeature:
-      type: object
-      properties:
-        carrier:
-          type: string
-          description: Carrier identifier (e.g., att, verizon, tmobile).
-        spamRemediation:
-          type: boolean
-        brandedCallerId:
-          type: boolean
-        status:
-          type: string
-          description: >-
-            Submission status (e.g., submitted.optIn, approved.optIn,
-            submitted.optOut, pending.optIn, pending.optOut).
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          type: string
   responses:
-    BadRequest:
-      description: Bad Request
+    RateLimited:
+      description: Rate Limit Exceeded (10 RPS)
       content:
         application/json:
           schema:
@@ -223,9 +126,94 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    RateLimited:
-      description: Rate Limit Exceeded (10 RPS)
+    BadRequest:
+      description: Bad Request
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+  schemas:
+    CarrierFeature:
+      type: object
+      properties:
+        carrier:
+          type: string
+          description: Carrier identifier (e.g., att, verizon, tmobile).
+        spamRemediation:
+          type: boolean
+        brandedCallerId:
+          type: boolean
+        status:
+          type: string
+          description: Submission status (e.g., submitted.optIn, approved.optIn, submitted.optOut, pending.optIn, pending.optOut).
+    BrandedPhoneNumber:
+      type: object
+      properties:
+        phoneNumber:
+          type: string
+        businessProfileId:
+          type: string
+        brandingNameShort:
+          type: string
+        brandingNameLong:
+          type: string
+        internalName:
+          type: string
+        reportingGroup:
+          type: string
+        carrierFeatures:
+          type: array
+          items:
+            $ref: '#/components/schemas/CarrierFeature'
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: string
+    BrandedPhoneNumberPatch:
+      type: object
+      properties:
+        businessProfileId:
+          type: string
+        carrierFeatures:
+          type: array
+          items:
+            $ref: '#/components/schemas/CarrierFeature'
+        brandingNameShort:
+          type: string
+        brandingNameLong:
+          type: string
+        internalName:
+          type: string
+        reportingGroup:
+          type: string
+    BrandedPhoneNumberCreate:
+      type: object
+      required:
+      - phoneNumber
+      - businessProfileId
+      - carrierFeatures
+      properties:
+        phoneNumber:
+          type: string
+        businessProfileId:
+          type: string
+        carrierFeatures:
+          type: array
+          items:
+            $ref: '#/components/schemas/CarrierFeature'
+        brandingNameShort:
+          type: string
+        brandingNameLong:
+          type: string
+        internalName:
+          type: string
+        reportingGroup:
+          type: string
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization

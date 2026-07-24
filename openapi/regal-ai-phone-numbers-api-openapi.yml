@@ -1,0 +1,82 @@
+openapi: 3.1.0
+info:
+  title: Regal Branded Phone Numbers API
+  version: '1.0'
+  summary: Register, update, and remove branded caller ID and spam remediation entries.
+  description: Branded Phone Numbers in Regal control how a tenant's outbound numbers appear on recipients' devices via carrier-level branded caller ID and spam remediation. Each registration ties a phoneNumber to a businessProfileId and a carrierFeatures array describing which features (spamRemediation or brandedCallerId) are enabled per carrier. POST is used for first-time registration only; PATCH is used for partial updates; DELETE removes a registration once all carrier submissions are inactive.
+  contact:
+    name: Regal Support
+    email: support@regal.ai
+    url: https://support.regal.ai
+  license:
+    name: Proprietary
+    url: https://www.regal.ai/terms-of-service
+servers:
+- url: https://api.regal.ai/v1
+  description: Production v1 Regal API
+security:
+- ApiKeyAuth: []
+tags:
+- name: Phone Numbers
+paths:
+  /activePhoneNumbers:
+    get:
+      summary: List Active Phone Numbers
+      operationId: listActivePhoneNumbers
+      description: List phone numbers currently active in the tenant.
+      tags:
+      - Phone Numbers
+      responses:
+        '200':
+          description: List of active phone numbers.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ActivePhoneNumber'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+components:
+  schemas:
+    ActivePhoneNumber:
+      type: object
+      properties:
+        phoneNumber:
+          type: string
+        friendlyName:
+          type: string
+        capabilities:
+          type: array
+          items:
+            type: string
+            description: e.g., voice, sms, mms
+        ivrFlowId:
+          type: string
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: string
+  responses:
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    RateLimited:
+      description: Rate Limit Exceeded
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
