@@ -1,0 +1,318 @@
+{
+  "info": {
+    "_postman_id": "a842600a-5a80-444b-93ef-854eab5ea3e7",
+    "name": "Regal Branded Phone Numbers Events API",
+    "description": "Branded Phone Numbers in Regal control how a tenant's outbound numbers appear on recipients' devices via carrier-level branded caller ID and spam remediation. Each registration ties a phoneNumber to a businessProfileId and a carrierFeatures array describing which features (spamRemediation or brandedCallerId) are enabled per carrier. POST is used for first-time registration only; PATCH is used for partial updates; DELETE removes a registration once all carrier submissions are inactive.\n\nContact Support:\n Name: Regal Support\n Email: support@regal.ai",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:44:04.000Z",
+    "updatedAt": "2026-07-28T02:44:04.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-a842600a-5a80-444b-93ef-854eab5ea3e7"
+  },
+  "item": [
+    {
+      "name": "events",
+      "item": [
+        {
+          "name": "Post Custom Event",
+          "id": "69b04956-970c-479c-adf9-2ad5a0493f65",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"traits\": {\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"phones\": [\n      {\n        \"phoneNumber\": \"<string>\",\n        \"isPrimary\": \"<boolean>\",\n        \"label\": \"<string>\",\n        \"voiceOptIn\": {\n          \"subscribed\": \"<boolean>\",\n          \"timestamp\": \"<string>\",\n          \"source\": \"<string>\"\n        },\n        \"smsOptIn\": {\n          \"subscribed\": \"<boolean>\",\n          \"timestamp\": \"<string>\",\n          \"source\": \"<string>\"\n        }\n      },\n      {\n        \"phoneNumber\": \"<string>\",\n        \"isPrimary\": \"<boolean>\",\n        \"label\": \"<string>\",\n        \"voiceOptIn\": {\n          \"subscribed\": \"<boolean>\",\n          \"timestamp\": \"<string>\",\n          \"source\": \"<string>\"\n        },\n        \"smsOptIn\": {\n          \"subscribed\": \"<boolean>\",\n          \"timestamp\": \"<string>\",\n          \"source\": \"<string>\"\n        }\n      }\n    ],\n    \"emails\": [\n      {\n        \"emailAddress\": \"<string>\",\n        \"isPrimary\": \"<boolean>\",\n        \"label\": \"<string>\",\n        \"emailOptIn\": {\n          \"subscribed\": \"<boolean>\",\n          \"timestamp\": \"<string>\",\n          \"source\": \"<string>\"\n        }\n      },\n      {\n        \"emailAddress\": \"<string>\",\n        \"isPrimary\": \"<boolean>\",\n        \"label\": \"<string>\",\n        \"emailOptIn\": {\n          \"subscribed\": \"<boolean>\",\n          \"timestamp\": \"<string>\",\n          \"source\": \"<string>\"\n        }\n      }\n    ],\n    \"address\": {\n      \"street\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"zipcode\": \"<string>\",\n      \"country\": \"<string>\"\n    },\n    \"dolor_5\": false\n  },\n  \"userId\": \"<string>\",\n  \"name\": \"<string>\",\n  \"properties\": {\n    \"amet_1\": -16623067.75339961,\n    \"fugiat8\": true,\n    \"incididuntb53\": \"laboris minim\"\n  },\n  \"originalTimestamp\": \"<string>\",\n  \"eventSource\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/events",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "events"
+              ]
+            },
+            "description": "Creates or updates a contact profile and records a custom event against the resolved profile. At least one phone or email must be present in traits for the contact to be considered contactable. Events whose name matches a Journey trigger will enroll the contact into that Journey."
+          },
+          "response": [
+            {
+              "id": "25aeed56-926d-415f-8656-130a162f0f16",
+              "name": "Request Accepted",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"traits\": {\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"phones\": [\n      {\n        \"phoneNumber\": \"<string>\",\n        \"isPrimary\": \"<boolean>\",\n        \"label\": \"<string>\",\n        \"voiceOptIn\": {\n          \"subscribed\": \"<boolean>\",\n          \"timestamp\": \"<string>\",\n          \"source\": \"<string>\"\n        },\n        \"smsOptIn\": {\n          \"subscribed\": \"<boolean>\",\n          \"timestamp\": \"<string>\",\n          \"source\": \"<string>\"\n        }\n      },\n      {\n        \"phoneNumber\": \"<string>\",\n        \"isPrimary\": \"<boolean>\",\n        \"label\": \"<string>\",\n        \"voiceOptIn\": {\n          \"subscribed\": \"<boolean>\",\n          \"timestamp\": \"<string>\",\n          \"source\": \"<string>\"\n        },\n        \"smsOptIn\": {\n          \"subscribed\": \"<boolean>\",\n          \"timestamp\": \"<string>\",\n          \"source\": \"<string>\"\n        }\n      }\n    ],\n    \"emails\": [\n      {\n        \"emailAddress\": \"<string>\",\n        \"isPrimary\": \"<boolean>\",\n        \"label\": \"<string>\",\n        \"emailOptIn\": {\n          \"subscribed\": \"<boolean>\",\n          \"timestamp\": \"<string>\",\n          \"source\": \"<string>\"\n        }\n      },\n      {\n        \"emailAddress\": \"<string>\",\n        \"isPrimary\": \"<boolean>\",\n        \"label\": \"<string>\",\n        \"emailOptIn\": {\n          \"subscribed\": \"<boolean>\",\n          \"timestamp\": \"<string>\",\n          \"source\": \"<string>\"\n        }\n      }\n    ],\n    \"address\": {\n      \"street\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"zipcode\": \"<string>\",\n      \"country\": \"<string>\"\n    },\n    \"dolor_5\": false\n  },\n  \"userId\": \"<string>\",\n  \"name\": \"<string>\",\n  \"properties\": {\n    \"amet_1\": -16623067.75339961,\n    \"fugiat8\": true,\n    \"incididuntb53\": \"laboris minim\"\n  },\n  \"originalTimestamp\": \"<string>\",\n  \"eventSource\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/events",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "events"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"status\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T02:44:05.000Z",
+              "updatedAt": "2026-07-28T02:44:05.000Z",
+              "uid": "35240-25aeed56-926d-415f-8656-130a162f0f16"
+            },
+            {
+              "id": "53fff63d-037c-4754-a315-3d8a803164f1",
+              "name": "Bad Request",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"traits\": {\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"phones\": [\n      {\n        \"phoneNumber\": \"<string>\",\n        \"isPrimary\": \"<boolean>\",\n        \"label\": \"<string>\",\n        \"voiceOptIn\": {\n          \"subscribed\": \"<boolean>\",\n          \"timestamp\": \"<string>\",\n          \"source\": \"<string>\"\n        },\n        \"smsOptIn\": {\n          \"subscribed\": \"<boolean>\",\n          \"timestamp\": \"<string>\",\n          \"source\": \"<string>\"\n        }\n      },\n      {\n        \"phoneNumber\": \"<string>\",\n        \"isPrimary\": \"<boolean>\",\n        \"label\": \"<string>\",\n        \"voiceOptIn\": {\n          \"subscribed\": \"<boolean>\",\n          \"timestamp\": \"<string>\",\n          \"source\": \"<string>\"\n        },\n        \"smsOptIn\": {\n          \"subscribed\": \"<boolean>\",\n          \"timestamp\": \"<string>\",\n          \"source\": \"<string>\"\n        }\n      }\n    ],\n    \"emails\": [\n      {\n        \"emailAddress\": \"<string>\",\n        \"isPrimary\": \"<boolean>\",\n        \"label\": \"<string>\",\n        \"emailOptIn\": {\n          \"subscribed\": \"<boolean>\",\n          \"timestamp\": \"<string>\",\n          \"source\": \"<string>\"\n        }\n      },\n      {\n        \"emailAddress\": \"<string>\",\n        \"isPrimary\": \"<boolean>\",\n        \"label\": \"<string>\",\n        \"emailOptIn\": {\n          \"subscribed\": \"<boolean>\",\n          \"timestamp\": \"<string>\",\n          \"source\": \"<string>\"\n        }\n      }\n    ],\n    \"address\": {\n      \"street\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"zipcode\": \"<string>\",\n      \"country\": \"<string>\"\n    },\n    \"dolor_5\": false\n  },\n  \"userId\": \"<string>\",\n  \"name\": \"<string>\",\n  \"properties\": {\n    \"amet_1\": -16623067.75339961,\n    \"fugiat8\": true,\n    \"incididuntb53\": \"laboris minim\"\n  },\n  \"originalTimestamp\": \"<string>\",\n  \"eventSource\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/events",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "events"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T02:44:05.000Z",
+              "updatedAt": "2026-07-28T02:44:05.000Z",
+              "uid": "35240-53fff63d-037c-4754-a315-3d8a803164f1"
+            },
+            {
+              "id": "3eef8830-0f0f-493b-a059-418b3d0ff858",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"traits\": {\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"phones\": [\n      {\n        \"phoneNumber\": \"<string>\",\n        \"isPrimary\": \"<boolean>\",\n        \"label\": \"<string>\",\n        \"voiceOptIn\": {\n          \"subscribed\": \"<boolean>\",\n          \"timestamp\": \"<string>\",\n          \"source\": \"<string>\"\n        },\n        \"smsOptIn\": {\n          \"subscribed\": \"<boolean>\",\n          \"timestamp\": \"<string>\",\n          \"source\": \"<string>\"\n        }\n      },\n      {\n        \"phoneNumber\": \"<string>\",\n        \"isPrimary\": \"<boolean>\",\n        \"label\": \"<string>\",\n        \"voiceOptIn\": {\n          \"subscribed\": \"<boolean>\",\n          \"timestamp\": \"<string>\",\n          \"source\": \"<string>\"\n        },\n        \"smsOptIn\": {\n          \"subscribed\": \"<boolean>\",\n          \"timestamp\": \"<string>\",\n          \"source\": \"<string>\"\n        }\n      }\n    ],\n    \"emails\": [\n      {\n        \"emailAddress\": \"<string>\",\n        \"isPrimary\": \"<boolean>\",\n        \"label\": \"<string>\",\n        \"emailOptIn\": {\n          \"subscribed\": \"<boolean>\",\n          \"timestamp\": \"<string>\",\n          \"source\": \"<string>\"\n        }\n      },\n      {\n        \"emailAddress\": \"<string>\",\n        \"isPrimary\": \"<boolean>\",\n        \"label\": \"<string>\",\n        \"emailOptIn\": {\n          \"subscribed\": \"<boolean>\",\n          \"timestamp\": \"<string>\",\n          \"source\": \"<string>\"\n        }\n      }\n    ],\n    \"address\": {\n      \"street\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"zipcode\": \"<string>\",\n      \"country\": \"<string>\"\n    },\n    \"dolor_5\": false\n  },\n  \"userId\": \"<string>\",\n  \"name\": \"<string>\",\n  \"properties\": {\n    \"amet_1\": -16623067.75339961,\n    \"fugiat8\": true,\n    \"incididuntb53\": \"laboris minim\"\n  },\n  \"originalTimestamp\": \"<string>\",\n  \"eventSource\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/events",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "events"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T02:44:05.000Z",
+              "updatedAt": "2026-07-28T02:44:05.000Z",
+              "uid": "35240-3eef8830-0f0f-493b-a059-418b3d0ff858"
+            },
+            {
+              "id": "361e1b99-ead4-45f5-b202-221bce248e90",
+              "name": "Rate Limit Exceeded (300 RPS default)",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"traits\": {\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"phones\": [\n      {\n        \"phoneNumber\": \"<string>\",\n        \"isPrimary\": \"<boolean>\",\n        \"label\": \"<string>\",\n        \"voiceOptIn\": {\n          \"subscribed\": \"<boolean>\",\n          \"timestamp\": \"<string>\",\n          \"source\": \"<string>\"\n        },\n        \"smsOptIn\": {\n          \"subscribed\": \"<boolean>\",\n          \"timestamp\": \"<string>\",\n          \"source\": \"<string>\"\n        }\n      },\n      {\n        \"phoneNumber\": \"<string>\",\n        \"isPrimary\": \"<boolean>\",\n        \"label\": \"<string>\",\n        \"voiceOptIn\": {\n          \"subscribed\": \"<boolean>\",\n          \"timestamp\": \"<string>\",\n          \"source\": \"<string>\"\n        },\n        \"smsOptIn\": {\n          \"subscribed\": \"<boolean>\",\n          \"timestamp\": \"<string>\",\n          \"source\": \"<string>\"\n        }\n      }\n    ],\n    \"emails\": [\n      {\n        \"emailAddress\": \"<string>\",\n        \"isPrimary\": \"<boolean>\",\n        \"label\": \"<string>\",\n        \"emailOptIn\": {\n          \"subscribed\": \"<boolean>\",\n          \"timestamp\": \"<string>\",\n          \"source\": \"<string>\"\n        }\n      },\n      {\n        \"emailAddress\": \"<string>\",\n        \"isPrimary\": \"<boolean>\",\n        \"label\": \"<string>\",\n        \"emailOptIn\": {\n          \"subscribed\": \"<boolean>\",\n          \"timestamp\": \"<string>\",\n          \"source\": \"<string>\"\n        }\n      }\n    ],\n    \"address\": {\n      \"street\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"zipcode\": \"<string>\",\n      \"country\": \"<string>\"\n    },\n    \"dolor_5\": false\n  },\n  \"userId\": \"<string>\",\n  \"name\": \"<string>\",\n  \"properties\": {\n    \"amet_1\": -16623067.75339961,\n    \"fugiat8\": true,\n    \"incididuntb53\": \"laboris minim\"\n  },\n  \"originalTimestamp\": \"<string>\",\n  \"eventSource\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/events",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "events"
+                  ]
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T02:44:05.000Z",
+              "updatedAt": "2026-07-28T02:44:05.000Z",
+              "uid": "35240-361e1b99-ead4-45f5-b202-221bce248e90"
+            }
+          ],
+          "createdAt": "2026-07-28T02:44:05.000Z",
+          "updatedAt": "2026-07-28T02:44:05.000Z",
+          "uid": "35240-69b04956-970c-479c-adf9-2ad5a0493f65"
+        }
+      ],
+      "id": "9e214a3b-82e5-4ea3-b541-0b508209f6b8",
+      "createdAt": "2026-07-28T02:44:05.000Z",
+      "updatedAt": "2026-07-28T02:44:05.000Z",
+      "uid": "35240-9e214a3b-82e5-4ea3-b541-0b508209f6b8"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.regal.ai/v1"
+    }
+  ]
+}

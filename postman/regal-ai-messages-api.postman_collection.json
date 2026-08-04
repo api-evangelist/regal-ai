@@ -1,0 +1,389 @@
+{
+  "info": {
+    "_postman_id": "38545ad1-2bdf-4a16-8c9c-25ace12ada12",
+    "name": "Regal Branded Phone Numbers Messages API",
+    "description": "Branded Phone Numbers in Regal control how a tenant's outbound numbers appear on recipients' devices via carrier-level branded caller ID and spam remediation. Each registration ties a phoneNumber to a businessProfileId and a carrierFeatures array describing which features (spamRemediation or brandedCallerId) are enabled per carrier. POST is used for first-time registration only; PATCH is used for partial updates; DELETE removes a registration once all carrier submissions are inactive.\n\nContact Support:\n Name: Regal Support\n Email: support@regal.ai",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:44:05.000Z",
+    "updatedAt": "2026-07-28T02:44:05.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-38545ad1-2bdf-4a16-8c9c-25ace12ada12"
+  },
+  "item": [
+    {
+      "name": "messages",
+      "item": [
+        {
+          "name": "send",
+          "item": [
+            {
+              "name": "Send Message",
+              "id": "edc20c8e-2fa3-47d0-94de-b5893fed6a9c",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"to\": {\n    \"phoneNumber\": \"<string>\",\n    \"contactId\": \"<string>\"\n  },\n  \"channel\": \"sms\",\n  \"from\": {\n    \"phoneNumber\": \"<string>\"\n  },\n  \"content\": {\n    \"body\": \"<string>\",\n    \"mediaUrl\": \"<uri>\"\n  },\n  \"campaignId\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/messages/send",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "messages",
+                    "send"
+                  ]
+                },
+                "description": "Queue an outbound SMS message for delivery."
+              },
+              "response": [
+                {
+                  "id": "ae8e0d26-686e-476f-a981-64c74db3916c",
+                  "name": "Accepted (queued for delivery).",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"to\": {\n    \"phoneNumber\": \"<string>\",\n    \"contactId\": \"<string>\"\n  },\n  \"channel\": \"sms\",\n  \"from\": {\n    \"phoneNumber\": \"<string>\"\n  },\n  \"content\": {\n    \"body\": \"<string>\",\n    \"mediaUrl\": \"<uri>\"\n  },\n  \"campaignId\": \"<integer>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/messages/send",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "messages",
+                        "send"
+                      ]
+                    }
+                  },
+                  "status": "Accepted",
+                  "code": 202,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"messageId\": \"<string>\",\n  \"status\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T02:44:06.000Z",
+                  "updatedAt": "2026-07-28T02:44:06.000Z",
+                  "uid": "35240-ae8e0d26-686e-476f-a981-64c74db3916c"
+                },
+                {
+                  "id": "53a63084-298c-4b4a-89fe-2edc755530ff",
+                  "name": "Bad Request",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"to\": {\n    \"phoneNumber\": \"<string>\",\n    \"contactId\": \"<string>\"\n  },\n  \"channel\": \"sms\",\n  \"from\": {\n    \"phoneNumber\": \"<string>\"\n  },\n  \"content\": {\n    \"body\": \"<string>\",\n    \"mediaUrl\": \"<uri>\"\n  },\n  \"campaignId\": \"<integer>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/messages/send",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "messages",
+                        "send"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T02:44:06.000Z",
+                  "updatedAt": "2026-07-28T02:44:06.000Z",
+                  "uid": "35240-53a63084-298c-4b4a-89fe-2edc755530ff"
+                },
+                {
+                  "id": "efb83931-fd3f-416d-aefb-50a08b4a61bf",
+                  "name": "Unauthorized",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"to\": {\n    \"phoneNumber\": \"<string>\",\n    \"contactId\": \"<string>\"\n  },\n  \"channel\": \"sms\",\n  \"from\": {\n    \"phoneNumber\": \"<string>\"\n  },\n  \"content\": {\n    \"body\": \"<string>\",\n    \"mediaUrl\": \"<uri>\"\n  },\n  \"campaignId\": \"<integer>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/messages/send",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "messages",
+                        "send"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T02:44:06.000Z",
+                  "updatedAt": "2026-07-28T02:44:06.000Z",
+                  "uid": "35240-efb83931-fd3f-416d-aefb-50a08b4a61bf"
+                },
+                {
+                  "id": "7e19d3d0-362a-4d9b-a2b8-40c5696a0309",
+                  "name": "Forbidden",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"to\": {\n    \"phoneNumber\": \"<string>\",\n    \"contactId\": \"<string>\"\n  },\n  \"channel\": \"sms\",\n  \"from\": {\n    \"phoneNumber\": \"<string>\"\n  },\n  \"content\": {\n    \"body\": \"<string>\",\n    \"mediaUrl\": \"<uri>\"\n  },\n  \"campaignId\": \"<integer>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/messages/send",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "messages",
+                        "send"
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T02:44:06.000Z",
+                  "updatedAt": "2026-07-28T02:44:06.000Z",
+                  "uid": "35240-7e19d3d0-362a-4d9b-a2b8-40c5696a0309"
+                },
+                {
+                  "id": "23fc43ee-fa1e-442e-ade3-960c6f6b096e",
+                  "name": "Rate Limit Exceeded (10 RPS)",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"to\": {\n    \"phoneNumber\": \"<string>\",\n    \"contactId\": \"<string>\"\n  },\n  \"channel\": \"sms\",\n  \"from\": {\n    \"phoneNumber\": \"<string>\"\n  },\n  \"content\": {\n    \"body\": \"<string>\",\n    \"mediaUrl\": \"<uri>\"\n  },\n  \"campaignId\": \"<integer>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/messages/send",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "messages",
+                        "send"
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T02:44:06.000Z",
+                  "updatedAt": "2026-07-28T02:44:06.000Z",
+                  "uid": "35240-23fc43ee-fa1e-442e-ade3-960c6f6b096e"
+                }
+              ],
+              "createdAt": "2026-07-28T02:44:06.000Z",
+              "updatedAt": "2026-07-28T02:44:06.000Z",
+              "uid": "35240-edc20c8e-2fa3-47d0-94de-b5893fed6a9c"
+            }
+          ],
+          "id": "4502eb08-5a4d-4e48-937c-364124470ee0",
+          "createdAt": "2026-07-28T02:44:06.000Z",
+          "updatedAt": "2026-07-28T02:44:06.000Z",
+          "uid": "35240-4502eb08-5a4d-4e48-937c-364124470ee0"
+        }
+      ],
+      "id": "d3508c61-6fdf-4848-8094-a688cc2b608c",
+      "createdAt": "2026-07-28T02:44:06.000Z",
+      "updatedAt": "2026-07-28T02:44:06.000Z",
+      "uid": "35240-d3508c61-6fdf-4848-8094-a688cc2b608c"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.regal.ai/v1"
+    }
+  ]
+}

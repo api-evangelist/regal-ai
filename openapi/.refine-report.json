@@ -1,0 +1,26 @@
+{
+  "provider": "regal-ai",
+  "sources": [
+    "regal-ai-branded-phone-numbers-api-openapi.yml",
+    "regal-ai-business-profiles-api-openapi.yml",
+    "regal-ai-campaigns-api-openapi.yml",
+    "regal-ai-dispositions-api-openapi.yml",
+    "regal-ai-events-api-openapi.yml",
+    "regal-ai-messages-api-openapi.yml",
+    "regal-ai-phone-numbers-api-openapi.yml"
+  ],
+  "outputs": [
+    "regal-ai-branded-phone-numbers-api-openapi.yml",
+    "regal-ai-business-profiles-api-openapi.yml",
+    "regal-ai-campaigns-api-openapi.yml",
+    "regal-ai-dispositions-api-openapi.yml",
+    "regal-ai-events-api-openapi.yml",
+    "regal-ai-messages-api-openapi.yml",
+    "regal-ai-phone-numbers-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

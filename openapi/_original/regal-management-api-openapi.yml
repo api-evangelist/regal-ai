@@ -1,0 +1,187 @@
+openapi: 3.1.0
+info:
+  title: Regal Management API
+  version: '1.0'
+  summary: Read-only listing endpoints for business profiles, active phone numbers, campaigns, and dispositions.
+  description: >-
+    The Regal Management API exposes listing endpoints over api.regal.ai/v1
+    for tenant configuration: Business Profiles (used to drive branded caller
+    ID), Active Phone Numbers in the tenant, Outbound Campaigns, and AI Call
+    Dispositions. Introduced in the January 2025 release to enable
+    programmatic onboarding, audit, and reporting.
+  contact:
+    name: Regal Support
+    email: support@regal.ai
+    url: https://support.regal.ai
+  license:
+    name: Proprietary
+    url: https://www.regal.ai/terms-of-service
+servers:
+  - url: https://api.regal.ai/v1
+    description: Production v1 Regal API
+security:
+  - ApiKeyAuth: []
+tags:
+  - name: Business Profiles
+  - name: Phone Numbers
+  - name: Campaigns
+  - name: Dispositions
+paths:
+  /businessProfiles:
+    get:
+      summary: List Business Profiles
+      operationId: listBusinessProfiles
+      description: List business profiles registered in the tenant.
+      tags:
+        - Business Profiles
+      responses:
+        '200':
+          description: List of business profiles.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BusinessProfile'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+  /activePhoneNumbers:
+    get:
+      summary: List Active Phone Numbers
+      operationId: listActivePhoneNumbers
+      description: List phone numbers currently active in the tenant.
+      tags:
+        - Phone Numbers
+      responses:
+        '200':
+          description: List of active phone numbers.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ActivePhoneNumber'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+  /campaigns:
+    get:
+      summary: List Campaigns
+      operationId: listCampaigns
+      description: List outbound campaigns configured in the tenant.
+      tags:
+        - Campaigns
+      responses:
+        '200':
+          description: List of campaigns.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Campaign'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+  /dispositions:
+    get:
+      summary: List Dispositions
+      operationId: listDispositions
+      description: List AI call dispositions configured in the tenant.
+      tags:
+        - Dispositions
+      responses:
+        '200':
+          description: List of dispositions.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Disposition'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+  schemas:
+    BusinessProfile:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        brandName:
+          type: string
+        status:
+          type: string
+    ActivePhoneNumber:
+      type: object
+      properties:
+        phoneNumber:
+          type: string
+        friendlyName:
+          type: string
+        capabilities:
+          type: array
+          items:
+            type: string
+            description: e.g., voice, sms, mms
+        ivrFlowId:
+          type: string
+    Campaign:
+      type: object
+      properties:
+        campaignId:
+          type: integer
+          format: int32
+        campaignFriendlyId:
+          type: string
+        name:
+          type: string
+        channel:
+          type: string
+          description: voice or sms
+        status:
+          type: string
+    Disposition:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        category:
+          type: string
+        description:
+          type: string
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: string
+  responses:
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    RateLimited:
+      description: Rate Limit Exceeded
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
