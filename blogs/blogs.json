@@ -5,10 +5,10 @@
       "source": "https://www.regal.ai/blog",
       "feed_url": "https://www.regal.ai/blog/rss.xml",
       "title": "Regal Blog",
-      "saved": 0,
+      "saved": 1,
       "method": "rss"
     }
   ],
-  "post_count": 64,
-  "fetched": "2026-08-01T15:38:58Z"
+  "post_count": 65,
+  "fetched": "2026-08-06T13:56:59Z"
 }
