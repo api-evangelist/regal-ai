@@ -52,7 +52,7 @@ access: 3rd-Party
 position: Consuming
 specificationVersion: '0.20'
 created: '2026-05-24'
-modified: '2026-05-24'
+modified: '2026-08-14'
 apis:
 - aid: regal-ai:regal-reporting-webhooks
   name: Regal Reporting Webhooks
@@ -70,6 +70,8 @@ apis:
     type: Documentation
   - url: asyncapi/regal-reporting-webhooks-asyncapi.yml
     type: AsyncAPI
+  - url: https://developer.regal.ai/docs/reporting-webhooks
+    type: Webhooks
   description: >-
     Regal publishes 40+ reporting webhook event types covering agent activity, call lifecycle (placed,
     completed, IVR triggered, wrapup), call recording and transcript availability, AI call analysis, task
@@ -82,6 +84,7 @@ apis:
     endpoint changes take up to five minutes to propagate.
 - aid: regal-ai:regal-ai-branded-phone-numbers-api
   name: Regal Branded Phone Numbers API
+  baseURL: https://api.regal.ai/v1
   description: Carrier-level branded caller ID and spam remediation
   humanURL: https://developer.regal.ai/reference/api
   tags:
@@ -89,6 +92,8 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/regal-ai-branded-phone-numbers-api-openapi.yml
+  - type: Overlay
+    url: overlays/regal-ai-branded-phone-numbers-overlay.yaml
   - type: Documentation
     url: https://developer.regal.ai/reference/overview
   - type: Documentation
@@ -119,6 +124,7 @@ apis:
     url: json-schema/regal-message-schema.json
 - aid: regal-ai:regal-ai-business-profiles-api
   name: Regal Business Profiles API
+  baseURL: https://api.regal.ai/v1
   description: The Business Profiles API from Regal — 1 operation(s) for business profiles.
   humanURL: https://developer.regal.ai/reference/api
   tags:
@@ -126,6 +132,8 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/regal-ai-business-profiles-api-openapi.yml
+  - type: Overlay
+    url: overlays/regal-ai-business-profiles-overlay.yaml
   - type: Documentation
     url: https://developer.regal.ai/reference/overview
   - type: Documentation
@@ -156,6 +164,7 @@ apis:
     url: json-schema/regal-message-schema.json
 - aid: regal-ai:regal-ai-campaigns-api
   name: Regal Campaigns API
+  baseURL: https://api.regal.ai/v1
   description: The Campaigns API from Regal — 1 operation(s) for campaigns.
   humanURL: https://developer.regal.ai/reference/api
   tags:
@@ -163,6 +172,8 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/regal-ai-campaigns-api-openapi.yml
+  - type: Overlay
+    url: overlays/regal-ai-campaigns-overlay.yaml
   - type: Documentation
     url: https://developer.regal.ai/reference/overview
   - type: Documentation
@@ -193,6 +204,7 @@ apis:
     url: json-schema/regal-message-schema.json
 - aid: regal-ai:regal-ai-dispositions-api
   name: Regal Dispositions API
+  baseURL: https://api.regal.ai/v1
   description: The Dispositions API from Regal — 1 operation(s) for dispositions.
   humanURL: https://developer.regal.ai/reference/api
   tags:
@@ -200,6 +212,8 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/regal-ai-dispositions-api-openapi.yml
+  - type: Overlay
+    url: overlays/regal-ai-dispositions-overlay.yaml
   - type: Documentation
     url: https://developer.regal.ai/reference/overview
   - type: Documentation
@@ -230,6 +244,7 @@ apis:
     url: json-schema/regal-message-schema.json
 - aid: regal-ai:regal-ai-events-api
   name: Regal Events API
+  baseURL: https://events.regalvoice.com
   description: Contact creation, update, and custom event tracking
   humanURL: https://developer.regal.ai/reference/api
   tags:
@@ -237,6 +252,8 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/regal-ai-events-api-openapi.yml
+  - type: Overlay
+    url: overlays/regal-ai-events-overlay.yaml
   - type: Documentation
     url: https://developer.regal.ai/reference/overview
   - type: Documentation
@@ -267,6 +284,7 @@ apis:
     url: json-schema/regal-message-schema.json
 - aid: regal-ai:regal-ai-messages-api
   name: Regal Messages API
+  baseURL: https://api.regal.ai/v1
   description: The Messages API from Regal — 1 operation(s) for messages.
   humanURL: https://developer.regal.ai/reference/api
   tags:
@@ -274,6 +292,8 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/regal-ai-messages-api-openapi.yml
+  - type: Overlay
+    url: overlays/regal-ai-messages-overlay.yaml
   - type: Documentation
     url: https://developer.regal.ai/reference/overview
   - type: Documentation
@@ -304,6 +324,7 @@ apis:
     url: json-schema/regal-message-schema.json
 - aid: regal-ai:regal-ai-phone-numbers-api
   name: Regal Phone Numbers API
+  baseURL: https://api.regal.ai/v1
   description: The Phone Numbers API from Regal — 1 operation(s) for phone numbers.
   humanURL: https://developer.regal.ai/reference/api
   tags:
@@ -311,6 +332,8 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/regal-ai-phone-numbers-api-openapi.yml
+  - type: Overlay
+    url: overlays/regal-ai-phone-numbers-overlay.yaml
   - type: Documentation
     url: https://developer.regal.ai/reference/overview
   - type: Documentation
@@ -339,6 +362,64 @@ apis:
     url: https://developer.regal.ai/reference/send-message
   - type: JSONSchema
     url: json-schema/regal-message-schema.json
+- aid: regal-ai:regal-ai-users-api
+  name: Regal Users API
+  baseURL: https://api.regal.ai/v1
+  description: >-
+    List and retrieve Regal user accounts — both human agents and AI agents — with their
+    skills, teams, custom attributes and eligible routing queues. List Users supports
+    cursor pagination and filtering by email, skills, teams, queues and customAttributes;
+    Get User resolves a single account by Regal user UUID or exact (URL-encoded) login
+    email. Both operations are limited to 10 requests per second.
+  humanURL: https://developer.regal.ai/reference/list-users
+  tags:
+  - Users
+  - Workforce
+  - Routing
+  properties:
+  - type: OpenAPI
+    url: openapi/regal-ai-users-api-openapi.yml
+  - type: Overlay
+    url: overlays/regal-ai-users-overlay.yaml
+  - type: Documentation
+    url: https://developer.regal.ai/reference/list-users
+  - type: Documentation
+    url: https://developer.regal.ai/reference/get-user
+  - type: Documentation
+    url: https://developer.regal.ai/reference/overview
+  - type: AgentSkill
+    url: skills/regal-ai-resolve-call-handoff.md
+    name: Resolve a Regal AI call handoff
+- aid: regal-ai:regal-ai-call-handoffs-api
+  name: Regal Call Handoffs API
+  baseURL: https://api.regal.ai/v1
+  description: >-
+    Retrieve routing instructions and call metadata after a Regal AI voice agent leaves a
+    live call. The response carries the routing decision (route.type of skill, external,
+    agent or hangup, plus route.value and route.reason), static meta.* fields from the
+    integration and transfer-destination configuration, task.* attributes including the
+    task SID, and definedContactData.* values collected by Set Contact Data actions in the
+    Agent Builder. Regal documents this endpoint as currently enabled only for inbound
+    calls connected through the Five9 AI Agent Connect integration, at 10 requests per
+    second.
+  humanURL: https://developer.regal.ai/reference/call-handoff
+  tags:
+  - Call Handoff
+  - Routing
+  - Telephony
+  - Five9
+  properties:
+  - type: OpenAPI
+    url: openapi/regal-ai-call-handoffs-api-openapi.yml
+  - type: Overlay
+    url: overlays/regal-ai-call-handoffs-overlay.yaml
+  - type: Documentation
+    url: https://developer.regal.ai/reference/call-handoff
+  - type: Documentation
+    url: https://developer.regal.ai/docs/five9-ai-agent-connect
+  - type: AgentSkill
+    url: skills/regal-ai-resolve-call-handoff.md
+    name: Resolve a Regal AI call handoff
 common:
   - type: PostmanWorkspace
     url: https://www.postman.com/kinlaneapi/regal/overview
@@ -570,7 +651,97 @@ common:
       - https://developer.regal.ai/docs/reporting-webhooks
       - https://www.regal.ai/blog/january-2025-releases
     updated: '2026-05-24'
+  - type: MCPServer
+    url: mcp/regal-ai-mcp.yml
+    name: Regal MCP
+  - type: ToolCrosswalk
+    url: mcp/regal-ai-tool-crosswalk.yml
+  - type: Documentation
+    url: https://developer.regal.ai/docs/regal-mcp
+    name: Regal MCP
+  - type: WellKnown
+    url: well-known/regal-ai-well-known.yml
+  - type: OAuthScopes
+    url: scopes/regal-ai-scopes.yml
+  - type: LLMsTxt
+    url: llms/regal-ai-llms.txt
+  - type: Packages
+    url: packages/regal-ai-packages.yml
+  - type: SDKs
+    url: packages/regal-ai-packages.yml
+    name: Regal Conversations SDK
+  - type: Components
+    url: components/regal-ai-components.yml
+  - type: Conventions
+    url: conventions/regal-ai-conventions.yml
+  - type: ErrorCatalog
+    url: errors/regal-ai-problem-types.yml
+  - type: DataModel
+    url: data-model/regal-ai-data-model.yml
+  - type: Lifecycle
+    url: lifecycle/regal-ai-lifecycle.yml
+  - type: StatusPage
+    url: https://status.regal.ai
+  - type: ChangeLog
+    url: changelog/regal-ai-changelog.yml
+  - type: ChangeLog
+    url: https://www.regal.io/category/whats-new
+    name: What's New
+  - type: Sandbox
+    url: sandbox/regal-ai-sandbox.yml
+  - type: Conformance
+    url: conformance/regal-ai-conformance.yml
+  - type: Compliance
+    url: https://www.regal.ai/security
+  - type: VulnerabilityDisclosure
+    url: security/regal-ai-vulnerability-disclosure.yml
+  - type: Security
+    url: https://www.regal.ai/security
+  - type: TrustCenter
+    url: https://trust.regal.ai
+  - type: AgentSkill
+    url: skills/_index.yml
+  - type: AgentSkill
+    url: skills/regal-ai-ingest-contact-and-event.md
+    name: Ingest a Regal contact and event
+  - type: AgentSkill
+    url: skills/regal-ai-register-branded-phone-number.md
+    name: Register a branded phone number with carriers
+  - type: AgentSkill
+    url: skills/regal-ai-send-sms.md
+    name: Send an SMS through Regal
+  - type: AgentSkill
+    url: skills/regal-ai-resolve-call-handoff.md
+    name: Resolve a Regal AI call handoff
+  - type: DeveloperPortal
+    url: https://developer.regal.ai
+  - type: APIReference
+    url: https://developer.regal.ai/reference/api
+  - type: Support
+    url: https://support.regal.ai/hc/en-us
+  - type: SignUp
+    url: https://www.regal.ai/get-a-demo
+  - type: GitHubOrganization
+    url: https://github.com/regal-ai
+  - type: Postman
+    url: https://app.getpostman.com/run-collection/17258986-81c59f40-7e22-480e-bb40-aa29250b0e35
+    name: Regal Public Workspace
+  - type: Examples
+    url: examples/regal-post-custom-event-example.json
+  - type: Examples
+    url: examples/regal-send-message-example.json
+  - type: Examples
+    url: examples/regal-post-branded-phone-number-example.json
+  - type: Examples
+    url: examples/regal-list-campaigns-example.json
+  - type: Examples
+    url: examples/regal-call-completed-webhook-example.json
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
     url: https://apievangelist.com
+x-enrichment:
+  date: '2026-08-14'
+  status: enriched
+  artifacts_added: 36
+  pass: local-v1
