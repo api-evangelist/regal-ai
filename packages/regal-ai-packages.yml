@@ -1,0 +1,52 @@
+generated: '2026-08-14'
+method: searched
+source: >-
+  npm registry search, PyPI, github.com/regal-ai, and the Regal developer docs
+  (https://developer.regal.ai/llms.txt and every /reference/* page)
+note: >-
+  Regal publishes NO first-party server-side SDK in any package registry. npm registry
+  search for "regal", "regal.ai" and "regalvoice" returns only unrelated projects (the
+  Regal game framework, Pipedream components, spam packages); pypi.org/pypi/regal/json is
+  boylegu/regal, an unrelated A/B testing library; pypi regal-ai and regalvoice both 404.
+  The GitHub organisation github.com/regal-ai exists and lists regal.ai as its blog but
+  has 0 public repositories. The only first-party distributed client artifact Regal ships
+  is the browser Conversations SDK / Regal Widget loader, served from its own CloudFront
+  CDN with no registry and no pinned version. Integration is otherwise raw HTTPS + API key
+  (see authentication/regal-ai-authentication.yml) or the hosted MCP server
+  (mcp/regal-ai-mcp.yml).
+packages:
+  - language: javascript
+    registry: cdn
+    name: regal-widget
+    product: Regal Conversations SDK (Chat / WebRTC Voice widget)
+    url: https://cdn.regal.io/conversations-sdk/production/regal-widget.js
+    install: '<script src="https://cdn.regal.io/conversations-sdk/production/regal-widget.js"></script>'
+    official: true
+    version: null
+    published: null
+    note: >-
+      Unpinned distribution — there is no registry metadata endpoint and no version in the
+      URL. The published URL is a floating loader that resolves at runtime to a dated build
+      directory; on 2026-08-14 it resolved to
+      https://cdn.regal.io/conversations-sdk/production/assets/20260813-1450-8cc0a/widget.js
+      with Last-Modified Thu, 13 Aug 2026 14:50:44 GMT. A consumer embedding the documented
+      script tag cannot tell which build they are getting, and Regal publishes no changelog
+      or version pin for it. Recorded as version: null deliberately — checked, nothing
+      versioned to record.
+    docs:
+      - https://developer.regal.ai/docs/deploy-chat-agent
+      - https://developer.regal.ai/docs/deploy-webrtc-agents-headless-mode
+registries_checked:
+  - {registry: npm, query: "regal / regal.ai / regalvoice", result: no first-party package}
+  - {registry: pypi, query: "regal / regal-ai / regalvoice", result: "no first-party package (regal is an unrelated project; regal-ai and regalvoice 404)"}
+  - {registry: github, query: "github.com/regal-ai", result: "org exists, 0 public repositories"}
+  - {registry: rubygems, query: regal, result: not published}
+  - {registry: packagist, query: regal, result: not published}
+  - {registry: nuget, query: regal, result: not published}
+  - {registry: crates.io, query: regal, result: not published}
+  - {registry: maven-central, query: regal, result: not published}
+summary:
+  official_packages: 1
+  server_side_sdks: 0
+  registry_published: 0
+  cdn_distributed: 1

@@ -1,0 +1,37 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Regal Branded Phone Numbers Dispositions API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Dispositions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Dispositions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.regal.ai/v1/dispositions"
+          },
+          "docs": "List AI call dispositions configured in the tenant."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

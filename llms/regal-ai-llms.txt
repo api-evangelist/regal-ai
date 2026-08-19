@@ -1,0 +1,145 @@
+# Regal Documentation
+
+> Regal.ai's docs
+
+## Guides
+- [What is Regal?](https://developer.regal.ai/docs/what-is-regal.md): Regal helps businesses build, improve, and manage AI Agents that outperform human agents.
+- [Planning a New AI Voice Agent Use Case](https://developer.regal.ai/docs/planning-a-new-ai-voice-agent-use-case.md): Template for planning your agent
+- [✨ Prompting Best Practices](https://developer.regal.ai/docs/prompting-best-practices.md): Helpful prompt snippets for common challenges
+- [Single State Agent Prompt](https://developer.regal.ai/docs/agent-prompt.md): Define your AI Agent personality, behaviors and handling
+- [Multi State Agent Prompt](https://developer.regal.ai/docs/multi-state-agent-prompt.md): Learn how to build structured, consistent AI conversations using Multi State Agents.
+- [Drafts & Versioning](https://developer.regal.ai/docs/saving-and-updating-agents.md): Use Draft and Active versions to safely make changes to an AI Agent without disrupting live calls.
+- [Agent Actions](https://developer.regal.ai/docs/agent-actions.md): Give your AI agents the tools to handle calls E2E, including Transfers and Scheduling
+- [End Call](https://developer.regal.ai/docs/end-call.md): Proactively hang up a call
+- [Transfer Call](https://developer.regal.ai/docs/transfer-call-action.md): Transfer calls to human teams or other AI agents
+- [Gather Date/Time](https://developer.regal.ai/docs/gather-datetime.md): Check business hours before scheduling
+- [Press Digit](https://developer.regal.ai/docs/press-digit.md): Give your AI Agent the ability to press keypad inputs to navigate IVRs.
+- [Schedule Callback](https://developer.regal.ai/docs/schedule-callback.md): Schedule a callback at a time that works for the customer and you
+- [Authenticate Contact](https://developer.regal.ai/docs/authenticate-contact.md): Verify that a caller matches known contact information—such as last name, email, or phone number—before proceeding with sensitive actions.
+- [Set Contact Data & Response Variables](https://developer.regal.ai/docs/set-contact-data-response-variables.md): Capture and reuse in-call data — collected names, API responses, and other values — anywhere in your agent conversation using handlebars.
+- [Start/Stop Recording](https://developer.regal.ai/docs/startstop-recording.md): Control when your AI Voice Agent records live calls to protect sensitive data and improve compliance
+- [Voicemail Drop](https://developer.regal.ai/docs/voicemail-drop.md): Leave a voicemail recording when your AI Agent reaches a voicemail
+- [Custom Actions](https://developer.regal.ai/docs/custom-actions.md): Give your AI agents custom tools to take action like a real agent
+- [📩 Send Custom Event to Contact Profile](https://developer.regal.ai/docs/send-custom-event-to-regal.md): Fire a custom event from your AI Agent onto a Regal contact profile mid-conversation
+- [👤 Update Contact Profile](https://developer.regal.ai/docs/update-profile.md): Update a Regal contact profile attribute mid-AI conversation
+- [📍Validate U.S. Zip Codes for Smarter Routing or Compliance](https://developer.regal.ai/docs/validate-us-zip-codes-for-smarter-routing-or-compliance.md): Verify zip codes in real time to unlock region-specific routing, eligibility logic, and compliance workflows.
+- [🗺️ Store Locator](https://developer.regal.ai/docs/store-locator.md): Search for nearby store locations to recommend to the customer
+- [🔍 Pricing / Inventory / Service Lookup](https://developer.regal.ai/docs/pricing-inventory-service-lookup.md): Look up pricing, inventory, or service coverage
+- [🔀 Branching Action](https://developer.regal.ai/docs/branching-function.md)
+- [📅 Schedule with Cal.com](https://developer.regal.ai/docs/make-cal-dot-com-booking.md): Leverage AI agents to fill up your teams' available time slots on Cal.com with qualified appointments
+- [📅 Schedule with Google Calendar](https://developer.regal.ai/docs/schedule-with-google-calendar.md): Leverage AI agents to fill up your teams' available time slots on Google Calendar with qualified appointments.
+- [📅 Schedule with Outlook Calendar](https://developer.regal.ai/docs/schedule-with-outlook-calendar.md): Leverage AI agents to fill up your teams' available time slots on Outlook Calendar with qualified appointments.
+- [Action Sequences](https://developer.regal.ai/docs/action-sequences.md): Allow your agent to reliably invoke multiple actions sequentially
+- [Personalization](https://developer.regal.ai/docs/personalization.md): Personalize your AI Agent's conversations using contact attributes, task attributes, system variables, and context from the contact's previous calls.
+- [Knowledge Base](https://developer.regal.ai/docs/knowledge-base.md): Configure your Knowledge Base for on-demand context retrieval
+- [Languages](https://developer.regal.ai/docs/languages.md): Speak in the language of your customers
+- [LLM Models](https://developer.regal.ai/docs/llm-models.md): Choose your LLM based on use case
+- [SMS Agent Settings](https://developer.regal.ai/docs/sms-agent-settings.md): Configure your SMS Agent Settings
+- [Voice Agent Settings](https://developer.regal.ai/docs/voice-agent-settings.md): Configure your agent
+- [Voice Settings](https://developer.regal.ai/docs/voice-settings.md): Tune your AI Agent voice
+- [AI Call Dispositions](https://developer.regal.ai/docs/ai-call-dispositions.md): Accurately disposition AI Agent calls
+- [Test Audio (Web calls)](https://developer.regal.ai/docs/webcall-testing.md): Iteratively test your AI voice agent with web calls
+- [Test Logic (Web chat)](https://developer.regal.ai/docs/test-logic-chat.md): Iteratively test your AI agent with chat
+- [Simulation Testing](https://developer.regal.ai/docs/test-cases-simulation.md): Test your agents in bulk
+- [Variants - A/B Testing](https://developer.regal.ai/docs/ai-agent-variants.md): Run multiple configurations of a single AI Agent in parallel and split live traffic between them.
+- [Knowledge Base Testing](https://developer.regal.ai/docs/test-knowledge-base.md): Quickly spot check your knowledge bases for coverage
+- [CCaaS / SIP Integration](https://developer.regal.ai/docs/sip.md): Integrate your Regal AI phone agents into another telephony provider
+- [Application Connect (Twilio Cross-Account Transfers)](https://developer.regal.ai/docs/application-connect.md): Send live calls into Regal from your own Twilio account and ride routing data on the call, without SIP or per-agent phone numbers.
+- [Deploy Inbound Voice Agent](https://developer.regal.ai/docs/deploy-inbound-voice-agent.md): Get your AI Voice Agent live and handling inbound calls
+- [Deploy Outbound Voice Agent](https://developer.regal.ai/docs/deploying-outbound-voice-agents.md): Get your AI Voice Agent live and handling outbound calls
+- [Triggered Outbound Calls](https://developer.regal.ai/docs/triggered-outbound-calls.md)
+- [Batch Dialing](https://developer.regal.ai/docs/batch-dialing.md)
+- [Outbound Call Routing](https://developer.regal.ai/docs/outbound-call-routing.md)
+- [Increase Outbound Answer Rates](https://developer.regal.ai/docs/increase-outbound-answer-rates.md)
+- [Handle iOS Call Screening](https://developer.regal.ai/docs/navigate-ios-call-screening.md)
+- [Deploy SMS Agent](https://developer.regal.ai/docs/deploy-sms-agent.md): Get your AI SMS Agent live and handling inbound sms
+- [Deploy Chat Agent](https://developer.regal.ai/docs/deploy-chat-agent.md): Get your AI Chat Agent live and handling conversations on your website.
+- [Deploy WebRTC Agents (Headless Mode)](https://developer.regal.ai/docs/deploy-webrtc-agents-headless-mode.md): Support webRTC voice conversations with your own website UI.
+- [Concurrency](https://developer.regal.ai/docs/concurrency.md): Set your AI agent concurrency
+- [Post-Call Transcripts](https://developer.regal.ai/docs/post-call-transcripts.md)
+- [Custom AI Analysis & Reporting](https://developer.regal.ai/docs/custom-ai-analysis.md): Extract relevant data from every call and view aggregate performance
+- [Call Observability Metrics](https://developer.regal.ai/docs/call-observability-metrics.md): Understand the call observability metrics used to measure AI agent latency, errors, interruptions, and quality signals.
+- [Conversation Topics Dashboard](https://developer.regal.ai/docs/conversation-insights-dashboard.md)
+- [Agent Coverage Gap Dashboard](https://developer.regal.ai/docs/beta-knowledge-base-coverage-insights.md)
+- [Search Across Transcripts](https://developer.regal.ai/docs/transcription-search-dashboard.md)
+- [What is Copilot?](https://developer.regal.ai/docs/copilot-continuous-agent-improvement.md): Build and continuously improve AI agents with Copilot.
+- [Regal Copilot — Capabilities, Use Cases, and Limits](https://developer.regal.ai/docs/copilot-how-tos.md): This appendix describes what Regal Copilot is for, how user intent maps to workflows, per-area tools and prompts, practical limits, and known gaps.
+- [Regal MCP](https://developer.regal.ai/docs/regal-mcp.md): Give your external tools and AI clients guided, permissioned access to Regal data and workflows.
+- [Okta SSO for MCP (Admin Config)](https://developer.regal.ai/docs/okta-sso-for-mcp.md): Set up Okta SAML SSO to enable authentication for the Regal MCP integration.
+- [Intro to Regal Data Model](https://developer.regal.ai/docs/intro-to-regal-data-model.md): Connect your AI Agents to all your customer data
+- [Plan your implementation](https://developer.regal.ai/docs/plan-your-implementation.md): Integrate customer data and deploy your first AI agent in a day
+- [Identity Resolution Settings](https://developer.regal.ai/docs/identity-resolution-settings.md): These settings control how identifiers in events are used to find/update or create contact profiles in Regal.
+- [Braze](https://developer.regal.ai/docs/braze.md): Send contact and event data between Braze and Regal
+- [Calendly](https://developer.regal.ai/docs/calendly.md): Send event data to Regal when a Calendly call is scheduled, rescheduled or canceled
+- [CallRail](https://developer.regal.ai/docs/callrail.md): Integrating CallRail data in real-time with to ensure your agents have the information they need to personalize conversations.
+- [Cal.com](https://developer.regal.ai/docs/cal.md): This integration allows you to use Cal.com to scheduled phone calls and video calls within Regal, giving your customers the flexibility to easily find the best time to speak with your brand. Cal.com is an open-source, HIPAA-compliant alternative to Calendly.
+- [Customer.io](https://developer.regal.ai/docs/customerio.md): Send contact and event data to Regal using Customer.io workflow webhooks
+- [Digioh](https://developer.regal.ai/docs/digioh.md): Have Digioh activity send events to Regal
+- [Freshdesk](https://developer.regal.ai/docs/freshdesk.md): Send customer profile and ticket/event data bewteen Freshdesk and Regal
+- [Gong.io](https://developer.regal.ai/docs/gongio.md): Send Regal call recordings to Gong.io
+- [Hightouch](https://developer.regal.ai/docs/hightouch.md): Send contact and event data to Regal using Hightouch HTTP destination
+- [HubSpot](https://developer.regal.ai/docs/hubspot.md): Sync contact and event data between HubSpot & Regal
+- [Improveit360](https://developer.regal.ai/docs/improveit360.md): Improveit360 is a Salesforce add on designed for pros across the home improvement industry. By combining the power of Regal and Improveit, you can level up your inbound & outbound communication.
+- [Iterable](https://developer.regal.ai/docs/iterable.md): Send contact and event data to Regal using Iterable workflow webhooks
+- [Klaviyo](https://developer.regal.ai/docs/klaviyo.md): Use Klaviyo segments to send user data to Regal
+- [Kustomer](https://developer.regal.ai/docs/kustomer.md): Create custom objects from Regal events on a customer's timeline in Kustomer
+- [Marketo](https://developer.regal.ai/docs/marketo.md): Send contact and event data between Marketo and Regal
+- [Microsoft Dynamics 365](https://developer.regal.ai/docs/microsoft-dynamics-365-data-in.md): This guide describes how to use Microsoft Dynamics as a source for sending your customer profile and event data to Regal using a Microsoft Power App Flows.
+- [Microsoft Teams](https://developer.regal.ai/docs/microsoft-teams.md): Create Microsoft Teams Notifications from Regal Events
+- [mParticle](https://developer.regal.ai/docs/mparticle.md): Send contact and event data from mParticle to Regal.
+- [Salesforce](https://developer.regal.ai/docs/salesforce.md): Sync data between Salesforce & Regal
+- [SendGrid](https://developer.regal.ai/docs/sendgrid.md): Trigger emails in SendGrid from Regal's Journey Builder
+- [Segment](https://developer.regal.ai/docs/segment.md): Send contact and event data from Segment to Regal
+- [Simon Data](https://developer.regal.ai/docs/simon-data.md): Send contact and event data to Regal using Simon Flow webhooks
+- [Slack](https://developer.regal.ai/docs/slack.md): Create Slack Notifications from Regal Events
+- [Zapier](https://developer.regal.ai/docs/zapier.md): Send contact and event data to Regal with Zapier
+- [Zendesk](https://developer.regal.ai/docs/zendesk.md): Send contact and ticket/event data between Zendesk and Regal
+- [Zoho](https://developer.regal.ai/docs/zoho.md): This guide describes how to use Zoho as a source for sending your customer profile & events to Regal using a Zoho's Webhooks Actions.
+- [Using Regal Events in Reporting](https://developer.regal.ai/docs/using-regal-voice-events-in-reporting.md): A blueprint for building your reporting data model off of Regal events
+- [Amazon S3](https://developer.regal.ai/docs/amazon-s3.md)
+- [Emailed Reports](https://developer.regal.ai/docs/email-reports.md): Receive Regal performance dashboards straight to your inbox
+- [Reporting Webhooks](https://developer.regal.ai/docs/reporting-webhooks.md): Receive Regal events to any endpoint in real-time
+- [Snowflake Data Share](https://developer.regal.ai/docs/snowflake-data-share.md): Query Regal reporting data directly from your Snowflake account
+- [Google Chrome Extension](https://developer.regal.ai/docs/chrome-extension.md): Communicate with contacts via a compact version of the Regal app for seamless multitasking across browser tabs.
+- [Kustomer Embed](https://developer.regal.ai/docs/kustomer-1.md): The guide describes how to set up the Regal app as an embedded dialer widget within the Kustomer platform.
+- [Retool Embed](https://developer.regal.ai/docs/retool.md): This guide describes how to embed Regal into your existing Retool applications and reference key contact data to power downstream Retool queries.
+- [Salesforce Embed](https://developer.regal.ai/docs/how-to-enable-regal-dialer-widget-in-salesforce.md): This guide describe how to embed Regal's Agent Desktop as an iFrame into Salesforce so your agents can handle Regal tasks directly in Salesforce.
+- [Universal Embeddable iFrame](https://developer.regal.ai/docs/embed-regal-anywhere.md): This guide describes how to embed and interact with Regal's Agent Desktop as an iFrame in your web platform so agents can benefit from a single pane of glass.
+- [8x8](https://developer.regal.ai/docs/8x8.md): Trigger outbound calls in 8x8 using Regal's Journey Builder
+- [Five9](https://developer.regal.ai/docs/five9-in.md): Trigger outbound calls in Five9 using Regal's Journey Builder
+- [Talkdesk](https://developer.regal.ai/docs/talkdesk.md): Trigger outbound calls in Talkdesk using Regal's Journey Builder
+- [Google SSO](https://developer.regal.ai/docs/google-sso.md): Enable your agents to login to Regal through Google SSO
+- [Okta SCIM](https://developer.regal.ai/docs/okta-scim.md): Manage Regal users from your Okta organization
+- [Okta SSO](https://developer.regal.ai/docs/okta-sso.md): Enable IdP SAML SSO through Okta
+- [Azure SSO](https://developer.regal.ai/docs/azure-sso.md): Enable your agents to login to Regal through Azure SSO
+- [Abstrakt](https://developer.regal.ai/docs/abstrakt.md): Enable AI-powered, real-time agent guidance with Abstrak on top of Regal
+- [Assembled](https://developer.regal.ai/docs/assembled.md): This guide describes how your tasks and Agents in Regal can be tracked in Assembled's Workforce Management Tool
+- [Balto](https://developer.regal.ai/docs/balto.md): Enable AI-powered, real-time agent guidance with Balto on top of Regal
+- [Gmail](https://developer.regal.ai/docs/gmail.md): Reach out or respond to customers via email from the Agent Desktop
+- [Gryphon](https://developer.regal.ai/docs/gryphon.md): Maintain compliance and respect customer preferences by integrating Gryphon with Regal to automatically block prohibited calls.
+- [Kindly](https://developer.regal.ai/docs/kindlyai.md): Kindly is an AI chatbot provider that automates support and sales. By combining the power of Regal and Kindly, you can offer 24/7 automated support and sales to enhance customer experiences and drive more sales using SMS.
+- [outboundANI](https://developer.regal.ai/docs/outboundani.md): Maximize connect rate by leveraging the Regal outboundANI integration to select which numbers to dial from.
+- [Regal <> Five9 AI Agent Connect](https://developer.regal.ai/docs/five9-ai-agent-connect.md): Seamlessly hand off Regal AI calls to a human agent in Five9 via Five9's AI Agent Connect integration.
+- [Five9 Transfer-Aware Dialing](https://developer.regal.ai/docs/five9.md): Maintain high dialer throughput while minimizing abandoned transfers with Regal's Transfer-Aware Dialing with Five9.
+
+## API Reference
+- [Post Custom Event](https://developer.regal.ai/reference/api.md): Create and update contacts or add events to contacts.
+- [Overview](https://developer.regal.ai/reference/overview.md): Use the Regal API to send contact and event data to Regal.
+- [Data Types & Name Limits ](https://developer.regal.ai/reference/data_types_and_name_limits.md): Acceptable data types and limits for contact attributes and event properties
+- [FAQ](https://developer.regal.ai/reference/faq.md)
+- [Send Message](https://developer.regal.ai/reference/send-message.md): Send messages at scale.
+- [List Active Phone Numbers](https://developer.regal.ai/reference/active-phone-number-api.md): Retrieve a list of active phone numbers.
+- [List Campaigns](https://developer.regal.ai/reference/campaign-list-api.md): Retrieve a list of your campaigns.
+- [List Dispositions](https://developer.regal.ai/reference/disposition-list-api.md): Retrieve a list of dispositions.
+- [Get User](https://developer.regal.ai/reference/get-user.md): Retrieve a single user by Regal user UUID or exact login email.
+- [List Users](https://developer.regal.ai/reference/list-users.md): Retrieve a list of your users.
+- [Call Handoff](https://developer.regal.ai/reference/call-handoff.md): Retrieve routing instructions and call metadata after a Regal AI agent leaves a live call.
+- [List Business Profiles](https://developer.regal.ai/reference/active-phone-numbers-api.md): Retrieve your business profile(s).
+- [Post Branded Phone Number](https://developer.regal.ai/reference/post-branded-phone-number.md): Post a phone number for spam remediation and/or branding.
+- [List Branded Phone Numbers](https://developer.regal.ai/reference/branded-phone-numbers.md): Retrieve a list of phone numbers submitted for branding and/or spam remediation.
+- [Update Branded Phone Number](https://developer.regal.ai/reference/update-branded-phone-number.md): Update an existing phone number for spam remediation and/or branding.
+- [Delete Branded Phone Number](https://developer.regal.ai/reference/delete-branded-phone-number.md): Delete an existing phone number from spam remediation and/or branding.
+
+## Pages
+- [Privacy & Security](https://developer.regal.ai/page/privacy-security.md)
+- [Video Tutorials](https://developer.regal.ai/page/video-tutorials.md)

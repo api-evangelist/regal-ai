@@ -1,0 +1,145 @@
+generated: '2026-08-14'
+method: searched
+status: published
+source: https://developer.regal.ai/docs/regal-mcp
+docs: https://developer.regal.ai/docs/regal-mcp
+sso_docs: https://developer.regal.ai/docs/okta-sso-for-mcp
+announcement: https://www.regal.ai/blog/regal-mcp
+deployment:
+  mode: remote
+  endpoint: https://mcp.regal.ai/v1/external-mcp/mcp
+  auth: oauth
+  verified: probed
+  note: >-
+    Regal ships a hosted remote MCP server. It is reachable right now — an unauthenticated
+    POST of tools/list to the endpoint returns HTTP 401 with a
+    WWW-Authenticate: Bearer error="invalid_token" challenge and a
+    resource_metadata pointer, which is the correct MCP OAuth handshake, not an outage.
+    Regal also documents `npx mcp-remote <endpoint>` for Claude Desktop, but that is the
+    generic mcp-remote bridge to this same hosted URL, not a first-party stdio package —
+    the mode is remote, not both.
+server:
+  name: RegalMCP
+  transport: http
+  url: https://mcp.regal.ai/v1/external-mcp/mcp
+  protocol: Model Context Protocol
+  tenancy: >-
+    All tools are scoped to the authenticated brand; Regal states no cross-tenant access
+    is possible.
+authentication:
+  type: oauth2
+  provider: Okta (same login as the Regal application)
+  flows: [authorization_code, refresh_token]
+  pkce: S256
+  dynamic_client_registration: true
+  registration_endpoint: https://mcp.regal.ai/v1/external-mcp/register
+  authorization_endpoint: https://mcp.regal.ai/v1/external-mcp/authorize
+  token_endpoint: https://mcp.regal.ai/v1/external-mcp/token
+  revocation_endpoint: https://mcp.regal.ai/v1/external-mcp/revoke
+  scopes: [openid, profile, email, offline_access]
+  metadata:
+    - well-known/regal-ai-oauth-authorization-server.json
+    - well-known/regal-ai-openid-configuration.json
+    - well-known/regal-ai-oauth-protected-resource.json
+  note: >-
+    Organizations on Okta SSO need one-time admin configuration before MCP authentication
+    works (https://developer.regal.ai/docs/okta-sso-for-mcp).
+clients_documented:
+  - {client: Cursor, method: mcp.json url entry}
+  - {client: Claude Desktop, method: connectors UI or npx mcp-remote config}
+  - {client: Claude Code, method: "claude mcp add --transport http --scope user RegalMCP <endpoint>"}
+  - {client: Codex, method: "~/.codex/config.toml [mcp_servers.RegalMCP] url"}
+  - {client: ChatGPT, method: Connectors (Business/Enterprise workspace, Developer Mode)}
+skills:
+  published: true
+  note: >-
+    Regal pairs its MCP tools with "Skills" — packaged workflow instructions the server
+    exposes so external clients get guided workflows rather than raw tool access. The
+    `list-regal-skills` tool enumerates them; the skill bodies are not published publicly.
+tools_source: >-
+  Verbatim from the published tool tables at https://developer.regal.ai/docs/regal-mcp
+  (fetched 2026-08-14). Live tools/list introspection is OAuth-gated (HTTP 401
+  invalid_token), so per-tool inputSchema is NOT captured here — obtaining it requires an
+  authenticated Regal session. Names and descriptions below are the provider's own.
+tool_counts:
+  read: 44
+  write: 16
+  total: 60
+tools:
+  # --- read tools -----------------------------------------------------------
+  - {name: get-brand, mode: read, description: "Fetch your brand's configuration, including telephony, compliance, and queue settings."}
+  - {name: query-regal-kb, mode: read, description: Query the Regal knowledge base with a natural language question.}
+  - {name: list-regal-skills, mode: read, description: List available skills.}
+  - {name: list-ai-agents, mode: read, description: "List AI agents configured for your brand, with pagination and channel-type filtering.", aliases: [list-agents]}
+  - {name: fetch-agent, mode: read, description: "Fetch an active version of a specific agent variant, including its full configuration and prompt."}
+  - {name: fetch-latest-agent, mode: read, description: "Fetch highest version (active, draft or deactivated) of a specific agent variant; use before edit-agent for updates.version."}
+  - {name: fetch-agent-version, mode: read, description: Fetch a specific version of an agent variant (including historical ones).}
+  - {name: list-ai-agent-variants, mode: read, description: "List all variants for a given agent, including traffic allocation."}
+  - {name: list-ai-agent-versions, mode: read, description: List all versions for a given agent variant.}
+  - {name: fetch-test-cases, mode: read, description: Fetch test cases associated with an agent.}
+  - {name: explore-agent-context, mode: read, description: Returns workflow instructions for building and understanding AI agent configurations.}
+  - {name: summarize-agent-plan, mode: read, description: Returns a plan template to guide agent design decisions.}
+  - {name: generate-agent-config, mode: read, description: Returns section-by-section guidance for editing an agent config.}
+  - {name: get-prompting-best-practices, mode: read, description: "Returns Regal's static prompting reference for agent builders."}
+  - {name: get-ai-agent-tool-context, mode: read, description: Returns the tool-context reference used when building agent tool configurations.}
+  - {name: fetch-simulation-transcript, mode: read, description: Fetch the transcript from a completed simulation run.}
+  - {name: list-recordings, mode: read, description: "List call recordings, with filters for date range, agent, disposition, and phone number."}
+  - {name: fetch-recording-transcripts, mode: read, description: Fetch transcripts for one or more recordings (up to 5 SIDs per call).}
+  - {name: get-trackers-lookup, mode: read, description: Return the list of tracker IDs and names defined for your brand.}
+  - {name: list-dispositions, mode: read, description: Lists dispositions in the account.}
+  - {name: list-analysis-data-points, mode: read, description: List analysis data point definitions used for call scoring and QA.}
+  - {name: list-journeys, mode: read, description: List journeys with search and pagination support.}
+  - {name: fetch-journey, mode: read, description: "Fetch a full journey definition, including its flow and node configuration. Webhook auth headers are redacted."}
+  - {name: list-journey-versions, mode: read, description: List all saved versions of a journey.}
+  - {name: fetch-journey-version, mode: read, description: Fetch a specific historical version of a journey for diffing or review.}
+  - {name: list-profile-journey-executions, mode: read, description: List journey executions for a given contact profile.}
+  - {name: get-profile-journey-execution-nodes, mode: read, description: Get the node-level detail of a specific journey execution.}
+  - {name: lookup-profile, mode: read, description: "Look up a contact profile by phone, email, name, or external ID. Returns multiple candidates if the query is ambiguous."}
+  - {name: fetch-profile, mode: read, description: Fetch a full contact profile by profile ID.}
+  - {name: fetch-profile-events, mode: read, description: "Fetch event history for a contact profile, with type and cursor-based pagination."}
+  - {name: list-profile-versions, mode: read, description: List all saved versions of a contact profile.}
+  - {name: fetch-profile-version, mode: read, description: Fetch a specific historical snapshot of a profile.}
+  - {name: list-users, mode: read, description: List agent and user accounts in your brand.}
+  - {name: fetch-user, mode: read, description: "Fetch a specific user account by email, including queue assignments."}
+  - {name: list-queues, mode: read, description: List routing queues and their eligibility rules.}
+  - {name: list-tasks, mode: read, description: "List tasks by state, queue, type, or phone number, with pagination."}
+  - {name: fetch-task, mode: read, description: Fetch a specific task by SID.}
+  - {name: get-task-events, mode: read, description: Fetch routing event history for a task.}
+  - {name: get-routing-rules, mode: read, description: Get routing rule definitions for your brand., known_gap: requires a UI session; may error on the external MCP endpoint}
+  - {name: get-routing-rule-versions, mode: read, description: Get version history for a named routing rule., known_gap: requires a UI session; may error on the external MCP endpoint}
+  - {name: get-simulation-progress, mode: read, description: Poll the progress of a running simulation.}
+  - {name: list-business-profiles, mode: read, description: List your business profile(s).}
+  - {name: list-active-phone-numbers, mode: read, description: Lists your Regal provisioned phone numbers.}
+  - {name: list-brandedphone-numbers, mode: read, description: Lists your phone numbers that were uploaded for branded caller id and/or spam remediation.}
+  # --- write tools (explicit human approval required at the client) ----------
+  - {name: create-agent, mode: write, description: Create a new AI agent.}
+  - {name: edit-agent, mode: write, description: Edit an existing agent (saves as a draft version).}
+  - {name: create-ai-agent-variant, mode: write, description: Create a new variant for an existing agent.}
+  - {name: set-variant-traffic-allocations, mode: write, description: Set traffic allocation percentages across all variants of an agent.}
+  - {name: create-test-cases, mode: write, description: Create test cases for an agent.}
+  - {name: edit-test-case, mode: write, description: Edit an existing test case.}
+  - {name: delete-test-cases, mode: write, description: Delete one or more test cases.}
+  - {name: start-simulation-run, mode: write, description: Start a simulation run against an agent and a set of test cases.}
+  - {name: create-dispositions, mode: write, description: Creates dispositions.}
+  - {name: edit-dispositions, mode: write, description: Updates existing dispositions.}
+  - {name: create-analysis-data-point, mode: write, description: Creates a new custom AI analysis data point.}
+  - {name: edit-analysis-data-points, mode: write, description: Edit one or more existing custom AI analysis data points.}
+  - {name: delete-analysis-data-points, mode: write, description: Delete one or more existing custom AI analysis data points.}
+  - {name: create-branded-phone-number, mode: write, description: Adds a phone number for branded caller id and/or spam remediation.}
+  - {name: update-branded-phone-number, mode: write, description: "Updates a phone number for branded caller id and/or spam remediation, including registering/unregistering numbers for carriers."}
+  - {name: delete-branded-phone-number, mode: write, description: Deletes a phone number from branded caller id and/or spam remediation.}
+governance:
+  human_approval: >-
+    Regal states write tools require explicit human approval at the client level before
+    execution, and that current write tools only save drafts — they do not publish or go
+    live without a separate action.
+  known_gaps:
+    - >-
+      get-routing-rules and get-routing-rule-versions currently require a UI session and
+      may return an error from the external MCP endpoint; Regal documents list-queues as
+      the workaround.
+x-evidence:
+  - {fetched: '2026-08-14', url: 'https://developer.regal.ai/docs/regal-mcp.md', http_status: 200}
+  - {fetched: '2026-08-14', url: 'https://mcp.regal.ai/v1/external-mcp/mcp', method: 'POST tools/list', http_status: 401, detail: 'WWW-Authenticate: Bearer error="invalid_token"'}
+  - {fetched: '2026-08-14', url: 'https://mcp.regal.ai/.well-known/oauth-authorization-server', http_status: 200}
+  - {fetched: '2026-08-14', url: 'https://mcp.regal.ai/.well-known/oauth-protected-resource/v1/external-mcp/mcp', http_status: 200}

@@ -3,7 +3,10 @@ info:
   title: Regal Branded Phone Numbers Events API
   version: '1.0'
   summary: Register, update, and remove branded caller ID and spam remediation entries.
-  description: Branded Phone Numbers in Regal control how a tenant's outbound numbers appear on recipients' devices via carrier-level branded caller ID and spam remediation. Each registration ties a phoneNumber to a businessProfileId and a carrierFeatures array describing which features (spamRemediation or brandedCallerId) are enabled per carrier. POST is used for first-time registration only; PATCH is used for partial updates; DELETE removes a registration once all carrier submissions are inactive.
+  description: Branded Phone Numbers in Regal control how a tenant's outbound numbers appear on recipients' devices via carrier-level
+    branded caller ID and spam remediation. Each registration ties a phoneNumber to a businessProfileId and a carrierFeatures
+    array describing which features (spamRemediation or brandedCallerId) are enabled per carrier. POST is used for first-time
+    registration only; PATCH is used for partial updates; DELETE removes a registration once all carrier submissions are inactive.
   contact:
     name: Regal Support
     email: support@regal.ai
@@ -12,8 +15,8 @@ info:
     name: Proprietary
     url: https://www.regal.ai/terms-of-service
 servers:
-- url: https://api.regal.ai/v1
-  description: Production v1 Regal API
+- url: https://events.regalvoice.com
+  description: Production custom events ingest endpoint
 security:
 - ApiKeyAuth: []
 tags:
@@ -24,7 +27,9 @@ paths:
     post:
       summary: Post Custom Event
       operationId: postCustomEvent
-      description: Creates or updates a contact profile and records a custom event against the resolved profile. At least one phone or email must be present in traits for the contact to be considered contactable. Events whose name matches a Journey trigger will enroll the contact into that Journey.
+      description: Creates or updates a contact profile and records a custom event against the resolved profile. At least
+        one phone or email must be present in traits for the contact to be considered contactable. Events whose name matches
+        a Journey trigger will enroll the contact into that Journey.
       tags:
       - Events
       requestBody:

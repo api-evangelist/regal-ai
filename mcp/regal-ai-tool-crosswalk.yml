@@ -1,0 +1,155 @@
+generated: '2026-08-14'
+method: derived
+source: mcp/regal-ai-mcp.yml + openapi/ (operationIds verified against the specs in this repo)
+note: >-
+  Binds each published Regal MCP tool to the REST operation(s) that back it. Regal's MCP
+  surface is much wider than its public REST surface: 60 published tools against 13 public
+  REST operations. The MCP server exposes the agent-builder, journey, task/routing,
+  recording/transcript, simulation and contact-profile cores of the platform that have no
+  public REST equivalent at all. Live tools/list introspection is OAuth-gated (HTTP 401
+  invalid_token), so bindings are mapped by published name and description, not by
+  observed inputSchema — confidence is set accordingly.
+surfaces:
+  openapi:
+    - openapi/regal-ai-events-api-openapi.yml
+    - openapi/regal-ai-messages-api-openapi.yml
+    - openapi/regal-ai-business-profiles-api-openapi.yml
+    - openapi/regal-ai-phone-numbers-api-openapi.yml
+    - openapi/regal-ai-campaigns-api-openapi.yml
+    - openapi/regal-ai-dispositions-api-openapi.yml
+    - openapi/regal-ai-branded-phone-numbers-api-openapi.yml
+    - openapi/regal-ai-users-api-openapi.yml
+    - openapi/regal-ai-call-handoffs-api-openapi.yml
+  graphql: null
+  mcp:
+    url: https://mcp.regal.ai/v1/external-mcp/mcp
+    gated: true
+    gate: OAuth 2.0 via Okta; unauthenticated tools/list returns 401 invalid_token
+crosswalk:
+  - tool: list-business-profiles
+    category: telephony-config
+    rest: [listBusinessProfiles]
+    binding: rest
+    confidence: high
+  - tool: list-active-phone-numbers
+    category: telephony-config
+    rest: [listActivePhoneNumbers]
+    binding: rest
+    confidence: high
+  - tool: list-dispositions
+    category: dispositions
+    rest: [listDispositions]
+    binding: rest
+    confidence: high
+  - tool: list-brandedphone-numbers
+    category: branded-caller-id
+    rest: [listBrandedPhoneNumbers]
+    binding: rest
+    confidence: high
+  - tool: create-branded-phone-number
+    category: branded-caller-id
+    rest: [postBrandedPhoneNumber]
+    binding: rest
+    confidence: high
+  - tool: update-branded-phone-number
+    category: branded-caller-id
+    rest: [patchBrandedPhoneNumber]
+    binding: rest
+    confidence: high
+    note: >-
+      Regal's tool description explicitly includes registering/unregistering numbers with
+      carriers, which is the carrierFeatures body on PATCH /brandedPhoneNumbers/{phoneNumber}.
+  - tool: delete-branded-phone-number
+    category: branded-caller-id
+    rest: [deleteBrandedPhoneNumber]
+    binding: rest
+    confidence: high
+  - tool: list-users
+    category: users
+    rest: [listUsers]
+    binding: rest
+    confidence: high
+  - tool: fetch-user
+    category: users
+    rest: [getUser]
+    binding: rest
+    confidence: medium
+    note: >-
+      The tool is documented as "fetch a specific user account by email"; the REST
+      operation accepts a Regal user UUID or an exact login email on the same path
+      parameter, so the tool is a narrower projection of getUser.
+mcp_only:
+  - {tool: get-brand, reason: brand configuration has no public REST endpoint}
+  - {tool: query-regal-kb, reason: knowledge-base retrieval is MCP/Copilot-only}
+  - {tool: list-regal-skills, reason: MCP Skills registry has no REST equivalent}
+  - {tool: list-ai-agents, reason: agent builder is not exposed over public REST}
+  - {tool: fetch-agent, reason: agent builder is not exposed over public REST}
+  - {tool: fetch-latest-agent, reason: agent builder is not exposed over public REST}
+  - {tool: fetch-agent-version, reason: agent builder is not exposed over public REST}
+  - {tool: list-ai-agent-variants, reason: agent variants/A-B allocation are not exposed over public REST}
+  - {tool: list-ai-agent-versions, reason: agent versioning is not exposed over public REST}
+  - {tool: fetch-test-cases, reason: simulation test cases are not exposed over public REST}
+  - {tool: explore-agent-context, reason: returns static workflow guidance, not data}
+  - {tool: summarize-agent-plan, reason: returns a static plan template, not data}
+  - {tool: generate-agent-config, reason: returns static authoring guidance, not data}
+  - {tool: get-prompting-best-practices, reason: returns Regal's static prompting reference}
+  - {tool: get-ai-agent-tool-context, reason: returns a static tool-context reference}
+  - {tool: fetch-simulation-transcript, reason: simulation runs are not exposed over public REST}
+  - {tool: list-recordings, reason: call recordings are delivered by reporting webhooks, not a REST list endpoint}
+  - {tool: fetch-recording-transcripts, reason: transcripts are delivered by reporting webhooks, not a REST endpoint}
+  - {tool: get-trackers-lookup, reason: conversation-intelligence trackers have no public REST endpoint}
+  - {tool: list-analysis-data-points, reason: custom AI analysis definitions have no public REST endpoint}
+  - {tool: list-journeys, reason: Journey Builder is not exposed over public REST}
+  - {tool: fetch-journey, reason: Journey Builder is not exposed over public REST}
+  - {tool: list-journey-versions, reason: Journey Builder is not exposed over public REST}
+  - {tool: fetch-journey-version, reason: Journey Builder is not exposed over public REST}
+  - {tool: list-profile-journey-executions, reason: journey execution state has no public REST endpoint}
+  - {tool: get-profile-journey-execution-nodes, reason: journey execution state has no public REST endpoint}
+  - {tool: lookup-profile, reason: "contact profiles are write-only over REST (POST /events); there is no public profile read endpoint"}
+  - {tool: fetch-profile, reason: "contact profiles are write-only over REST (POST /events); there is no public profile read endpoint"}
+  - {tool: fetch-profile-events, reason: event history has no public REST read endpoint}
+  - {tool: list-profile-versions, reason: profile version history has no public REST endpoint}
+  - {tool: fetch-profile-version, reason: profile version history has no public REST endpoint}
+  - {tool: list-queues, reason: routing queues have no public REST endpoint}
+  - {tool: list-tasks, reason: tasks have no public REST endpoint}
+  - {tool: fetch-task, reason: tasks have no public REST endpoint}
+  - {tool: get-task-events, reason: task routing events are delivered by reporting webhooks, not REST}
+  - {tool: get-routing-rules, reason: routing rules have no public REST endpoint; also a known gap on the external endpoint}
+  - {tool: get-routing-rule-versions, reason: routing rules have no public REST endpoint; also a known gap on the external endpoint}
+  - {tool: get-simulation-progress, reason: simulation runs are not exposed over public REST}
+  - {tool: create-agent, reason: agent builder writes are not exposed over public REST}
+  - {tool: edit-agent, reason: agent builder writes are not exposed over public REST}
+  - {tool: create-ai-agent-variant, reason: agent variants are not exposed over public REST}
+  - {tool: set-variant-traffic-allocations, reason: traffic allocation is not exposed over public REST}
+  - {tool: create-test-cases, reason: simulation test cases are not exposed over public REST}
+  - {tool: edit-test-case, reason: simulation test cases are not exposed over public REST}
+  - {tool: delete-test-cases, reason: simulation test cases are not exposed over public REST}
+  - {tool: start-simulation-run, reason: simulation runs are not exposed over public REST}
+  - {tool: create-dispositions, reason: "REST exposes dispositions read-only (GET /dispositions); creates are MCP-only"}
+  - {tool: edit-dispositions, reason: "REST exposes dispositions read-only (GET /dispositions); updates are MCP-only"}
+  - {tool: create-analysis-data-point, reason: custom AI analysis definitions have no public REST endpoint}
+  - {tool: edit-analysis-data-points, reason: custom AI analysis definitions have no public REST endpoint}
+  - {tool: delete-analysis-data-points, reason: custom AI analysis definitions have no public REST endpoint}
+rest_only:
+  - capability: event and contact ingestion
+    operations: [postCustomEvent]
+    note: >-
+      The Custom Events ingest endpoint (POST https://events.regalvoice.com/events) is the
+      primary write path into Regal and has no MCP tool. An agent can read a profile over
+      MCP (lookup-profile / fetch-profile) but cannot create or update one.
+  - capability: outbound SMS
+    operations: [sendMessage]
+    note: No MCP tool sends a message; messaging remains REST-only.
+  - capability: campaigns
+    operations: [listCampaigns]
+    note: No campaigns tool is published on the MCP server.
+  - capability: call handoff routing instructions
+    operations: [getCallHandoff]
+    note: Five9 AI Agent Connect handoff retrieval is REST-only.
+coverage:
+  tools_named: 60
+  tools_bound_to_rest: 9
+  mcp_only: 51
+  rest_operations_total: 13
+  rest_operations_with_a_tool: 9
+  rest_only: 4

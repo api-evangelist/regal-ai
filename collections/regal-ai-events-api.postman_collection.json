@@ -1,0 +1,301 @@
+{
+  "item": [
+    {
+      "id": "f8fd88c0-1be2-46e8-a205-11058bd73bb4",
+      "name": "Events",
+      "description": {
+        "content": "Contact creation, update, and custom event tracking",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "91942147-3ce8-462c-9731-4ea38901ca3a",
+          "name": "Post Custom Event",
+          "request": {
+            "name": "Post Custom Event",
+            "description": {
+              "content": "Creates or updates a contact profile and records a custom event against the resolved profile. At least one phone or email must be present in traits for the contact to be considered contactable. Events whose name matches a Journey trigger will enroll the contact into that Journey.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "events"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"traits\": {\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"phones\": [\n      {\n        \"phoneNumber\": \"<string>\",\n        \"isPrimary\": \"<boolean>\",\n        \"label\": \"<string>\",\n        \"voiceOptIn\": {\n          \"subscribed\": \"<boolean>\",\n          \"timestamp\": \"<string>\",\n          \"source\": \"<string>\"\n        },\n        \"smsOptIn\": {\n          \"subscribed\": \"<boolean>\",\n          \"timestamp\": \"<string>\",\n          \"source\": \"<string>\"\n        }\n      },\n      {\n        \"phoneNumber\": \"<string>\",\n        \"isPrimary\": \"<boolean>\",\n        \"label\": \"<string>\",\n        \"voiceOptIn\": {\n          \"subscribed\": \"<boolean>\",\n          \"timestamp\": \"<string>\",\n          \"source\": \"<string>\"\n        },\n        \"smsOptIn\": {\n          \"subscribed\": \"<boolean>\",\n          \"timestamp\": \"<string>\",\n          \"source\": \"<string>\"\n        }\n      }\n    ],\n    \"emails\": [\n      {\n        \"emailAddress\": \"<string>\",\n        \"isPrimary\": \"<boolean>\",\n        \"label\": \"<string>\",\n        \"emailOptIn\": {\n          \"subscribed\": \"<boolean>\",\n          \"timestamp\": \"<string>\",\n          \"source\": \"<string>\"\n        }\n      },\n      {\n        \"emailAddress\": \"<string>\",\n        \"isPrimary\": \"<boolean>\",\n        \"label\": \"<string>\",\n        \"emailOptIn\": {\n          \"subscribed\": \"<boolean>\",\n          \"timestamp\": \"<string>\",\n          \"source\": \"<string>\"\n        }\n      }\n    ],\n    \"address\": {\n      \"street\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"zipcode\": \"<string>\",\n      \"country\": \"<string>\"\n    },\n    \"key_0\": false\n  },\n  \"userId\": \"<string>\",\n  \"name\": \"<string>\",\n  \"properties\": {\n    \"key_0\": 4598\n  },\n  \"originalTimestamp\": \"<string>\",\n  \"eventSource\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1eabf9c3-7a69-42ed-8a25-d21eb6fb39e9",
+              "name": "Request Accepted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"userId\": \"12345\",\n  \"traits\": {\n    \"firstName\": \"Jane\",\n    \"lastName\": \"Doe\",\n    \"phones\": [\n      {\n        \"phoneNumber\": \"+15551234567\",\n        \"isPrimary\": true,\n        \"label\": \"mobile\",\n        \"voiceOptIn\": {\n          \"subscribed\": true\n        },\n        \"smsOptIn\": {\n          \"subscribed\": true\n        }\n      }\n    ],\n    \"emails\": [\n      {\n        \"emailAddress\": \"jane.doe@example.com\",\n        \"isPrimary\": true,\n        \"emailOptIn\": {\n          \"subscribed\": true\n        }\n      }\n    ]\n  },\n  \"name\": \"Lead Form Submitted\",\n  \"properties\": {\n    \"course\": \"Intro to AI\",\n    \"source\": \"marketing-site\"\n  },\n  \"originalTimestamp\": \"2026-05-24T15:00:00Z\",\n  \"eventSource\": \"Website\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"accepted\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a8aadabd-8d14-410d-a5d8-c4b45d9edf76",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"userId\": \"12345\",\n  \"traits\": {\n    \"firstName\": \"Jane\",\n    \"lastName\": \"Doe\",\n    \"phones\": [\n      {\n        \"phoneNumber\": \"+15551234567\",\n        \"isPrimary\": true,\n        \"label\": \"mobile\",\n        \"voiceOptIn\": {\n          \"subscribed\": true\n        },\n        \"smsOptIn\": {\n          \"subscribed\": true\n        }\n      }\n    ],\n    \"emails\": [\n      {\n        \"emailAddress\": \"jane.doe@example.com\",\n        \"isPrimary\": true,\n        \"emailOptIn\": {\n          \"subscribed\": true\n        }\n      }\n    ]\n  },\n  \"name\": \"Lead Form Submitted\",\n  \"properties\": {\n    \"course\": \"Intro to AI\",\n    \"source\": \"marketing-site\"\n  },\n  \"originalTimestamp\": \"2026-05-24T15:00:00Z\",\n  \"eventSource\": \"Website\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ee7a3129-6d56-40a6-b5a4-25f0d5073e10",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"userId\": \"12345\",\n  \"traits\": {\n    \"firstName\": \"Jane\",\n    \"lastName\": \"Doe\",\n    \"phones\": [\n      {\n        \"phoneNumber\": \"+15551234567\",\n        \"isPrimary\": true,\n        \"label\": \"mobile\",\n        \"voiceOptIn\": {\n          \"subscribed\": true\n        },\n        \"smsOptIn\": {\n          \"subscribed\": true\n        }\n      }\n    ],\n    \"emails\": [\n      {\n        \"emailAddress\": \"jane.doe@example.com\",\n        \"isPrimary\": true,\n        \"emailOptIn\": {\n          \"subscribed\": true\n        }\n      }\n    ]\n  },\n  \"name\": \"Lead Form Submitted\",\n  \"properties\": {\n    \"course\": \"Intro to AI\",\n    \"source\": \"marketing-site\"\n  },\n  \"originalTimestamp\": \"2026-05-24T15:00:00Z\",\n  \"eventSource\": \"Website\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6fa958f0-fea6-4afa-bcd3-8282e050e552",
+              "name": "Rate Limit Exceeded (300 RPS default)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"userId\": \"12345\",\n  \"traits\": {\n    \"firstName\": \"Jane\",\n    \"lastName\": \"Doe\",\n    \"phones\": [\n      {\n        \"phoneNumber\": \"+15551234567\",\n        \"isPrimary\": true,\n        \"label\": \"mobile\",\n        \"voiceOptIn\": {\n          \"subscribed\": true\n        },\n        \"smsOptIn\": {\n          \"subscribed\": true\n        }\n      }\n    ],\n    \"emails\": [\n      {\n        \"emailAddress\": \"jane.doe@example.com\",\n        \"isPrimary\": true,\n        \"emailOptIn\": {\n          \"subscribed\": true\n        }\n      }\n    ]\n  },\n  \"name\": \"Lead Form Submitted\",\n  \"properties\": {\n    \"course\": \"Intro to AI\",\n    \"source\": \"marketing-site\"\n  },\n  \"originalTimestamp\": \"2026-05-24T15:00:00Z\",\n  \"eventSource\": \"Website\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.regal.ai/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "8ddf82d7-ecf4-43bc-8552-0c09852fbd0b",
+    "name": "Regal Branded Phone Numbers Events API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Branded Phone Numbers in Regal control how a tenant's outbound numbers appear on recipients' devices via carrier-level branded caller ID and spam remediation. Each registration ties a phoneNumber to a businessProfileId and a carrierFeatures array describing which features (spamRemediation or brandedCallerId) are enabled per carrier. POST is used for first-time registration only; PATCH is used for partial updates; DELETE removes a registration once all carrier submissions are inactive.\n\nContact Support:\n Name: Regal Support\n Email: support@regal.ai",
+      "type": "text/plain"
+    }
+  }
+}

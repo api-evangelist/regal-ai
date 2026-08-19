@@ -1,3 +1,12 @@
+generated: '2026-08-14'
+method: searched
+source: https://www.regal.ai/pricing
+plan_count: 0
+plan_count_note: >-
+  Regal publishes no public pricing tiers. https://www.regal.ai/pricing is a quote-request
+  page — custom pricing scoped to volume, features and contract term, with discounts for
+  higher commitment and multi-year terms. The single `custom` entry below records that
+  enterprise "contact us" posture; it is not a published tier.
 plans: 0.1
 provider: regal-ai
 url: https://www.regal.ai/pricing

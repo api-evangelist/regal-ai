@@ -1,0 +1,158 @@
+generated: '2026-08-14'
+method: searched
+source: >-
+  https://developer.regal.ai/reference/overview,
+  https://developer.regal.ai/reference/faq,
+  https://developer.regal.ai/reference/data_types_and_name_limits,
+  https://developer.regal.ai/docs/reporting-webhooks,
+  plus the OpenAPI 3.1.0 definitions published inline on each
+  https://developer.regal.ai/reference/* page (harvested to openapi/_original/).
+authentication:
+  style: api-key
+  transport: header
+  header: Authorization
+  format: >-
+    Raw key value in the Authorization header. Regal documents no scheme prefix (no
+    "Bearer", no "Basic"). Every endpoint requires it.
+  issuance: >-
+    Keys are issued by Regal support — there is no self-serve key page. The docs say
+    "For an API key please, reach out to support@regal.ai."
+  rotation: not documented
+  detail: authentication/regal-ai-authentication.yml
+  oauth:
+    surface: mcp
+    note: >-
+      OAuth 2.0 (Okta, authorization_code + PKCE S256, dynamic client registration) exists
+      ONLY on the hosted MCP server at mcp.regal.ai. The REST APIs have no OAuth.
+    detail: scopes/regal-ai-scopes.yml
+base_urls:
+  - {surface: custom events ingest, url: 'https://events.regalvoice.com', note: 'POST /events — the contact/event write path'}
+  - {surface: v1 management API, url: 'https://api.regal.ai/v1', note: 'contact-center-apis 1.2 — phone numbers, business profiles, campaigns, dispositions, branded caller ID, users, call handoffs, SMS send'}
+  - {surface: MCP, url: 'https://mcp.regal.ai/v1/external-mcp/mcp'}
+idempotency:
+  supported: false
+  client_key: null
+  header: null
+  detail: >-
+    Regal documents NO client-supplied idempotency key on any operation. There is no
+    Idempotency-Key header, and no idempotency field in any request body in the published
+    OpenAPI. The one occurrence of the word in the contract is in the RESPONSE of
+    POST /messages/send, which returns
+    {"status":"queued","message":"enqueued for sms-interaction-job","idempotencyKey":"..."} —
+    a server-generated key echoed back after the message is already enqueued. A caller
+    cannot supply it, cannot replay against it, and cannot use it to make a retry safe.
+    Practical consequence for agents: POST /messages/send and POST /brandedPhoneNumbers are
+    NOT safely retryable; a timeout on send may have delivered an SMS. The only built-in
+    conflict protection is POST /brandedPhoneNumbers returning 409 with
+    "already exists for this brand. Use PATCH to update."
+  retry_guidance: >-
+    Treat POST /events as effectively repeatable (events are appended to a profile, so a
+    duplicate produces a duplicate event, not a duplicate contact — identity resolution
+    dedupes the profile, not the event). Treat POST /messages/send as non-retryable.
+pagination:
+  style: cursor
+  request_params:
+    - {name: nextCursor, in: query, description: Opaque cursor returned by the previous page.}
+    - {name: size, in: query, description: Page size.}
+  response_fields: [nextCursor]
+  applies_to: [listActivePhoneNumbers, listBusinessProfiles, listCampaigns, listDispositions, listBrandedPhoneNumbers, listUsers]
+  not_applicable: [postCustomEvent, sendMessage, getUser, getCallHandoff, postBrandedPhoneNumber, patchBrandedPhoneNumber, deleteBrandedPhoneNumber]
+  note: >-
+    Consistent cursor pagination across every list operation — the strongest convention in
+    the Regal contract. The MCP tool surface mirrors it (fetch-profile-events is documented
+    as cursor-based).
+filtering:
+  supported: true
+  note: >-
+    Only two list operations accept filters. GET /brandedPhoneNumbers accepts phoneNumber,
+    businessProfileId, carrier, feature, status, detailedStatus, internalName and
+    reportingGroup. GET /users accepts email, skills, teams, queues and customAttributes.
+    The other list operations accept pagination only.
+field_expansion:
+  supported: false
+  note: No expand/include/fields parameter exists on any operation.
+metadata:
+  supported: true
+  note: >-
+    Arbitrary customer-defined data is first class on the ingest path, not as a `metadata`
+    bag but as open contact `traits` and event `properties`. Any trait beyond the standard
+    set (firstName, lastName, phones, emails, address) becomes a custom contact attribute;
+    any key inside `properties` becomes a custom event property.
+  limits:
+    - >-
+      A Regal account supports up to 8,000 unique event property names. The same field
+      name used across differently-named events counts once per event name, so mapping to
+      a single event name with categorising properties conserves the budget.
+    - >-
+      Contact attributes and event properties are CAST ON FIRST WRITE and the data type
+      cannot be overwritten afterwards. Later values that cannot be coerced into the
+      established type will fail in journey conditional nodes — a silent behavioural
+      failure, not an API error.
+identity_resolution:
+  identifiers: [userId, phones, emails]
+  precedence: phone number > email address > external id (userId)
+  behaviour: >-
+    Regal walks the identifiers in that order looking for an existing contact profile,
+    attaches the event to the first match, and creates a new profile if none match. userId
+    is the caller's own database id and appears in the app as External ID; a contact may
+    hold many phones and many emails but only one userId at a time.
+  contactability: >-
+    A contact must carry at least one phone or email to exist. An event carrying only a
+    userId, with no prior event tying that userId to a phone or email, will not create a
+    contact and cannot trigger a journey.
+  opt_in: >-
+    Consent is per-identifier, not per-contact: each phone carries voiceOptIn/smsOptIn and
+    each email carries emailOptIn, each with subscribed plus optional timestamp, ip and
+    text for the audit trail. Journey-triggered calls and SMS go only to the PRIMARY phone,
+    so changing the primary phone without carrying its opt-in forward silently stops
+    outbound contact.
+request_tracing:
+  request_id_header: null
+  note: No request-id or correlation header is documented on any REST response.
+versioning:
+  scheme: uri-path
+  current: v1
+  spec_version: '1.2'
+  spec_version_note: >-
+    The published OpenAPI documents carry info.version 1.2 (title "contact-center-apis")
+    and 1.2 (title "regal-voice-api") while the path prefix stays /v1. The document version
+    moves; the URI version has not.
+  events_surface: unversioned (https://events.regalvoice.com/events)
+  detail: lifecycle/regal-ai-lifecycle.yml
+error_envelope:
+  format: none
+  shapes:
+    - '{"message": "<reason>"}'
+    - '{"statusCode": <int>, "message": <string|string[]>, "error": "<reason phrase>"}'
+  note: Two envelopes across one API. Not RFC 9457. No error code vocabulary.
+  detail: errors/regal-ai-problem-types.yml
+rate_limit_signaling:
+  status_on_exhaustion: 429
+  response_headers: []
+  note: >-
+    No rate-limit headers are documented anywhere — no X-RateLimit-*, no RateLimit-*, no
+    Retry-After. Clients get a 429 body and nothing else, so budget must be managed
+    client-side against the published static limits.
+  detail: rate-limits/regal-ai-rate-limits.yml
+webhooks:
+  direction: outbound (Regal -> customer endpoint)
+  delivery: >-
+    Fire-and-forget. The receiver must respond within 5 seconds or the event is DROPPED —
+    there are no automatic retries and no dead-letter surface. Endpoint or filter changes
+    take up to 5 minutes to propagate because of caching.
+  signature_verification: not documented
+  detail: asyncapi/regal-reporting-webhooks-asyncapi.yml
+custom_actions:
+  direction: outbound (Regal agent -> customer HTTP endpoint, mid-conversation)
+  note: >-
+    The Custom Actions framework lets a live voice agent POST a structured payload to a
+    customer-owned endpoint and branch on the response. This makes the customer the API
+    provider and Regal the client — the inverse of the rest of this file.
+  docs: https://developer.regal.ai/docs/custom-actions
+cross_links:
+  authentication: authentication/regal-ai-authentication.yml
+  scopes: scopes/regal-ai-scopes.yml
+  errors: errors/regal-ai-problem-types.yml
+  lifecycle: lifecycle/regal-ai-lifecycle.yml
+  rate_limits: rate-limits/regal-ai-rate-limits.yml
+  data_model: data-model/regal-ai-data-model.yml

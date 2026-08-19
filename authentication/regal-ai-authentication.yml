@@ -1,19 +1,67 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/regal-branded-phone-numbers-api-openapi.yml, openapi/regal-events-api-openapi.yml,
-  openapi/regal-management-api-openapi.yml, openapi/regal-messages-api-openapi.yml
+generated: '2026-08-14'
+method: searched
+source: openapi/regal-ai-branded-phone-numbers-api-openapi.yml, openapi/regal-ai-business-profiles-api-openapi.yml,
+  openapi/regal-ai-call-handoffs-api-openapi.yml, openapi/regal-ai-campaigns-api-openapi.yml,
+  openapi/regal-ai-dispositions-api-openapi.yml, openapi/regal-ai-events-api-openapi.yml, openapi/regal-ai-messages-api-openapi.yml,
+  openapi/regal-ai-phone-numbers-api-openapi.yml, openapi/regal-ai-users-api-openapi.yml
+docs: https://developer.regal.ai/reference/overview
+mcp_docs: https://developer.regal.ai/docs/regal-mcp
+issuance: >-
+  API keys are issued by Regal support only — "For an API key please, reach out to
+  support@regal.ai". There is no self-serve key page, no key rotation procedure, and no
+  test/live key pair; every documented call goes to production with a production key.
+transport_note: >-
+  The key is sent RAW in the Authorization header. Regal documents no scheme prefix — not
+  Bearer, not Basic. A wrong key returns 403 {"statusCode":403,"message":"Invalid API
+  Key","error":"Forbidden"} on the application-layer endpoints and 401
+  {"message":"Unauthorized"} at the gateway, so both statuses must be treated as auth
+  failures.
+oauth:
+  surface: mcp
+  endpoint: https://mcp.regal.ai/v1/external-mcp/mcp
+  type: oauth2
+  identity_provider: Okta
+  flows: [authorizationCode, refreshToken]
+  pkce: S256
+  dynamic_client_registration: true
+  scopes: [openid, profile, email, offline_access]
+  metadata: well-known/regal-ai-oauth-authorization-server.json
+  detail: scopes/regal-ai-scopes.yml
+  note: >-
+    OAuth exists ONLY on the hosted MCP server. None of the REST APIs accept an OAuth
+    token, and the MCP server does not accept an API key.
+sso:
+  saml: [Okta, Google, Azure]
+  scim: Okta
+  docs:
+    - https://developer.regal.ai/docs/okta-sso
+    - https://developer.regal.ai/docs/google-sso
+    - https://developer.regal.ai/docs/azure-sso
+    - https://developer.regal.ai/docs/okta-scim
+  note: Application/user authentication, not API authentication.
 summary:
   types:
   - apiKey
   api_key_in:
   - header
+  oauth2_flows:
+  - authorizationCode
+  - refreshToken
+  surfaces:
+    rest: apiKey
+    mcp: oauth2
 schemes:
 - name: ApiKeyAuth
   type: apiKey
   in: header
   parameter: Authorization
   sources:
-  - openapi/regal-branded-phone-numbers-api-openapi.yml
-  - openapi/regal-events-api-openapi.yml
-  - openapi/regal-management-api-openapi.yml
-  - openapi/regal-messages-api-openapi.yml
+  - openapi/regal-ai-branded-phone-numbers-api-openapi.yml
+  - openapi/regal-ai-business-profiles-api-openapi.yml
+  - openapi/regal-ai-call-handoffs-api-openapi.yml
+  - openapi/regal-ai-campaigns-api-openapi.yml
+  - openapi/regal-ai-dispositions-api-openapi.yml
+  - openapi/regal-ai-events-api-openapi.yml
+  - openapi/regal-ai-messages-api-openapi.yml
+  - openapi/regal-ai-phone-numbers-api-openapi.yml
+  - openapi/regal-ai-users-api-openapi.yml

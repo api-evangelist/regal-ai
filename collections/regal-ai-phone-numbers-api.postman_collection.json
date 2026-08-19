@@ -1,0 +1,213 @@
+{
+  "item": [
+    {
+      "id": "0a028cff-4525-4ab4-85ae-53eccc842ca8",
+      "name": "Phone Numbers",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "68cec482-4bd1-40be-a704-928d3df5000b",
+          "name": "List Active Phone Numbers",
+          "request": {
+            "name": "List Active Phone Numbers",
+            "description": {
+              "content": "List phone numbers currently active in the tenant.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "activePhoneNumbers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9e7982ef-e988-4c54-980f-86cbf17a5a93",
+              "name": "List of active phone numbers.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "activePhoneNumbers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"phoneNumber\": \"string\",\n    \"friendlyName\": \"string\",\n    \"capabilities\": [\n      \"string\",\n      \"string\"\n    ],\n    \"ivrFlowId\": \"string\"\n  },\n  {\n    \"phoneNumber\": \"string\",\n    \"friendlyName\": \"string\",\n    \"capabilities\": [\n      \"string\",\n      \"string\"\n    ],\n    \"ivrFlowId\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "330a41d8-68d9-4e73-96f1-f67b0b2555ef",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "activePhoneNumbers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2d4fe4a4-f842-42d1-8c2c-0aea2bdc5d39",
+              "name": "Rate Limit Exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "activePhoneNumbers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.regal.ai/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "bc8334f2-5e32-4a79-82bd-704b73e74057",
+    "name": "Regal Branded Phone Numbers API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Branded Phone Numbers in Regal control how a tenant's outbound numbers appear on recipients' devices via carrier-level branded caller ID and spam remediation. Each registration ties a phoneNumber to a businessProfileId and a carrierFeatures array describing which features (spamRemediation or brandedCallerId) are enabled per carrier. POST is used for first-time registration only; PATCH is used for partial updates; DELETE removes a registration once all carrier submissions are inactive.\n\nContact Support:\n Name: Regal Support\n Email: support@regal.ai",
+      "type": "text/plain"
+    }
+  }
+}

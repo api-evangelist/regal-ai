@@ -1,0 +1,74 @@
+generated: '2026-08-14'
+method: searched
+source: >-
+  https://status.regal.ai (Atlassian Statuspage, /api/v2/summary.json),
+  https://www.regal.io/category/whats-new,
+  https://developer.regal.ai/reference/* published OpenAPI,
+  https://developer.regal.ai/docs/saving-and-updating-agents
+versioning:
+  scheme: uri-path
+  current: v1
+  document_version: '1.2'
+  documents:
+    - {title: contact-center-apis, version: '1.2', server: 'https://api.regal.ai/v1'}
+    - {title: regal-voice-api, version: '1.2', server: 'https://events.regalvoice.com'}
+  docs: https://developer.regal.ai/reference/overview
+  note: >-
+    The URI version has stayed at /v1 while the published OpenAPI document version has
+    moved to 1.2. The custom-events ingest host is unversioned entirely. Regal publishes no
+    written versioning policy — no statement of what constitutes a breaking change, no
+    version negotiation header, no dated version train.
+  backwards_compatibility_precedent: >-
+    Regal documents one explicit backwards-compatibility commitment, in
+    /reference/overview: when multi-phone/multi-email support was added in July 2023, the
+    legacy singular `phone`/`email` and `optIn[]` fields were kept working and mapped onto
+    the primary phone/email. That is a real, dated compatibility decision, but it is a
+    precedent, not a policy.
+deprecation:
+  policy_url: null
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  deprecated_operations: []
+  note: >-
+    No deprecation policy, no deprecation or sunset page, no RFC 8594 Sunset/Deprecation
+    header support documented, and not one operation is marked deprecated: true in any
+    published Regal OpenAPI. https://developer.regal.ai/docs/roadmap returns 404. This is a
+    genuine gap in the operational contract, not a failure to find the page.
+sla:
+  url: null
+  uptime_target: null
+  note: >-
+    No public SLA or uptime commitment is published. Regal is enterprise-contracted
+    (see plans/regal-ai-plans-pricing.yml), so any availability target is presumably
+    contractual rather than public.
+status_page: https://status.regal.ai
+status_page_detail:
+  provider: Atlassian Statuspage
+  page_id: n1plpyf2fx6x
+  title: Regal AI
+  machine_readable: https://status.regal.ai/api/v2/summary.json
+  history: https://status.regal.ai/history
+  components_include: [Agent Desktop, APIs]
+  aliases: [https://regal.statuspage.io, https://status.regal.io]
+  note: >-
+    Real Statuspage with a dedicated "APIs" component tracked since 2022, a public incident
+    history and the standard Statuspage JSON API (summary.json, status.json, components.json)
+    available anonymously — so status is machine-readable even though nothing else
+    operational is.
+change_log:
+  url: https://www.regal.io/category/whats-new
+  cadence: monthly
+  detail: changelog/regal-ai-changelog.yml
+release_channels:
+  - {name: Product Updates ("What's New"), url: 'https://www.regal.io/category/whats-new'}
+  - {name: Blog (monthly releases posts), url: 'https://www.regal.ai/blog'}
+  - {name: RSS, url: 'https://www.regal.ai/blog/rss.xml'}
+tenant_level_lifecycle:
+  note: >-
+    Regal ships a real lifecycle model INSIDE the product that has no counterpart in the
+    API contract: AI agents have Draft and Active versions, full version history, and
+    variants with traffic allocation for A/B tests. Agents can be rolled back to a prior
+    version. All of it is reachable over MCP (list-ai-agent-versions,
+    fetch-agent-version, set-variant-traffic-allocations) and none of it over REST.
+  docs: https://developer.regal.ai/docs/saving-and-updating-agents

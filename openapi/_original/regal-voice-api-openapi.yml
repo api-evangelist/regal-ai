@@ -1,0 +1,248 @@
+openapi: 3.1.0
+info:
+  title: regal-voice-api
+  version: '1.2'
+servers:
+- url: https://events.regalvoice.com
+components:
+  securitySchemes:
+    sec0:
+      type: apiKey
+      in: header
+      name: Authorization
+      x-bearer-format: ''
+security:
+- sec0: []
+paths:
+  /events:
+    post:
+      summary: Post Custom Event
+      description: Create and update contacts or add events to contacts.
+      operationId: api
+      parameters:
+      - name: Authorization
+        in: header
+        description: Your Regal API Key
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+                  description: Unique identifier for your contact
+                  default: '12345'
+                traits:
+                  properties:
+                    firstName:
+                      type: string
+                      description: First name
+                      default: Anna
+                    lastName:
+                      type: string
+                      description: Last name
+                      default: Kerinina
+                    phones:
+                      properties:
+                        '{phone}':
+                          properties:
+                            label:
+                              type: string
+                              description: Label for the phone number
+                              default: Mobile
+                            isPrimary:
+                              type: boolean
+                              description: True if phone should be used in journeys to receive automated SMS and tasks.
+                              default: true
+                            voiceOptIn:
+                              properties:
+                                subscribed:
+                                  type: boolean
+                                  description: Voice Subscription Status. True if contact opted in. False if explicitly opted
+                                    out.
+                                  default: true
+                                ip:
+                                  type: string
+                                  description: IP address the Voice subscription came from
+                                  default: 176.63.12.165
+                                source:
+                                  type: string
+                                  description: Source of the Voice subscription update
+                                  default: Booking flow
+                                text:
+                                  type: string
+                                  description: Text the contact was presented for Voice opt in
+                                  default: I subscribe to marketing SMS and phone calls.
+                                timestamp:
+                                  type: string
+                                  description: Timestamp of the Voice subscription update
+                                  default: '2000-08-20 09:12:28 -04:00'
+                              required: []
+                              type: object
+                            smsOptIn:
+                              properties:
+                                subscribed:
+                                  type: boolean
+                                  description: SMS Subscription Status. True if contact opted in. False if explicitly opted
+                                    out.
+                                  default: true
+                                ip:
+                                  type: string
+                                  description: IP address the SMS subscription came from
+                                  default: 176.63.12.165
+                                source:
+                                  type: string
+                                  description: Source of the SMS subscription update
+                                  default: Booking flow
+                                text:
+                                  type: string
+                                  description: Text the contact was presented for SMS opt in
+                                  default: I subscribe to marketing SMS and phone calls.
+                                timestamp:
+                                  type: string
+                                  description: Timestamp of the SMS subscription update
+                                  default: '2000-08-20 09:12:28 -04:00'
+                              required: []
+                              type: object
+                          required: []
+                          type: object
+                      required: []
+                      type: object
+                    emails:
+                      properties:
+                        '{email}':
+                          properties:
+                            label:
+                              type: string
+                              description: Label for the email address
+                              default: Personal
+                            isPrimary:
+                              type: boolean
+                              description: True if email should be used in journeys to receive automated email tasks (future
+                                feature).
+                              default: true
+                            emailOptIn:
+                              properties:
+                                subscribed:
+                                  type: boolean
+                                  description: Email Subscription Status. True if contact opted in. False if explicitly opted
+                                    out.
+                                  default: true
+                                ip:
+                                  type: string
+                                  description: IP address the Email subscription came from
+                                  default: 176.63.12.165
+                                source:
+                                  type: string
+                                  description: Source of the Email subscription update
+                                  default: Booking flow
+                                text:
+                                  type: string
+                                  description: Text the contact was presented for Email opt in
+                                  default: I subscribe to marketing emails.
+                                timestamp:
+                                  type: string
+                                  description: Timestamp of the Email subscription update
+                                  default: '2000-08-20 09:12:28 -04:00'
+                              required: []
+                              type: object
+                          required: []
+                          type: object
+                      required: []
+                      type: object
+                    address:
+                      properties:
+                        street:
+                          type: string
+                          description: Street
+                          default: 201 E 87th St
+                        city:
+                          type: string
+                          description: City
+                          default: New York
+                        state:
+                          type: string
+                          description: State
+                          default: New York
+                        zipcode:
+                          type: string
+                          description: Zipcode
+                          default: '11038'
+                        country:
+                          type: string
+                          description: Country
+                          default: United States
+                      required: []
+                      type: object
+                    customTrait1:
+                      type: string
+                      default: value1
+                    customTrait2:
+                      type: integer
+                      default: 2
+                      format: int32
+                  required: []
+                  type: object
+                  description: Attributes about the contact
+                name:
+                  type: string
+                  description: Name of event
+                  default: Order Created
+                properties:
+                  properties:
+                    customProperty1:
+                      type: string
+                      default: Value1
+                    customProperty2:
+                      type: number
+                      default: 12.55
+                      format: float
+                  required: []
+                  type: object
+                  description: Arbitrary object of properties
+                eventSource:
+                  type: string
+                  description: Source of the event. E.g. salesforce, hubspot
+                  default: Website
+                originalTimestamp:
+                  type: string
+                  description: Time of the event on the client device
+                  default: '2000-08-20 09:12:28 -04:00'
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Request Accepted:
+                  value: '{"message":"ok"}'
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: ok
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                Bad Request:
+                  value: ''
+        '401':
+          description: '401'
+          content:
+            application/json:
+              examples:
+                API key missing or invalid:
+                  value: ''
+      deprecated: false
+x-readme:
+  headers: []
+  explorer-enabled: true
+  proxy-enabled: true
+x-readme-fauxas: true

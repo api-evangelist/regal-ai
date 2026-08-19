@@ -1,0 +1,152 @@
+generated: '2026-08-14'
+method: derived
+source: >-
+  openapi/_original/regal-contact-center-apis-openapi.yml and
+  openapi/_original/regal-voice-api-openapi.yml — the OpenAPI 3.1.0 definitions Regal
+  publishes inline on each https://developer.regal.ai/reference/* page (harvested
+  2026-08-14), including their response examples verbatim.
+format: none
+format_note: >-
+  Regal does NOT use RFC 9457 problem+json. Every documented error is application/json and
+  falls into one of two envelopes, which is itself a finding: an agent cannot write one
+  error handler for the Regal API. The gateway envelope is {"message": "..."} and the
+  application envelope is {"statusCode": <int>, "message": <string|string[]>, "error":
+  "<reason phrase>"}. Validation failures return `message` as an ARRAY of human-readable
+  strings with no machine-readable field pointers or error codes, so a caller cannot map a
+  400 back to a request field programmatically. There is no error `code` vocabulary
+  anywhere in the published contract.
+envelopes:
+  - id: gateway
+    shape: '{"message": "<reason>"}'
+    used_by: [postCustomEvent, listActivePhoneNumbers, listBusinessProfiles, listCampaigns, listDispositions, listBrandedPhoneNumbers, listUsers, sendMessage]
+    note: Emitted by the API Gateway/auth layer. Seen on 401 and on sendMessage 429.
+  - id: application
+    shape: '{"statusCode": <int>, "message": <string|string[]>, "error": "<reason phrase>"}'
+    used_by: [postBrandedPhoneNumber, patchBrandedPhoneNumber, deleteBrandedPhoneNumber, sendMessage]
+    note: >-
+      NestJS-style envelope emitted by the application layer. `message` is an array of
+      validation strings on 400 and a single string on 403/404/409/429.
+problems:
+  - status: 400
+    title: Bad Request
+    envelope: application
+    example_message:
+      - Business profile 8cba47fe-2d84-4476-b9b1-edeb8ad99c3f not found for this brand
+      - businessProfileId must be a UUID
+      - Phone number not in valid status for removal
+      - "Phone number +asdfasdf is not valid"
+      - "channel must be one of the following values: 'sms'"
+      - to should not be empty
+      - "'content' is required when 'campaignId' is not provided."
+    remediation: >-
+      Field-level validation failure. The array entries are the only diagnostic; parse them
+      as prose or pre-validate against the request schema in the OpenAPI.
+    source_operations:
+      - openapi/regal-ai-branded-phone-numbers-api-openapi.yml#postBrandedPhoneNumber
+      - openapi/regal-ai-branded-phone-numbers-api-openapi.yml#patchBrandedPhoneNumber
+      - openapi/regal-ai-branded-phone-numbers-api-openapi.yml#deleteBrandedPhoneNumber
+      - openapi/regal-ai-messages-api-openapi.yml#sendMessage
+  - status: 400
+    title: Bad Request
+    envelope: gateway
+    remediation: >-
+      Malformed request or invalid query parameters. On listUsers Regal documents this as
+      "Invalid query parameters, unknown team, or unknown queue."
+    source_operations:
+      - openapi/regal-ai-events-api-openapi.yml#postCustomEvent
+      - openapi/regal-ai-users-api-openapi.yml#listUsers
+      - openapi/regal-ai-phone-numbers-api-openapi.yml#listActivePhoneNumbers
+      - openapi/regal-ai-business-profiles-api-openapi.yml#listBusinessProfiles
+      - openapi/regal-ai-campaigns-api-openapi.yml#listCampaigns
+      - openapi/regal-ai-dispositions-api-openapi.yml#listDispositions
+      - openapi/regal-ai-branded-phone-numbers-api-openapi.yml#listBrandedPhoneNumbers
+      - openapi/regal-ai-call-handoffs-api-openapi.yml#getCallHandoff
+  - status: 401
+    title: Unauthorized
+    envelope: gateway
+    example: '{"message": "Unauthorized"}'
+    remediation: >-
+      No Authorization header, or a header the gateway cannot parse. Send the API key in
+      the Authorization header on every request (see
+      authentication/regal-ai-authentication.yml). Keys are issued by support@regal.ai.
+    source_operations:
+      - openapi/regal-ai-events-api-openapi.yml#postCustomEvent
+      - openapi/regal-ai-messages-api-openapi.yml#sendMessage
+      - openapi/regal-ai-users-api-openapi.yml#listUsers
+      - openapi/regal-ai-users-api-openapi.yml#getUser
+      - openapi/regal-ai-phone-numbers-api-openapi.yml#listActivePhoneNumbers
+      - openapi/regal-ai-business-profiles-api-openapi.yml#listBusinessProfiles
+      - openapi/regal-ai-campaigns-api-openapi.yml#listCampaigns
+      - openapi/regal-ai-dispositions-api-openapi.yml#listDispositions
+      - openapi/regal-ai-branded-phone-numbers-api-openapi.yml#listBrandedPhoneNumbers
+      - openapi/regal-ai-call-handoffs-api-openapi.yml#getCallHandoff
+  - status: 403
+    title: Forbidden
+    envelope: application
+    example: '{"statusCode": 403, "message": "Invalid API Key", "error": "Forbidden"}'
+    remediation: >-
+      The key was present but is not valid for this brand, or the brand is not entitled to
+      the resource. Regal returns 403 (not 401) for a wrong key on the application-layer
+      endpoints — treat 403 as an auth failure, not an authorization-only failure.
+    source_operations:
+      - openapi/regal-ai-branded-phone-numbers-api-openapi.yml#postBrandedPhoneNumber
+      - openapi/regal-ai-branded-phone-numbers-api-openapi.yml#patchBrandedPhoneNumber
+      - openapi/regal-ai-branded-phone-numbers-api-openapi.yml#deleteBrandedPhoneNumber
+      - openapi/regal-ai-messages-api-openapi.yml#sendMessage
+      - openapi/regal-ai-users-api-openapi.yml#listUsers
+      - openapi/regal-ai-users-api-openapi.yml#getUser
+      - openapi/regal-ai-call-handoffs-api-openapi.yml#getCallHandoff
+  - status: 404
+    title: Not Found
+    envelope: application
+    example: '{"statusCode": 404, "message": "Phone number +12123333333 not found for this brand", "error": "Not Found"}'
+    remediation: >-
+      The addressed resource does not exist within the authenticated brand. Documented
+      variants: "Phone number ... not found for this brand", "User not found for this
+      brand.", "No handoff data found for the given callKey".
+    source_operations:
+      - openapi/regal-ai-branded-phone-numbers-api-openapi.yml#patchBrandedPhoneNumber
+      - openapi/regal-ai-branded-phone-numbers-api-openapi.yml#deleteBrandedPhoneNumber
+      - openapi/regal-ai-users-api-openapi.yml#getUser
+      - openapi/regal-ai-call-handoffs-api-openapi.yml#getCallHandoff
+  - status: 409
+    title: Conflict
+    envelope: application
+    example: '{"statusCode": 409, "message": "Phone number +17378888888 already exists for this brand. Use PATCH to update.", "error": "Conflict"}'
+    remediation: >-
+      POST /brandedPhoneNumbers is first-time registration only. On 409, switch to PATCH
+      /brandedPhoneNumbers/{phoneNumber}. This is the one place Regal's error message
+      carries an explicit next action.
+    source_operations:
+      - openapi/regal-ai-branded-phone-numbers-api-openapi.yml#postBrandedPhoneNumber
+  - status: 429
+    title: Rate Limit Exceeded
+    envelope: application
+    example: '{"statusCode": 429, "message": "Too many requests", "error": "Rate Limit Exceeded"}'
+    remediation: >-
+      Back off and retry. Regal publishes NO rate-limit response headers — no
+      X-RateLimit-*, no RateLimit-*, no Retry-After appears anywhere in the published
+      contract or docs — so a client has no runtime signal of remaining budget and must
+      pace itself against the documented static limits in
+      rate-limits/regal-ai-rate-limits.yml (300 rps on the events ingest, 10 rps on the v1
+      management endpoints).
+    variants:
+      - '{"message": "Too Many Requests"}   # gateway envelope, sendMessage'
+    source_operations:
+      - openapi/regal-ai-messages-api-openapi.yml#sendMessage
+      - openapi/regal-ai-users-api-openapi.yml#listUsers
+      - openapi/regal-ai-users-api-openapi.yml#getUser
+      - openapi/regal-ai-phone-numbers-api-openapi.yml#listActivePhoneNumbers
+      - openapi/regal-ai-business-profiles-api-openapi.yml#listBusinessProfiles
+      - openapi/regal-ai-campaigns-api-openapi.yml#listCampaigns
+      - openapi/regal-ai-dispositions-api-openapi.yml#listDispositions
+      - openapi/regal-ai-branded-phone-numbers-api-openapi.yml#listBrandedPhoneNumbers
+      - openapi/regal-ai-branded-phone-numbers-api-openapi.yml#postBrandedPhoneNumber
+      - openapi/regal-ai-branded-phone-numbers-api-openapi.yml#patchBrandedPhoneNumber
+      - openapi/regal-ai-branded-phone-numbers-api-openapi.yml#deleteBrandedPhoneNumber
+gaps:
+  - No error code vocabulary — errors are identified only by HTTP status plus prose.
+  - Two different error envelopes across one API surface.
+  - No 5xx responses are documented on any operation.
+  - No Retry-After or RateLimit-* headers documented on 429.
+  - No application/problem+json anywhere.

@@ -1,0 +1,85 @@
+generated: '2026-08-14'
+method: searched
+source: >-
+  https://developer.regal.ai/docs/webcall-testing,
+  https://developer.regal.ai/docs/test-logic-chat,
+  https://developer.regal.ai/docs/test-cases-simulation,
+  https://developer.regal.ai/docs/test-knowledge-base,
+  https://developer.regal.ai/docs/saving-and-updating-agents,
+  https://developer.regal.ai/reference/overview
+note: >-
+  Regal ships a substantial testing surface, but it is an AGENT-testing surface, not an
+  API sandbox. There is no test mode, no separate sandbox host, no test/live key prefix
+  pair, and no magic test values of any kind — every documented API call goes to the
+  production host with the production key. What Regal does publish is a full pre-production
+  loop for the AI agents themselves (web calls, chat logic tests, bulk simulation with
+  auto-evaluated success criteria, knowledge-base coverage checks) plus Draft/Active agent
+  versioning so changes can be staged without touching live calls. Recorded honestly:
+  api_sandbox false, agent_sandbox true.
+api_sandbox:
+  available: false
+  test_mode: false
+  test_host: null
+  key_prefixes: null
+  test_values: null
+  detail: >-
+    The docs describe exactly one key ("An API key must be included in the Authorization
+    header for all requests"), issued by emailing support@regal.ai, with no test/live
+    distinction. Nothing in the published OpenAPI or docs marks a sandbox server. An
+    integrator's only safe rehearsal path is a non-production Regal brand, which Regal does
+    not document publicly.
+public_collection:
+  type: postman
+  name: Regal Public Workspace
+  run_url: https://app.getpostman.com/run-collection/17258986-81c59f40-7e22-480e-bb40-aa29250b0e35
+  docs: https://developer.regal.ai/reference/overview
+  note: >-
+    Regal publishes a runnable Postman collection ("Run in Postman") for the Custom Events
+    endpoint so an integrator can fire test events without writing code — but it still runs
+    against production with a real key.
+agent_sandbox:
+  available: true
+  tools:
+    - id: test-audio
+      name: Test Audio (Web calls)
+      docs: https://developer.regal.ai/docs/webcall-testing
+      description: >-
+        Place a web call to the agent from inside the builder before any phone number or
+        routing exists.
+      can_test: [voice sound/speed/volume, responsiveness and interruption handling, conversational logic, RAG responses, custom actions, personalization using test values for dynamic variables]
+      cannot_test: [call transfers, end-to-end telephony latency, personalization from real profile data, routing, dispositions]
+    - id: test-logic
+      name: Test Logic (Web chat)
+      docs: https://developer.regal.ai/docs/test-logic-chat
+      description: Iteratively exercise agent logic over chat while building.
+    - id: simulation
+      name: Simulation Testing
+      docs: https://developer.regal.ai/docs/test-cases-simulation
+      description: >-
+        Bulk automated validation across many test cases before go-live and after live
+        iterations.
+      test_case_fields:
+        - {field: Name, description: Brief identifier for what the case covers.}
+        - {field: Contact Prompt, description: "Prompt defining the simulated contact's behaviour, persona and dialogue."}
+        - {field: Success Criteria, description: Expected agent behaviour, used to drive the auto-eval outcome and per-run stats.}
+        - {field: Test Variable, description: Saved variable values giving the agent context/personalization data for the run.}
+      auto_generation: >-
+        "Get Me Started" auto-generates 10 test cases from the existing agent prompt, but
+        only when no test cases exist yet.
+      can_test: [conversational logic under diverse scenarios, objection and question handling, RAG responses, custom actions triggered during conversation, many scenarios in parallel against one prompt]
+      cannot_test: [voice sound/speed/volume, responsiveness and interruption handling, transfers, end-to-end telephony latency, personalization from real profile data, dispositions]
+      mcp_tools: [fetch-test-cases, create-test-cases, edit-test-case, delete-test-cases, start-simulation-run, get-simulation-progress, fetch-simulation-transcript]
+    - id: knowledge-base-testing
+      name: Knowledge Base Testing
+      docs: https://developer.regal.ai/docs/test-knowledge-base
+      description: Spot-check knowledge bases for coverage gaps.
+staging_model:
+  mechanism: Draft and Active agent versions
+  docs: https://developer.regal.ai/docs/saving-and-updating-agents
+  description: >-
+    Changes are saved as a Draft version and promoted to Active, so an agent can be edited
+    without disrupting live calls, and rolled back to a previous version. MCP write tools
+    only ever save drafts.
+  variants: >-
+    Agent variants with traffic allocation provide live A/B splitting as a second staged
+    rollout mechanism.

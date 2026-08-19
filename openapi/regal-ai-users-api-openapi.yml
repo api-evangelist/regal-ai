@@ -1,0 +1,339 @@
+openapi: 3.1.0
+info:
+  title: Regal Users API
+  version: '1.2'
+  summary: List and retrieve Regal user accounts, including human and AI agents.
+  description: The Users endpoints on the Regal v1 management API (contact-center-apis 1.2) return the user accounts in a
+    brand — both human agents and AI agents — along with their skills, teams, custom attributes and eligible routing queues.
+    List Users supports cursor pagination and filtering by email, skills, teams, queues and custom attributes; Get User looks
+    a single user up by Regal user UUID or exact (URL-encoded) login email. Both are limited to 10 requests per second and
+    return 429 on exhaustion.
+  contact:
+    name: Regal Support
+    email: support@regal.ai
+    url: https://support.regal.ai
+  license:
+    name: Proprietary
+    url: https://www.regal.ai/terms-of-service
+servers:
+- url: https://api.regal.ai/v1
+  description: Production v1 Regal API
+security:
+- ApiKeyAuth: []
+tags:
+- name: Users
+paths:
+  /users:
+    get:
+      responses:
+        '200':
+          description: Users returned successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: 11111111-1111-4111-8111-111111111101
+                        email:
+                          type: string
+                          example: user@example.com
+                        firstName:
+                          type: string
+                          example: Avery
+                        lastName:
+                          type: string
+                          example: User
+                        skills:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              name:
+                                type: string
+                                example: Outbound Call
+                              disabled:
+                                type: boolean
+                        teams:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                example: 22222222-2222-4222-8222-222222222202
+                              name:
+                                type: string
+                                example: Sales Team
+                        customAttributes:
+                          type: object
+                          properties:
+                            tier:
+                              type: string
+                              example: gold
+                            region:
+                              type: string
+                              example: us-east
+                  nextCursor: {}
+              examples:
+                OK:
+                  summary: OK
+                  value:
+                    items:
+                    - id: 11111111-1111-4111-8111-111111111101
+                      email: user@example.com
+                      firstName: Avery
+                      lastName: User
+                      skills:
+                      - name: Outbound Call
+                      teams:
+                      - id: 22222222-2222-4222-8222-222222222202
+                        name: Sales Team
+                      customAttributes:
+                        tier: gold
+                        region: us-east
+                    nextCursor: null
+        '400':
+          description: Invalid query parameters, unknown team, or unknown queue.
+          content: {}
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorized
+              examples:
+                Unauthorized:
+                  summary: Unauthorized
+                  value:
+                    message: Unauthorized
+        '403':
+          description: Forbidden
+          content:
+            text/plain:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                Forbidden:
+                  summary: Forbidden
+                  value: ''
+        '429':
+          description: Rate Limit Exceeded
+          content:
+            text/plain:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                Rate Limit Exceeded:
+                  summary: Rate Limit Exceeded
+                  value: ''
+      parameters:
+      - in: query
+        name: nextCursor
+        schema:
+          type: string
+        description: Cursor returned from the previous response.
+      - in: query
+        name: size
+        schema:
+          type: number
+        description: Number of results per page. Defaults to 25. Maximum 100.
+      - in: query
+        name: email
+        schema:
+          type: string
+        description: Case-insensitive email substring filter.
+      - in: query
+        name: skills
+        schema:
+          type: string
+        description: URL-encoded JSON array of skill names. User must have all listed skills.
+      - in: query
+        name: teams
+        schema:
+          type: string
+        description: URL-encoded JSON array of team names. User must belong to at least one listed team.
+      - in: query
+        name: queues
+        schema:
+          type: string
+        description: URL-encoded JSON array of queue names. User must be eligible for at least one listed queue.
+      - in: query
+        name: customAttributes
+        schema:
+          type: string
+        description: URL-encoded JSON object of custom attribute key-value filters. Values may be strings, numbers, booleans,
+          or null.
+      - in: header
+        name: accept
+        schema:
+          type: string
+          default: application/json
+        description: ''
+      summary: List Users
+      description: Retrieve a list of your users.
+      x-readme:
+        code-samples:
+        - code: "curl --request GET \\\n  --url 'https://api.regal.ai/v1/users?size=25&skills=%5B%22Outbound%20Call%22%5D&customAttributes=%7B%22tier%22%3A%22gold%22%7D'\
+            \ \\\n  --header 'Authorization: YOUR_REGAL_API_KEY' \\\n  --header 'accept: application/json'"
+          language: shell
+          name: ''
+        samples-languages:
+        - shell
+      operationId: listUsers
+      tags:
+      - Users
+  /users/{userIdOrEmail}:
+    get:
+      responses:
+        '200':
+          description: User returned successfully.
+          content:
+            application/json:
+              examples:
+                OK:
+                  summary: OK
+                  value:
+                    id: 11111111-1111-4111-8111-111111111101
+                    email: user@example.com
+                    firstName: Avery
+                    lastName: User
+                    skills:
+                    - name: Outbound Call
+                    teams:
+                    - id: 22222222-2222-4222-8222-222222222202
+                      name: Sales Team
+                    customAttributes:
+                      tier: gold
+                    eligibleQueues:
+                    - id: 33333333-3333-4333-8333-333333333303
+                      name: Sales Queue
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: 11111111-1111-4111-8111-111111111101
+                  email:
+                    type: string
+                    example: user@example.com
+                  firstName:
+                    type: string
+                    example: Avery
+                  lastName:
+                    type: string
+                    example: User
+                  skills:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          example: Outbound Call
+                        disabled:
+                          type: boolean
+                  teams:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: 22222222-2222-4222-8222-222222222202
+                        name:
+                          type: string
+                          example: Sales Team
+                  customAttributes:
+                    type: object
+                    properties:
+                      tier:
+                        type: string
+                        example: gold
+                  eligibleQueues:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: 33333333-3333-4333-8333-333333333303
+                        name:
+                          type: string
+                          example: Sales Queue
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    default: Unauthorized
+                required:
+                - message
+        '403':
+          description: Forbidden
+          content:
+            text/plain:
+              schema:
+                type: object
+                properties: {}
+        '404':
+          description: User not found for this brand.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '429':
+          description: Rate Limit Exceeded
+          content:
+            text/plain:
+              schema:
+                type: object
+                properties: {}
+      parameters:
+      - in: path
+        name: userIdOrEmail
+        schema:
+          type: string
+        required: true
+        description: Regal user UUID or exact login email.
+      - in: header
+        name: accept
+        schema:
+          type: string
+          default: application/json
+      operationId: getUser
+      summary: Get User
+      description: Retrieve a single user by Regal user UUID or exact login email.
+      x-readme:
+        code-samples:
+        - code: "curl --request GET \\\n  --url 'https://api.regal.ai/v1/users/user%40example.com' \\\n  --header 'Authorization:\
+            \ YOUR_REGAL_API_KEY' \\\n  --header 'accept: application/json'"
+          language: shell
+          name: ''
+        samples-languages:
+        - shell
+      tags:
+      - Users
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization

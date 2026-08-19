@@ -1,0 +1,38 @@
+generated: '2026-08-14'
+method: generated
+source: >-
+  Generated from the OpenAPI 3.1.0 definitions Regal publishes inline on
+  https://developer.regal.ai/reference/* (harvested to openapi/), plus
+  conventions/regal-ai-conventions.yml and errors/regal-ai-problem-types.yml. Every
+  operationId referenced below was verified against the specs in this repo. Regal publishes
+  no AGENTS.md or skill files of its own on its public docs; its MCP server exposes an
+  internal "Skills" registry (`list-regal-skills`) whose bodies are not public.
+skills:
+  - file: regal-ai-ingest-contact-and-event.md
+    name: Ingest a Regal contact and event
+    description: >-
+      Create or update a contact profile and record a custom event through the Custom
+      Events ingest endpoint, with correct identity resolution and per-identifier consent.
+    api: openapi/regal-ai-events-api-openapi.yml
+    operations: [postCustomEvent]
+  - file: regal-ai-register-branded-phone-number.md
+    name: Register a branded phone number with carriers
+    description: >-
+      Register an outbound number for branded caller ID and spam remediation against a
+      business profile, track per-carrier status, update it, and remove it.
+    api: openapi/regal-ai-branded-phone-numbers-api-openapi.yml
+    operations: [listBusinessProfiles, listBrandedPhoneNumbers, postBrandedPhoneNumber, patchBrandedPhoneNumber, deleteBrandedPhoneNumber]
+  - file: regal-ai-send-sms.md
+    name: Send an SMS through Regal
+    description: >-
+      Send an outbound SMS from a Regal-provisioned number, with or without a campaign,
+      honouring per-phone opt-in — and why the send is not safely retryable.
+    api: openapi/regal-ai-messages-api-openapi.yml
+    operations: [listActivePhoneNumbers, listCampaigns, sendMessage, postCustomEvent]
+  - file: regal-ai-resolve-call-handoff.md
+    name: Resolve a Regal AI call handoff
+    description: >-
+      Retrieve the routing decision and call context after a Regal AI voice agent leaves a
+      live call, and resolve the destination against Regal users and dispositions.
+    api: openapi/regal-ai-call-handoffs-api-openapi.yml
+    operations: [getCallHandoff, listUsers, getUser, listDispositions]

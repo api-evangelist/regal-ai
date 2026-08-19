@@ -1,0 +1,64 @@
+generated: '2026-08-14'
+method: searched
+source: >-
+  https://developer.regal.ai/docs/deploy-chat-agent,
+  https://developer.regal.ai/docs/deploy-webrtc-agents-headless-mode,
+  https://developer.regal.ai/docs/embed-regal-anywhere,
+  https://developer.regal.ai/docs/chrome-extension
+note: >-
+  Regal's client-side surface is unusually large relative to its REST surface. There are
+  two distinct families: the Conversations SDK (a browser widget that puts a Regal AI chat
+  or WebRTC voice agent on the customer's own site) and the Agent Desktop embed (Regal's
+  own operator UI dropped into another product as an iframe, with a postMessage channel).
+  Neither is distributed through a package registry — see packages/regal-ai-packages.yml.
+families:
+  - family: Conversations SDK (Regal Widget)
+    kind: web-widget
+    loader: https://cdn.regal.io/conversations-sdk/production/regal-widget.js
+    global: window.RegalWidget
+    versioning: unpinned — the loader resolves at runtime to a dated build directory
+    channels: [chat, webrtc-voice]
+    install: '<script src="https://cdn.regal.io/conversations-sdk/production/regal-widget.js"></script>'
+    initialization: window.RegalWidget.init({ ... })
+    modes:
+      - mode: standard
+        description: Regal renders and controls the chat / click-to-talk widget UI on the page.
+        docs: https://developer.regal.ai/docs/deploy-chat-agent
+      - mode: headless
+        description: >-
+          The customer renders their own UI and drives the voice session directly, so a
+          Regal WebRTC voice agent runs inside the customer's product without Regal chrome.
+        docs: https://developer.regal.ai/docs/deploy-webrtc-agents-headless-mode
+    api_surface:
+      - {method: 'window.RegalWidget.init(config)', description: Initialise the widget.}
+      - {method: 'window.RegalWidget.updateContactPhone(phone)', description: Bind the session to a contact phone number.}
+      - {method: 'window.RegalWidget.updateContactEmail(email)', description: Bind the session to a contact email.}
+      - {method: 'window.RegalWidget.updateAgentId(agentUuid)', description: Switch the widget to a different AI agent.}
+      - {method: 'window.RegalWidget.voice.startInteraction()', description: Start a WebRTC voice interaction (headless mode).}
+      - {method: 'window.RegalWidget.voice.stopInteraction()', description: Stop the voice interaction.}
+      - {method: 'window.RegalWidget.setVisible(true|false)', description: Show or hide the widget.}
+    events:
+      - {event: RegalWidgetLoaded, target: window, description: Dispatched by the loader once the resolved widget build has loaded.}
+  - family: Agent Desktop embed
+    kind: iframe
+    description: >-
+      Regal's Agent Desktop embedded as an iframe inside another application so operators
+      work in a single pane of glass, with a window.postMessage channel in both directions
+      for contact context and events.
+    docs: https://developer.regal.ai/docs/embed-regal-anywhere
+    prebuilt_targets:
+      - {target: Salesforce, docs: 'https://developer.regal.ai/docs/how-to-enable-regal-dialer-widget-in-salesforce'}
+      - {target: Kustomer, docs: 'https://developer.regal.ai/docs/kustomer-1'}
+      - {target: Retool, docs: 'https://developer.regal.ai/docs/retool'}
+      - {target: Universal (any web platform), docs: 'https://developer.regal.ai/docs/embed-regal-anywhere'}
+    integration_pattern: bidirectional window.postMessage between host page and the Regal iframe
+  - family: Browser extension
+    kind: chrome-extension
+    description: >-
+      A compact version of the Regal app as a Chrome extension so agents can communicate
+      with contacts while working across browser tabs.
+    docs: https://developer.regal.ai/docs/chrome-extension
+summary:
+  families: 3
+  registry_published: 0
+  cdn_loaders: 1

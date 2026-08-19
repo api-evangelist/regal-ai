@@ -1,0 +1,165 @@
+openapi: 3.1.0
+info:
+  title: Regal Call Handoffs API
+  version: '1.2'
+  summary: Retrieve routing instructions and call metadata after a Regal AI agent leaves a live call.
+  description: The Call Handoff endpoint on the Regal v1 management API (contact-center-apis 1.2) returns the routing decision
+    and call context recorded when a Regal AI voice agent hands a live call off. The response carries route.type (skill, external,
+    agent or hangup), route.value, route.reason, static meta.* fields from the integration and transfer-destination configuration,
+    task.* attributes including the task SID, and definedContactData.* values collected by Set Contact Data actions in the
+    Agent Builder. Regal documents this endpoint as currently enabled only for inbound calls connected through the Five9 AI
+    Agent Connect integration, and limits it to 10 requests per second.
+  contact:
+    name: Regal Support
+    email: support@regal.ai
+    url: https://support.regal.ai
+  license:
+    name: Proprietary
+    url: https://www.regal.ai/terms-of-service
+servers:
+- url: https://api.regal.ai/v1
+  description: Production v1 Regal API
+security:
+- ApiKeyAuth: []
+tags:
+- name: Call Handoffs
+paths:
+  /callHandoffs/{callKey}:
+    get:
+      responses:
+        '200':
+          description: A Call Handoff
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  route.type:
+                    type: string
+                    example: skill
+                    description: Five 9 Exclusive
+                    enum:
+                    - skill
+                    - external
+                    - agent
+                    - hangup
+                  route.value:
+                    type: string
+                    example: support-queue
+                    description: Five 9 Exclusive - When "route.type" is hangup, it can be "agent_hangup", "user_hangup",
+                      "error". When it's a transfer, it will be the Five9 skill name, phone number or agent username that
+                      matches the selected route type
+                  route.reason:
+                    type: string
+                    example: AI routed
+                    description: Five 9 Exclusive - On transfers, it will be your defined Transfer Destination reason, on
+                      hangups, it will be another descriptors on what happened.
+                  meta.*:
+                    type: string
+                    example: high
+                    description: Static metadata fields added to the integration configuration and the transfer destination
+                      configuration (if the call ended with a cold transfer)
+                  task.*:
+                    type: string
+                    example: five9-session-abc123
+                    description: The related task attributes, plus the task SID
+                  definedContactData.*:
+                    type: string
+                    example: Jane
+                    description: The Defined Contact Data that was made available to the agent, with the variables collected
+                      through a "Set Contact Data" action, in the Agent Builder
+              examples:
+                OK:
+                  summary: OK
+                  value:
+                    route.type: skill
+                    route.value: support-queue
+                    route.reason: AI routed
+                    meta.priority: high
+                    task.incomingSipHeaders.X-CallSessionId: five9-session-abc123
+                    task.direction: inbound
+                    task.sid: WT123
+                    definedContactData.firstName: Jane
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                required:
+                - message
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                required:
+                - message
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  Message:
+                    type: string
+                required:
+                - Message
+        '404':
+          description: No handoff data found for the given callKey
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    default: '"No handoff data found for the given callKey"'
+                required:
+                - message
+      parameters:
+      - in: path
+        name: callKey
+        schema:
+          type: string
+        required: true
+        description: External call identifier. For Five9 AI Agent Connect, this is the value of the X-CallSessionId SIP header
+          Five9 sent on the original call to Regal.
+      - in: query
+        name: provider
+        schema:
+          type: string
+          enum:
+          - five9
+          default: five9
+        required: true
+        description: Provider response format. Only five9 is currently supported.
+      summary: Call Handoff
+      operationId: getCallHandoff
+      description: Retrieve routing instructions and call metadata after a Regal AI agent leaves a live call.
+      x-readme:
+        code-samples:
+        - code: 'curl -X GET "https://api.regal.ai/v1/callHandoffs/five9-session-abc123?provider=five9" \
+
+            --header ''Authorization: YOUR API KEY'''
+          language: shell
+          name: ''
+        samples-languages:
+        - shell
+      x-internal: false
+      tags:
+      - Call Handoffs
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization

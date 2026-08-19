@@ -1,0 +1,119 @@
+generated: '2026-08-14'
+method: searched
+source: >-
+  openapi/ (this repo), well-known/regal-ai-well-known.yml,
+  https://developer.regal.ai/docs/regal-mcp, https://developer.regal.ai/docs/okta-scim,
+  https://developer.regal.ai/docs/okta-sso, https://www.regal.ai/security,
+  https://trust.regal.ai
+standards:
+  - id: openapi-3.1
+    conforms: true
+    evidence: >-
+      Regal publishes OpenAPI 3.1.0 documents inline on every
+      https://developer.regal.ai/reference/* page (info.title contact-center-apis 1.2 and
+      regal-voice-api 1.2), harvested to openapi/_original/.
+  - id: asyncapi
+    conforms: false
+    evidence: >-
+      Regal documents 40+ reporting webhook event types in prose but publishes no AsyncAPI
+      document. asyncapi/regal-reporting-webhooks-asyncapi.yml in this repo is an API
+      Evangelist derivation from that documentation, not a provider artifact.
+  - id: oauth2
+    conforms: true
+    scope: mcp
+    evidence: >-
+      https://mcp.regal.ai/.well-known/oauth-authorization-server returns authorization_code
+      + refresh_token grants with PKCE S256. The REST APIs use an API key only.
+  - id: rfc8414-oauth-authorization-server-metadata
+    conforms: true
+    evidence: https://mcp.regal.ai/.well-known/oauth-authorization-server returned HTTP 200 (probed 2026-08-14).
+  - id: rfc9728-oauth-protected-resource-metadata
+    conforms: true
+    evidence: >-
+      The MCP endpoint's 401 carries WWW-Authenticate ... resource_metadata=
+      "https://mcp.regal.ai/.well-known/oauth-protected-resource/v1/external-mcp/mcp",
+      which returns HTTP 200 with resource + authorization_servers.
+  - id: rfc7636-pkce
+    conforms: true
+    evidence: code_challenge_methods_supported = ["S256"] in the authorization-server metadata.
+  - id: rfc7591-dynamic-client-registration
+    conforms: true
+    evidence: registration_endpoint https://mcp.regal.ai/v1/external-mcp/register advertised in metadata.
+  - id: oidc-discovery
+    conforms: true
+    scope: mcp
+    evidence: https://mcp.regal.ai/.well-known/openid-configuration returned HTTP 200 (probed 2026-08-14).
+  - id: mcp
+    conforms: true
+    evidence: >-
+      Hosted remote MCP server at https://mcp.regal.ai/v1/external-mcp/mcp, documented at
+      https://developer.regal.ai/docs/regal-mcp with 60 published tools; an unauthenticated
+      tools/list returns the correct MCP OAuth challenge.
+  - id: a2a
+    conforms: false
+    evidence: >-
+      No agent card. /.well-known/agent-card.json and /.well-known/agent.json miss on every
+      Regal host (404 or 403; app.regal.io answers 200 with an SPA HTML shell for every
+      path, which is not a card).
+  - id: scim2
+    conforms: true
+    evidence: >-
+      Okta SCIM provisioning for Regal user management is documented at
+      https://developer.regal.ai/docs/okta-scim. Not exposed as a public /scim/v2 API.
+  - id: saml2
+    conforms: true
+    evidence: >-
+      SAML SSO via Okta, plus Google and Azure SSO
+      (https://developer.regal.ai/docs/okta-sso, /google-sso, /azure-sso).
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: >-
+      No application/problem+json anywhere. Two ad-hoc JSON error envelopes; see
+      errors/regal-ai-problem-types.yml.
+  - id: rfc8594-sunset-header
+    conforms: false
+    evidence: No Sunset/Deprecation header support and no deprecation policy published.
+  - id: rfc9116-security-txt
+    conforms: false
+    evidence: /.well-known/security.txt returns 404 or 403 on every Regal host.
+  - id: rfc9110-idempotent-methods
+    conforms: partial
+    evidence: >-
+      No client-supplied idempotency key on any write operation; POST /messages/send is not
+      safely retryable. See conventions/regal-ai-conventions.yml.
+  - id: cursor-pagination
+    conforms: true
+    evidence: nextCursor + size on every list operation across both published specs.
+  - id: rate-limit-headers
+    conforms: false
+    evidence: >-
+      429 is returned on exhaustion but no X-RateLimit-*, RateLimit-* or Retry-After header
+      is documented.
+  - id: llms-txt
+    conforms: true
+    evidence: >-
+      https://developer.regal.ai/llms.txt returns HTTP 200 with a real llms.txt index
+      (saved verbatim to llms/regal-ai-llms.txt); https://www.regal.ai/llms.txt also 200.
+      Every docs page additionally serves a .md twin.
+  - id: webrtc
+    conforms: true
+    evidence: WebRTC voice agents including a headless mode for customer-rendered UIs.
+compliance:
+  published: true
+  page: https://www.regal.ai/security
+  trust_center: https://trust.regal.ai
+  certifications:
+    - {name: SOC 2, status: certified, evidence: 'https://www.regal.ai/security — "including SOC2 certification"'}
+    - {name: HIPAA, status: claimed, evidence: 'https://www.regal.ai/security navigation — "SOC2, HIPAA, GDPR, CCPA, Privacy, DPA & TCPA"'}
+    - {name: GDPR, status: adherence, evidence: 'https://www.regal.ai/security — "we adhere to relevant standards including GDPR and CCPA"'}
+    - {name: CCPA, status: adherence, evidence: https://www.regal.ai/security}
+    - {name: TCPA, status: program, evidence: 'Regal gates journey-triggered outbound calls and SMS on per-identifier opt-in; TCPA named on the security page.'}
+  data_processing_addendum: https://www.regal.ai/dpa
+  ai_data_use: >-
+    Regal states customer data is not used for LLM training (recorded in apis.yml features
+    and in https://developer.regal.ai/page/privacy-security).
+  detail: security/regal-ai-trust-center.yml
+regulatory_context:
+  - {regime: TCPA, relevance: outbound calling and SMS consent, surface: 'per-phone voiceOptIn / smsOptIn, per-email emailOptIn'}
+  - {regime: HIPAA, relevance: healthcare voice agents, surface: BAA/compliance program}
+  - {regime: STIR/SHAKEN + branded caller ID, relevance: 'carrier registration of outbound numbers', surface: 'POST/PATCH /brandedPhoneNumbers carrierFeatures'}

@@ -3,7 +3,10 @@ info:
   title: Regal Branded Phone Numbers API
   version: '1.0'
   summary: Register, update, and remove branded caller ID and spam remediation entries.
-  description: Branded Phone Numbers in Regal control how a tenant's outbound numbers appear on recipients' devices via carrier-level branded caller ID and spam remediation. Each registration ties a phoneNumber to a businessProfileId and a carrierFeatures array describing which features (spamRemediation or brandedCallerId) are enabled per carrier. POST is used for first-time registration only; PATCH is used for partial updates; DELETE removes a registration once all carrier submissions are inactive.
+  description: Branded Phone Numbers in Regal control how a tenant's outbound numbers appear on recipients' devices via carrier-level
+    branded caller ID and spam remediation. Each registration ties a phoneNumber to a businessProfileId and a carrierFeatures
+    array describing which features (spamRemediation or brandedCallerId) are enabled per carrier. POST is used for first-time
+    registration only; PATCH is used for partial updates; DELETE removes a registration once all carrier submissions are inactive.
   contact:
     name: Regal Support
     email: support@regal.ai
@@ -21,6 +24,261 @@ tags:
   description: Carrier-level branded caller ID and spam remediation
 paths:
   /brandedPhoneNumbers:
+    get:
+      summary: List Branded Phone Numbers
+      description: Retrieve a list of phone numbers submitted for branding and/or spam remediation.
+      operationId: listBrandedPhoneNumbers
+      parameters:
+      - name: nextCursor
+        in: query
+        description: Used for pagination to retrieve the next page of data. Optional
+        schema:
+          type: string
+      - name: size
+        in: query
+        description: Specific the number of results per page, up to 100.
+        schema:
+          type: string
+          default: '25'
+      - name: phoneNumber
+        in: query
+        description: Filter by exact phone number (E.164 format, e.g., "%2B15551234567") - supports only one value at a time,
+          not multiple. Optional
+        schema:
+          type: string
+      - name: businessProfileId
+        in: query
+        description: Filter by business profile UUID - supports only one value at a time, not multiple. You can retrieve your
+          business profile uuid by making a GET request to businessProfiles. Optional
+        schema:
+          type: string
+      - name: carrier
+        in: query
+        description: Filter by carrier. Optional
+        schema:
+          type: string
+          enum:
+          - AT%26T
+          - T-Mobile
+          - Verizon
+      - name: feature
+        in: query
+        description: Filter by feature. Optional
+        schema:
+          type: string
+          enum:
+          - brandedCallerId
+          - spamRemediation
+      - name: status
+        in: query
+        description: Filter by phone number level status. Optional
+        schema:
+          type: string
+          enum:
+          - submitted for review
+          - approved
+          - rejected
+          - unregistered
+      - name: detailedStatus
+        in: query
+        description: Filter by carrier/feature level status. Optional
+        schema:
+          type: string
+          enum:
+          - pending.initialOptIn
+          - pending.optIn
+          - approved.optIn
+          - rejected.optIn
+          - submitted.optOut
+          - pending.optOut
+          - approved.optOut
+          - rejected.optOut
+      - name: internalName
+        in: query
+        description: Filter by internal name. Optional
+        schema:
+          type: string
+      - name: reportingGroup
+        in: query
+        description: Filter by reporting group. Optional
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Response Data:
+                  value: "{\n    \"items\": [\n        {\n            \"id\": \"xxxx-xxx-xxxx-xxxx-xxxx\",\n            \"\
+                    phoneNumber\": \"+1555123456\",\n            \"businessProfile\": {\n                \"id\": \"zzzzz-zzzz-zzzzzz-zzzz-zzzz\"\
+                    ,\n                \"businessName\": \"Circle Bank\",\n                \"status\": \"approved\"\n    \
+                    \        },\n            \"internalName\": \"Mortgage Sales Line\",\n            \"brandingNameShort\"\
+                    : \"Circle Bank\",\n            \"brandingNameLong\": \"Circle Bank Financial\",\n            \"reportingGroup\"\
+                    : \"Control\",\n            \"status\": \"submitted for review\",\n            \"carrierStatuses\": [\n\
+                    \                {\n                    \"carrier\": \"T-Mobile\",\n                    \"feature\": \"\
+                    brandedCallerId\",\n                    \"detailedStatus\": \"pending.initialOptIn\",\n              \
+                    \      \"createdAt\": \"2026-02-03T16:49:03.043Z\"\n                },\n                {\n          \
+                    \          \"carrier\": \"T-Mobile\",\n                    \"feature\": \"spamRemediation\",\n       \
+                    \             \"detailedStatus\": \"pending.initialOptIn\",\n                    \"createdAt\": \"2026-02-03T16:49:03.043Z\"\
+                    \n                },\n                {\n                    \"carrier\": \"Verizon\",\n             \
+                    \       \"feature\": \"brandedCallerId\",\n                    \"detailedStatus\": \"pending.initialOptIn\"\
+                    ,\n                    \"createdAt\": \"2026-02-03T16:49:03.043Z\"\n                },\n             \
+                    \   {\n                    \"carrier\": \"Verizon\",\n                    \"feature\": \"spamRemediation\"\
+                    ,\n                    \"detailedStatus\": \"approved.optIn\",\n                    \"createdAt\": \"\
+                    2026-02-05T18:51:51.868Z\"\n                },\n                {\n                    \"carrier\": \"\
+                    AT&T\",\n                    \"feature\": \"brandedCallerId\",\n                    \"detailedStatus\"\
+                    : \"pending.initialOptIn\",\n                    \"createdAt\": \"2026-02-03T16:49:03.043Z\"\n       \
+                    \         },\n                {\n                    \"carrier\": \"AT&T\",\n                    \"feature\"\
+                    : \"spamRemediation\",\n                    \"detailedStatus\": \"approved.optIn\",\n                \
+                    \    \"createdAt\": \"2026-02-05T18:31:30.590Z\"\n                }\n            ],\n            \"createdAt\"\
+                    : \"2026-02-03T16:49:02.748Z\",\n            \"updatedAt\": \"2026-02-03T16:49:02.748Z\"\n        },\n\
+                    \        {\n            \"id\": \"yyyy-xxx-xxxx-xxxx-xxxx\",\n            \"phoneNumber\": \"+1555123456\"\
+                    ,\n            \"businessProfile\": {\n                \"id\": \"zzzzz-zzzz-zzzzzz-zzzz-zzzz\",\n    \
+                    \            \"businessName\": \"Circle Bank\",\n                \"status\": \"approved\"\n          \
+                    \  },\n            \"internalName\": \"Circle Bank Main Line\",\n            \"brandingNameShort\": \"\
+                    Circle Bank\",\n            \"brandingNameLong\": \"Circle Bank Financial\",\n            \"reportingGroup\"\
+                    : \"Control\",\n            \"status\": \"approved\",\n            \"carrierStatuses\": [\n          \
+                    \      {\n                    \"carrier\": \"T-Mobile\",\n                    \"feature\": \"brandedCallerId\"\
+                    ,\n                    \"detailedStatus\": \"approved.optIn\",\n                    \"createdAt\": \"\
+                    2026-02-03T16:49:03.043Z\"\n                },\n                {\n                    \"carrier\": \"\
+                    T-Mobile\",\n                    \"feature\": \"spamRemediation\",\n                    \"detailedStatus\"\
+                    : \"approved.optInn\",\n                    \"createdAt\": \"2026-02-03T16:49:03.043Z\"\n            \
+                    \    },\n                {\n                    \"carrier\": \"Verizon\",\n                    \"feature\"\
+                    : \"brandedCallerId\",\n                    \"detailedStatus\": \"approved.optInn\",\n               \
+                    \     \"createdAt\": \"2026-02-03T16:49:03.043Z\"\n                },\n                {\n           \
+                    \         \"carrier\": \"Verizon\",\n                    \"feature\": \"spamRemediation\",\n         \
+                    \           \"detailedStatus\": \"approved.optIn\",\n                    \"createdAt\": \"2026-02-05T18:51:51.886Z\"\
+                    \n                },\n                {\n                    \"carrier\": \"AT&T\",\n                \
+                    \    \"feature\": \"brandedCallerId\",\n                    \"detailedStatus\": \"approved.optIn\",\n\
+                    \                    \"createdAt\": \"2026-02-03T16:49:03.043Z\"\n                },\n               \
+                    \ {\n                    \"carrier\": \"AT&T\",\n                    \"feature\": \"spamRemediation\"\
+                    ,\n                    \"detailedStatus\": \"approved.optIn\",\n                    \"createdAt\": \"\
+                    2026-02-05T18:31:30.604Z\"\n                }\n            ],\n            \"createdAt\": \"2026-02-03T16:49:02.748Z\"\
+                    ,\n            \"updatedAt\": \"2026-02-03T16:49:02.748Z\"\n        }\n    ],\n    \"nextCursor\": \"\
+                    xyz456\"\n}"
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: xxxx-xxx-xxxx-xxxx-xxxx
+                        phoneNumber:
+                          type: string
+                          example: '+1555123456'
+                        businessProfile:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              example: zzzzz-zzzz-zzzzzz-zzzz-zzzz
+                            businessName:
+                              type: string
+                              example: Circle Bank
+                            status:
+                              type: string
+                              example: approved
+                        internalName:
+                          type: string
+                          example: Mortgage Sales Line
+                        brandingNameShort:
+                          type: string
+                          example: Circle Bank
+                        brandingNameLong:
+                          type: string
+                          example: Circle Bank Financial
+                        reportingGroup:
+                          type: string
+                          example: Control
+                        status:
+                          type: string
+                          example: submitted for review
+                        carrierStatuses:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              carrier:
+                                type: string
+                                example: T-Mobile
+                              feature:
+                                type: string
+                                example: brandedCallerId
+                              detailedStatus:
+                                type: string
+                                example: pending.initialOptIn
+                              createdAt:
+                                type: string
+                                example: '2026-02-03T16:49:03.043Z'
+                        createdAt:
+                          type: string
+                          example: '2026-02-03T16:49:02.748Z'
+                        updatedAt:
+                          type: string
+                          example: '2026-02-03T16:49:02.748Z'
+                  nextCursor:
+                    type: string
+                    example: xyz456
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                Bad Request:
+                  value: "{\n    \"message\": \"Bad Request\"\n}"
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Bad Request
+        '401':
+          description: '401'
+          content:
+            application/json:
+              examples:
+                Unauthorized:
+                  value: "{\n    \"message\": \"Unauthorized\"\n}"
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorized
+        '403':
+          description: '403'
+          content:
+            application/json:
+              examples:
+                Forbidden:
+                  value: "{\n    \"message\": \"Forbidden\"\n}"
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Forbidden
+        '429':
+          description: '429'
+          content:
+            application/json:
+              examples:
+                Rate Limit Exceeded:
+                  value: "{\n    \"message\": \"Rate Limit Exceeded\"\n}"
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Rate Limit Exceeded
+      deprecated: false
+      tags:
+      - Branded Phone Numbers
     post:
       summary: Post Branded Phone Number
       operationId: postBrandedPhoneNumber
@@ -86,7 +344,8 @@ paths:
     delete:
       summary: Delete Branded Phone Number
       operationId: deleteBrandedPhoneNumber
-      description: Remove a branded phone number registration. Phone numbers with active carrier submissions cannot be deleted; opt out of all carrier features and wait for approval before retrying.
+      description: Remove a branded phone number registration. Phone numbers with active carrier submissions cannot be deleted;
+        opt out of all carrier features and wait for approval before retrying.
       tags:
       - Branded Phone Numbers
       responses:

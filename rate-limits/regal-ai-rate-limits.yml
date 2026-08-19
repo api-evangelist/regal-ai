@@ -1,3 +1,14 @@
+generated: '2026-08-14'
+method: searched
+source: https://developer.regal.ai/reference/overview
+limit_count: 8
+response_headers: []
+response_headers_note: >-
+  Regal publishes NO rate-limit response headers — no X-RateLimit-*, no RateLimit-*, no
+  Retry-After appears in any published OpenAPI response or docs page. Exhaustion is
+  signalled only by HTTP 429 with a JSON body. A client has no runtime budget signal and
+  must pace itself against the static documented limits below.
+status_on_exhaustion: 429
 rateLimits: 0.1
 provider: regal-ai
 description: >-
@@ -11,6 +22,10 @@ sources:
   - https://developer.regal.ai/reference/post-branded-phone-number
   - https://developer.regal.ai/reference/send-message
   - https://developer.regal.ai/docs/reporting-webhooks
+  - https://developer.regal.ai/reference/list-users
+  - https://developer.regal.ai/reference/get-user
+  - https://developer.regal.ai/reference/call-handoff
+  - https://developer.regal.ai/reference/branded-phone-numbers
 policies:
   - id: events-ingest
     api: regal-events-api
@@ -73,3 +88,23 @@ policies:
     description: >-
       Endpoint or event filter changes take up to 5 minutes to propagate due
       to caching.
+  - id: users
+    api: regal-ai-users-api
+    scope: per-tenant
+    limit: 10
+    unit: requests
+    window: 1s
+    enforcement: 429
+    description: >-
+      GET /users and GET /users/{userIdOrEmail} are each documented at 10 requests per
+      second. Exceeding returns 429 Rate Limit Exceeded.
+  - id: call-handoffs
+    api: regal-ai-call-handoffs-api
+    scope: per-tenant
+    limit: 10
+    unit: requests
+    window: 1s
+    enforcement: 429
+    description: >-
+      GET /callHandoffs/{callKey} is documented at 10 requests per second. Exceeding
+      returns 429 Rate Limit Exceeded.

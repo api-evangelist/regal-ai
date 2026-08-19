@@ -1,0 +1,202 @@
+generated: '2026-08-14'
+method: derived
+source: >-
+  openapi/_original/regal-contact-center-apis-openapi.yml and
+  openapi/_original/regal-voice-api-openapi.yml (the OpenAPI 3.1.0 documents Regal
+  publishes inline on each https://developer.regal.ai/reference/* page, including their
+  response examples), plus https://developer.regal.ai/reference/overview and
+  https://developer.regal.ai/docs/intro-to-regal-data-model
+note: >-
+  Derived from the published response schemas and examples. Regal's contract is a
+  ONE-DIRECTIONAL data model: the Contact/Event core is write-only over REST (POST /events
+  is the only way in, and there is no public read endpoint for a profile), while the
+  telephony/configuration core is read-only over REST apart from branded phone numbers.
+  The read side of the contact graph exists only over MCP (lookup-profile, fetch-profile,
+  fetch-profile-events) and over the reporting webhooks. Entity ids are UUIDs throughout,
+  with no typed id prefixes.
+id_convention:
+  format: uuid-v4
+  prefixed: false
+  note: >-
+    No Stripe-style typed prefixes. Campaigns additionally carry a human-facing
+    `friendlyId` (a short numeric string) alongside the UUID. Tasks are identified by a SID
+    (e.g. "WT123") in the webhook and MCP surfaces.
+entities:
+  - name: Contact
+    alias: Profile
+    domain: audience
+    write_surface: openapi/regal-ai-events-api-openapi.yml#postCustomEvent
+    read_surface: mcp (lookup-profile, fetch-profile) + reporting webhooks
+    identifiers: [userId, phones, emails]
+    fields: [userId, traits.firstName, traits.lastName, traits.address, traits.phones, traits.emails, 'traits.<custom>']
+    note: >-
+      A contact must be "contactable" — at least one phone or email. Custom traits become
+      contact attributes, cast on first write and immutable in type thereafter.
+  - name: Phone
+    domain: audience
+    parent: Contact
+    fields: [phoneNumber, label, isPrimary, voiceOptIn, smsOptIn]
+    note: Consent lives here, not on the contact. Journey-triggered calls/SMS go only to the primary phone.
+  - name: Email
+    domain: audience
+    parent: Contact
+    fields: [address, label, isPrimary, emailOptIn]
+  - name: Event
+    domain: audience
+    write_surface: openapi/regal-ai-events-api-openapi.yml#postCustomEvent
+    fields: [name, properties, originalTimestamp, eventSource]
+    note: >-
+      Up to 8,000 unique event property names per account. Events without an associated
+      contactable contact cannot trigger a journey.
+  - name: Message
+    domain: messaging
+    write_surface: openapi/regal-ai-messages-api-openapi.yml#sendMessage
+    fields: [to.phoneNumber, to.bypassOptIn, from.phoneNumber, channel, content.body, content.mediaUrls, campaignId]
+    response_fields: [status, message, idempotencyKey]
+  - name: Campaign
+    domain: orchestration
+    read_surface: openapi/regal-ai-campaigns-api-openapi.yml#listCampaigns
+    fields: [id, friendlyId, state, name, type, channel, dialingMode, priority, createdAt, updatedAt]
+    enums:
+      state: [ready, draft]
+      type: [agent-task, automated]
+      channel: [phone_call, sms]
+      dialingMode: [progressive, null]
+  - name: Disposition
+    domain: conversation-intelligence
+    read_surface: openapi/regal-ai-dispositions-api-openapi.yml#listDispositions
+    fields: [id, disposition, description, isSystem, conversationHappened, createdAt, updatedAt]
+  - name: ActivePhoneNumber
+    domain: telephony
+    read_surface: openapi/regal-ai-phone-numbers-api-openapi.yml#listActivePhoneNumbers
+    fields: [id, phoneNumber, internalDisplayName, subBrand, ivrUuid, ivrName, ivrFriendlyId, createdAt, updatedAt]
+  - name: IVR
+    domain: telephony
+    read_surface: none (referenced only)
+    fields: [ivrUuid, ivrName, ivrFriendlyId]
+    note: Referenced from ActivePhoneNumber by id/name but has no endpoint of its own.
+  - name: BusinessProfile
+    domain: branded-caller-id
+    read_surface: openapi/regal-ai-business-profiles-api-openapi.yml#listBusinessProfiles
+    fields: [id, businessName, status, taxId, industry, size, streetAddress, city, state, postalCode, country, businessProfileDBAs, createdAt, updatedAt, createdBy, updatedBy]
+  - name: BusinessProfileDBA
+    domain: branded-caller-id
+    parent: BusinessProfile
+    fields: [id, createdAt, updatedAt, createdBy, updatedBy]
+  - name: BrandedPhoneNumber
+    domain: branded-caller-id
+    read_surface: openapi/regal-ai-branded-phone-numbers-api-openapi.yml#listBrandedPhoneNumbers
+    write_surface:
+      - openapi/regal-ai-branded-phone-numbers-api-openapi.yml#postBrandedPhoneNumber
+      - openapi/regal-ai-branded-phone-numbers-api-openapi.yml#patchBrandedPhoneNumber
+      - openapi/regal-ai-branded-phone-numbers-api-openapi.yml#deleteBrandedPhoneNumber
+    fields: [id, phoneNumber, businessProfile, internalName, brandingNameShort, brandingNameLong, reportingGroup, status, carrierStatuses]
+  - name: CarrierStatus
+    domain: branded-caller-id
+    parent: BrandedPhoneNumber
+    fields: [carrier, feature, detailedStatus, createdAt]
+    enums:
+      feature: [brandedCallerId, spamRemediation]
+    note: >-
+      One row per (carrier, feature) pair. This is where the real registration lifecycle
+      lives — the parent record's `status` is a rollup of these.
+  - name: User
+    domain: workforce
+    read_surface:
+      - openapi/regal-ai-users-api-openapi.yml#listUsers
+      - openapi/regal-ai-users-api-openapi.yml#getUser
+    fields: [id, email, firstName, lastName, skills, teams, queues, customAttributes]
+    note: Covers both human agents and AI agents.
+  - name: Skill
+    domain: workforce
+    parent: User
+    fields: [name, disabled]
+    note: '`disabled` appears only when the skill is saved on the user but inactive for routing.'
+  - name: Team
+    domain: workforce
+    fields: [id, name]
+  - name: Queue
+    domain: routing
+    read_surface: mcp (list-queues)
+    note: Referenced as a User's eligible queues over REST; only listable over MCP.
+  - name: Task
+    domain: routing
+    read_surface: mcp (list-tasks, fetch-task, get-task-events) + reporting webhooks
+    identifier: SID
+    note: Not exposed over public REST at all, but appears in CallHandoff as task.* attributes.
+  - name: CallHandoff
+    domain: routing
+    read_surface: openapi/regal-ai-call-handoffs-api-openapi.yml#getCallHandoff
+    key: callKey
+    fields: ['route.type', 'route.value', 'route.reason', 'meta.*', 'task.*', 'definedContactData.*']
+    enums:
+      route.type: [skill, external, agent, hangup]
+    note: Currently Five9 AI Agent Connect only.
+  - name: AIAgent
+    domain: agent-builder
+    read_surface: mcp (list-ai-agents, fetch-agent, fetch-agent-version)
+    write_surface: mcp (create-agent, edit-agent)
+    note: No REST surface. Versioned (draft/active/deactivated) with variants and traffic allocation.
+  - name: AgentVariant
+    domain: agent-builder
+    parent: AIAgent
+    read_surface: mcp (list-ai-agent-variants, list-ai-agent-versions)
+  - name: Journey
+    domain: orchestration
+    read_surface: mcp (list-journeys, fetch-journey, list-journey-versions)
+    note: No REST surface.
+  - name: JourneyExecution
+    domain: orchestration
+    read_surface: mcp (list-profile-journey-executions, get-profile-journey-execution-nodes)
+  - name: Recording
+    domain: conversation-intelligence
+    read_surface: mcp (list-recordings, fetch-recording-transcripts) + reporting webhooks
+  - name: AnalysisDataPoint
+    domain: conversation-intelligence
+    read_surface: mcp (list-analysis-data-points)
+  - name: TestCase
+    domain: testing
+    read_surface: mcp (fetch-test-cases)
+  - name: SimulationRun
+    domain: testing
+    read_surface: mcp (get-simulation-progress, fetch-simulation-transcript)
+relationships:
+  - {from: Contact, to: Phone, type: has_many, via: traits.phones}
+  - {from: Contact, to: Email, type: has_many, via: traits.emails}
+  - {from: Contact, to: Event, type: has_many, via: identity resolution (userId | phone | email)}
+  - {from: Contact, to: JourneyExecution, type: has_many, via: profileId}
+  - {from: Event, to: Contact, type: belongs_to, via: 'userId / phones / emails (precedence: phone > email > userId)'}
+  - {from: Message, to: Campaign, type: belongs_to, via: campaignId}
+  - {from: Message, to: Phone, type: belongs_to, via: to.phoneNumber}
+  - {from: BrandedPhoneNumber, to: BusinessProfile, type: belongs_to, via: businessProfile.id}
+  - {from: BrandedPhoneNumber, to: CarrierStatus, type: has_many, via: carrierStatuses}
+  - {from: BusinessProfile, to: BusinessProfileDBA, type: has_many, via: businessProfileDBAs}
+  - {from: ActivePhoneNumber, to: IVR, type: has_one, via: ivrUuid}
+  - {from: User, to: Skill, type: has_many, via: skills}
+  - {from: User, to: Team, type: has_many, via: teams}
+  - {from: User, to: Queue, type: has_many, via: queues}
+  - {from: CallHandoff, to: Task, type: has_one, via: task.sid}
+  - {from: CallHandoff, to: Queue, type: references, via: 'route.value when route.type = skill'}
+  - {from: Task, to: Queue, type: belongs_to, via: queue}
+  - {from: AIAgent, to: AgentVariant, type: has_many, via: variant}
+  - {from: AIAgent, to: TestCase, type: has_many, via: agent}
+  - {from: SimulationRun, to: TestCase, type: has_many, via: run}
+  - {from: Recording, to: Task, type: belongs_to, via: task sid}
+  - {from: JourneyExecution, to: Journey, type: belongs_to, via: journeyId}
+domains:
+  - {id: audience, entities: [Contact, Phone, Email, Event]}
+  - {id: messaging, entities: [Message]}
+  - {id: orchestration, entities: [Campaign, Journey, JourneyExecution]}
+  - {id: telephony, entities: [ActivePhoneNumber, IVR]}
+  - {id: branded-caller-id, entities: [BusinessProfile, BusinessProfileDBA, BrandedPhoneNumber, CarrierStatus]}
+  - {id: workforce, entities: [User, Skill, Team]}
+  - {id: routing, entities: [Queue, Task, CallHandoff]}
+  - {id: agent-builder, entities: [AIAgent, AgentVariant]}
+  - {id: conversation-intelligence, entities: [Disposition, Recording, AnalysisDataPoint]}
+  - {id: testing, entities: [TestCase, SimulationRun]}
+coverage:
+  entities_total: 24
+  rest_readable: 9
+  rest_writable: 5
+  mcp_only: 12
+  webhook_only: 0

@@ -1,0 +1,60 @@
+generated: '2026-08-14'
+method: probed
+source: https://mcp.regal.ai/.well-known/oauth-authorization-server
+docs: https://developer.regal.ai/docs/regal-mcp
+note: >-
+  Regal's REST APIs are API-key only and have no scope surface at all — the OpenAPI
+  securityScheme is a single apiKey in the Authorization header, and derive-oauth-scopes.py
+  correctly finds zero oauth2 schemes across every spec in this repo. The OAuth surface
+  belongs entirely to the hosted MCP server at mcp.regal.ai, which advertises RFC 8414
+  authorization-server metadata anonymously. The scopes below are read verbatim from that
+  metadata; they are OIDC identity scopes, not Regal permission scopes. Authorization is
+  brand-scoped by the authenticated Okta identity rather than by requested scope, so there
+  is no per-resource scope catalogue to capture. Do not read this file as evidence of a
+  fine-grained permission model — it is evidence of an OIDC login boundary in front of 60
+  MCP tools.
+applies_to: mcp/regal-ai-mcp.yml
+schemes:
+  - name: RegalMCPOAuth
+    type: oauth2
+    source: https://mcp.regal.ai/.well-known/oauth-authorization-server
+    issuer: https://mcp.regal.ai/
+    identity_provider: Okta
+    dynamic_client_registration: https://mcp.regal.ai/v1/external-mcp/register
+    code_challenge_methods: [S256]
+    token_endpoint_auth_methods: [client_secret_post, client_secret_basic]
+    flows:
+      - flow: authorizationCode
+        authorizationUrl: https://mcp.regal.ai/v1/external-mcp/authorize
+        tokenUrl: https://mcp.regal.ai/v1/external-mcp/token
+        revocationUrl: https://mcp.regal.ai/v1/external-mcp/revoke
+      - flow: refreshToken
+        tokenUrl: https://mcp.regal.ai/v1/external-mcp/token
+scopes:
+  - scope: openid
+    description: OIDC authentication of the Regal user behind the MCP client.
+    flows: [authorizationCode]
+    sources: [https://mcp.regal.ai/.well-known/oauth-authorization-server]
+  - scope: profile
+    description: Basic profile claims for the authenticated Regal user.
+    flows: [authorizationCode]
+    sources: [https://mcp.regal.ai/.well-known/oauth-authorization-server]
+  - scope: email
+    description: Email claim for the authenticated Regal user.
+    flows: [authorizationCode]
+    sources: [https://mcp.regal.ai/.well-known/oauth-authorization-server]
+  - scope: offline_access
+    description: Refresh-token issuance so the MCP client can keep a session without re-prompting.
+    flows: [authorizationCode, refreshToken]
+    sources: [https://mcp.regal.ai/.well-known/oauth-authorization-server]
+resource:
+  resource: https://mcp.regal.ai/v1/external-mcp/mcp
+  authorization_servers: [https://mcp.regal.ai/]
+  bearer_methods_supported: [header]
+  source: https://mcp.regal.ai/.well-known/oauth-protected-resource/v1/external-mcp/mcp
+authorization_model:
+  boundary: brand
+  detail: >-
+    Regal states every MCP tool is scoped to the authenticated brand and that no
+    cross-tenant access is possible. Write tools additionally require explicit human
+    approval at the client and only save drafts.

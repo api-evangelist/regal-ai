@@ -1,0 +1,1009 @@
+{
+  "item": [
+    {
+      "id": "04f16825-5d45-4eaa-b02f-fed712541c8c",
+      "name": "Branded Phone Numbers",
+      "description": {
+        "content": "Carrier-level branded caller ID and spam remediation",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "8589f7d1-0db4-496e-84d7-7607e2c5107b",
+          "name": "Post Branded Phone Number",
+          "request": {
+            "name": "Post Branded Phone Number",
+            "description": {
+              "content": "Register a new branded phone number with one or more carriers.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "brandedPhoneNumbers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phoneNumber\": \"<string>\",\n  \"businessProfileId\": \"<string>\",\n  \"carrierFeatures\": [\n    {\n      \"carrier\": \"<string>\",\n      \"spamRemediation\": \"<boolean>\",\n      \"brandedCallerId\": \"<boolean>\",\n      \"status\": \"<string>\"\n    },\n    {\n      \"carrier\": \"<string>\",\n      \"spamRemediation\": \"<boolean>\",\n      \"brandedCallerId\": \"<boolean>\",\n      \"status\": \"<string>\"\n    }\n  ],\n  \"brandingNameShort\": \"<string>\",\n  \"brandingNameLong\": \"<string>\",\n  \"internalName\": \"<string>\",\n  \"reportingGroup\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c0f00c9b-2d15-4cb7-9708-0d41204c5ec0",
+              "name": "Phone number registered.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "brandedPhoneNumbers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"phoneNumber\": \"<string>\",\n  \"businessProfileId\": \"<string>\",\n  \"carrierFeatures\": [\n    {\n      \"carrier\": \"string\",\n      \"spamRemediation\": true,\n      \"brandedCallerId\": false,\n      \"status\": \"string\"\n    },\n    {\n      \"carrier\": \"string\",\n      \"spamRemediation\": false,\n      \"brandedCallerId\": false,\n      \"status\": \"string\"\n    }\n  ],\n  \"brandingNameShort\": \"<string>\",\n  \"brandingNameLong\": \"<string>\",\n  \"internalName\": \"<string>\",\n  \"reportingGroup\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"phoneNumber\": \"string\",\n  \"businessProfileId\": \"string\",\n  \"brandingNameShort\": \"string\",\n  \"brandingNameLong\": \"string\",\n  \"internalName\": \"string\",\n  \"reportingGroup\": \"string\",\n  \"carrierFeatures\": [\n    {\n      \"carrier\": \"string\",\n      \"spamRemediation\": false,\n      \"brandedCallerId\": false,\n      \"status\": \"string\"\n    },\n    {\n      \"carrier\": \"string\",\n      \"spamRemediation\": true,\n      \"brandedCallerId\": true,\n      \"status\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7ea306f8-31a5-4073-938a-b93a1f4cbe88",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "brandedPhoneNumbers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"phoneNumber\": \"<string>\",\n  \"businessProfileId\": \"<string>\",\n  \"carrierFeatures\": [\n    {\n      \"carrier\": \"string\",\n      \"spamRemediation\": true,\n      \"brandedCallerId\": false,\n      \"status\": \"string\"\n    },\n    {\n      \"carrier\": \"string\",\n      \"spamRemediation\": false,\n      \"brandedCallerId\": false,\n      \"status\": \"string\"\n    }\n  ],\n  \"brandingNameShort\": \"<string>\",\n  \"brandingNameLong\": \"<string>\",\n  \"internalName\": \"<string>\",\n  \"reportingGroup\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d8c7b90b-0c0d-4114-b17a-a9ddcc7b6d77",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "brandedPhoneNumbers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"phoneNumber\": \"<string>\",\n  \"businessProfileId\": \"<string>\",\n  \"carrierFeatures\": [\n    {\n      \"carrier\": \"string\",\n      \"spamRemediation\": true,\n      \"brandedCallerId\": false,\n      \"status\": \"string\"\n    },\n    {\n      \"carrier\": \"string\",\n      \"spamRemediation\": false,\n      \"brandedCallerId\": false,\n      \"status\": \"string\"\n    }\n  ],\n  \"brandingNameShort\": \"<string>\",\n  \"brandingNameLong\": \"<string>\",\n  \"internalName\": \"<string>\",\n  \"reportingGroup\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "70293edb-e0de-40d3-8c82-0bd7efbfc837",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "brandedPhoneNumbers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"phoneNumber\": \"<string>\",\n  \"businessProfileId\": \"<string>\",\n  \"carrierFeatures\": [\n    {\n      \"carrier\": \"string\",\n      \"spamRemediation\": true,\n      \"brandedCallerId\": false,\n      \"status\": \"string\"\n    },\n    {\n      \"carrier\": \"string\",\n      \"spamRemediation\": false,\n      \"brandedCallerId\": false,\n      \"status\": \"string\"\n    }\n  ],\n  \"brandingNameShort\": \"<string>\",\n  \"brandingNameLong\": \"<string>\",\n  \"internalName\": \"<string>\",\n  \"reportingGroup\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ec5115a4-aefb-41d7-a9e9-36cab6290fbc",
+              "name": "Rate Limit Exceeded (10 RPS)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "brandedPhoneNumbers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"phoneNumber\": \"<string>\",\n  \"businessProfileId\": \"<string>\",\n  \"carrierFeatures\": [\n    {\n      \"carrier\": \"string\",\n      \"spamRemediation\": true,\n      \"brandedCallerId\": false,\n      \"status\": \"string\"\n    },\n    {\n      \"carrier\": \"string\",\n      \"spamRemediation\": false,\n      \"brandedCallerId\": false,\n      \"status\": \"string\"\n    }\n  ],\n  \"brandingNameShort\": \"<string>\",\n  \"brandingNameLong\": \"<string>\",\n  \"internalName\": \"<string>\",\n  \"reportingGroup\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bc560f95-e38e-48db-95ca-2f6333916cd2",
+          "name": "Patch Branded Phone Number",
+          "request": {
+            "name": "Patch Branded Phone Number",
+            "description": {
+              "content": "Partially update a branded phone number registration.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "brandedPhoneNumbers",
+                ":phoneNumber"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "phoneNumber",
+                  "description": "(Required) The branded phone number identifier (E.164)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"businessProfileId\": \"<string>\",\n  \"carrierFeatures\": [\n    {\n      \"carrier\": \"<string>\",\n      \"spamRemediation\": \"<boolean>\",\n      \"brandedCallerId\": \"<boolean>\",\n      \"status\": \"<string>\"\n    },\n    {\n      \"carrier\": \"<string>\",\n      \"spamRemediation\": \"<boolean>\",\n      \"brandedCallerId\": \"<boolean>\",\n      \"status\": \"<string>\"\n    }\n  ],\n  \"brandingNameShort\": \"<string>\",\n  \"brandingNameLong\": \"<string>\",\n  \"internalName\": \"<string>\",\n  \"reportingGroup\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6dbf5303-99ae-49e6-8ea0-14ea55ae526e",
+              "name": "Successfully updated phone number.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "brandedPhoneNumbers",
+                    ":phoneNumber"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "phoneNumber",
+                      "description": "(Required) The branded phone number identifier (E.164)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"businessProfileId\": \"<string>\",\n  \"carrierFeatures\": [\n    {\n      \"carrier\": \"string\",\n      \"spamRemediation\": false,\n      \"brandedCallerId\": true,\n      \"status\": \"string\"\n    },\n    {\n      \"carrier\": \"string\",\n      \"spamRemediation\": false,\n      \"brandedCallerId\": true,\n      \"status\": \"string\"\n    }\n  ],\n  \"brandingNameShort\": \"<string>\",\n  \"brandingNameLong\": \"<string>\",\n  \"internalName\": \"<string>\",\n  \"reportingGroup\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"phoneNumber\": \"string\",\n  \"businessProfileId\": \"string\",\n  \"brandingNameShort\": \"string\",\n  \"brandingNameLong\": \"string\",\n  \"internalName\": \"string\",\n  \"reportingGroup\": \"string\",\n  \"carrierFeatures\": [\n    {\n      \"carrier\": \"string\",\n      \"spamRemediation\": false,\n      \"brandedCallerId\": false,\n      \"status\": \"string\"\n    },\n    {\n      \"carrier\": \"string\",\n      \"spamRemediation\": true,\n      \"brandedCallerId\": true,\n      \"status\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5b6cd64f-38f8-4659-a185-e465a1ca4a63",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "brandedPhoneNumbers",
+                    ":phoneNumber"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "phoneNumber",
+                      "description": "(Required) The branded phone number identifier (E.164)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"businessProfileId\": \"<string>\",\n  \"carrierFeatures\": [\n    {\n      \"carrier\": \"string\",\n      \"spamRemediation\": false,\n      \"brandedCallerId\": true,\n      \"status\": \"string\"\n    },\n    {\n      \"carrier\": \"string\",\n      \"spamRemediation\": false,\n      \"brandedCallerId\": true,\n      \"status\": \"string\"\n    }\n  ],\n  \"brandingNameShort\": \"<string>\",\n  \"brandingNameLong\": \"<string>\",\n  \"internalName\": \"<string>\",\n  \"reportingGroup\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f387d0ca-a0b8-414b-809e-ef423f412c9d",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "brandedPhoneNumbers",
+                    ":phoneNumber"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "phoneNumber",
+                      "description": "(Required) The branded phone number identifier (E.164)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"businessProfileId\": \"<string>\",\n  \"carrierFeatures\": [\n    {\n      \"carrier\": \"string\",\n      \"spamRemediation\": false,\n      \"brandedCallerId\": true,\n      \"status\": \"string\"\n    },\n    {\n      \"carrier\": \"string\",\n      \"spamRemediation\": false,\n      \"brandedCallerId\": true,\n      \"status\": \"string\"\n    }\n  ],\n  \"brandingNameShort\": \"<string>\",\n  \"brandingNameLong\": \"<string>\",\n  \"internalName\": \"<string>\",\n  \"reportingGroup\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6a62623b-c015-4b74-aeda-09fa308458a7",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "brandedPhoneNumbers",
+                    ":phoneNumber"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "phoneNumber",
+                      "description": "(Required) The branded phone number identifier (E.164)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"businessProfileId\": \"<string>\",\n  \"carrierFeatures\": [\n    {\n      \"carrier\": \"string\",\n      \"spamRemediation\": false,\n      \"brandedCallerId\": true,\n      \"status\": \"string\"\n    },\n    {\n      \"carrier\": \"string\",\n      \"spamRemediation\": false,\n      \"brandedCallerId\": true,\n      \"status\": \"string\"\n    }\n  ],\n  \"brandingNameShort\": \"<string>\",\n  \"brandingNameLong\": \"<string>\",\n  \"internalName\": \"<string>\",\n  \"reportingGroup\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1abb0dee-d03b-4d9b-9018-f978875cd7c8",
+              "name": "Rate Limit Exceeded (10 RPS)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "brandedPhoneNumbers",
+                    ":phoneNumber"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "phoneNumber",
+                      "description": "(Required) The branded phone number identifier (E.164)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"businessProfileId\": \"<string>\",\n  \"carrierFeatures\": [\n    {\n      \"carrier\": \"string\",\n      \"spamRemediation\": false,\n      \"brandedCallerId\": true,\n      \"status\": \"string\"\n    },\n    {\n      \"carrier\": \"string\",\n      \"spamRemediation\": false,\n      \"brandedCallerId\": true,\n      \"status\": \"string\"\n    }\n  ],\n  \"brandingNameShort\": \"<string>\",\n  \"brandingNameLong\": \"<string>\",\n  \"internalName\": \"<string>\",\n  \"reportingGroup\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d16389a8-b79f-4d99-8af3-fb23d0257bce",
+          "name": "Delete Branded Phone Number",
+          "request": {
+            "name": "Delete Branded Phone Number",
+            "description": {
+              "content": "Remove a branded phone number registration. Phone numbers with active carrier submissions cannot be deleted; opt out of all carrier features and wait for approval before retrying.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "brandedPhoneNumbers",
+                ":phoneNumber"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "phoneNumber",
+                  "description": "(Required) The branded phone number identifier (E.164)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7af63839-bf01-47f3-8f8b-2b647525aeae",
+              "name": "Phone number deleted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "brandedPhoneNumbers",
+                    ":phoneNumber"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "phoneNumber",
+                      "description": "(Required) The branded phone number identifier (E.164)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "96099cd1-6172-49b9-81d5-556bf64f0a3d",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "brandedPhoneNumbers",
+                    ":phoneNumber"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "phoneNumber",
+                      "description": "(Required) The branded phone number identifier (E.164)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "69452c86-5e70-4508-b5bb-23bf50baa6b7",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "brandedPhoneNumbers",
+                    ":phoneNumber"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "phoneNumber",
+                      "description": "(Required) The branded phone number identifier (E.164)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1c545ebd-42f3-46ef-a673-139760df793d",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "brandedPhoneNumbers",
+                    ":phoneNumber"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "phoneNumber",
+                      "description": "(Required) The branded phone number identifier (E.164)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6fb741e8-d27f-4b98-815e-c7a85b4132f7",
+              "name": "Rate Limit Exceeded (10 RPS)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "brandedPhoneNumbers",
+                    ":phoneNumber"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "phoneNumber",
+                      "description": "(Required) The branded phone number identifier (E.164)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.regal.ai/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "c55c4a51-f224-46ff-8103-a84cce7c0deb",
+    "name": "Regal Branded Phone Numbers API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Branded Phone Numbers in Regal control how a tenant's outbound numbers appear on recipients' devices via carrier-level branded caller ID and spam remediation. Each registration ties a phoneNumber to a businessProfileId and a carrierFeatures array describing which features (spamRemediation or brandedCallerId) are enabled per carrier. POST is used for first-time registration only; PATCH is used for partial updates; DELETE removes a registration once all carrier submissions are inactive.\n\nContact Support:\n Name: Regal Support\n Email: support@regal.ai",
+      "type": "text/plain"
+    }
+  }
+}

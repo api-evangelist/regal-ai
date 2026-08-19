@@ -1,0 +1,37 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Regal Branded Phone Numbers Business Profiles API
+  version: 1.0.0
+extends: openapi/regal-ai-business-profiles-api-openapi.yml
+actions:
+- target: $.info
+  update:
+    x-apievangelist-profile: https://apis.io/providers/regal-ai
+    x-apievangelist-source: OpenAPI 3.1.0 published inline by Regal on https://developer.regal.ai/reference/* (contact-center-apis
+      1.2 / regal-voice-api 1.2)
+    x-apievangelist-artifacts:
+      authentication: authentication/regal-ai-authentication.yml
+      conventions: conventions/regal-ai-conventions.yml
+      errors: errors/regal-ai-problem-types.yml
+      rate-limits: rate-limits/regal-ai-rate-limits.yml
+      lifecycle: lifecycle/regal-ai-lifecycle.yml
+      data-model: data-model/regal-ai-data-model.yml
+      mcp: mcp/regal-ai-mcp.yml
+      skills: skills/_index.yml
+- target: $.info
+  update:
+    x-agent-readiness:
+      idempotency: none — no client-supplied idempotency key on any operation
+      error-format: ad-hoc JSON; not RFC 9457
+      rate-limit-headers: none published; 429 body only
+      pagination: cursor (nextCursor + size)
+- target: $.servers
+  update:
+  - url: https://api.regal.ai/v1
+    description: Production
+- target: $.paths['/businessProfiles'].get
+  update:
+    x-apievangelist-operation:
+      id: listBusinessProfiles
+      surface: Business profiles
+      retry-safe: true

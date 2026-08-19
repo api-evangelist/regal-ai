@@ -1,0 +1,125 @@
+generated: '2026-08-14'
+method: searched
+source: https://www.regal.io/category/whats-new
+also: https://www.regal.ai/blog
+feed: https://www.regal.ai/blog/rss.xml
+scheme: dated-monthly
+current_api_version: v1
+current_document_version: '1.2'
+note: >-
+  Regal publishes product release notes as a dated monthly series on its marketing site
+  ("What's New" / "<Month> <Year> Releases"), not as an API changelog. There is no
+  developer-facing changelog on developer.regal.ai — https://developer.regal.ai/changelog
+  and https://www.regal.ai/changelog both return 404 — and no entry states whether a change
+  is breaking at the API level. The entries below are the recent window, summarised from
+  the provider's own posts (mirrored in blogs/); highlights are the platform changes that
+  touch an integration surface, not the full marketing list. `breaking` is recorded as
+  `not-stated` throughout because Regal never says.
+cadence: monthly
+entries:
+  - version: '2026-07'
+    date: '2026-07-13'
+    title: July 2026 Product Recap
+    url: https://www.regal.ai/blog/july-2026
+    breaking: not-stated
+    highlights:
+      - Dynamic Voices — agent adjusts speaking pace mid-call on contact request.
+      - Copilot extended to IVR and disposition management.
+  - version: '2026-06'
+    date: '2026-06-12'
+    title: Real-Time Observability Across Every AI Agent
+    url: https://www.regal.ai/blog/real-time-observability-across-every-ai-agent
+    breaking: not-stated
+    highlights:
+      - Real-time call observability metrics across agents (latency, errors, interruptions, quality signals).
+  - version: '2026-06'
+    date: '2026-06-10'
+    title: 'Extend what your team can build, see, and improve with Regal MCP'
+    url: https://www.regal.ai/blog/regal-mcp
+    breaking: not-stated
+    integration_surface: true
+    highlights:
+      - >-
+        Regal MCP launched — a hosted remote Model Context Protocol server at
+        https://mcp.regal.ai/v1/external-mcp/mcp with OAuth via Okta, exposing 60 tools to
+        Claude, Cursor, ChatGPT and Codex. The single largest addition to Regal's
+        integration surface in this window; see mcp/regal-ai-mcp.yml.
+  - version: '2026-05'
+    date: '2026-06-08'
+    title: May 2026 Releases
+    url: https://www.regal.ai/blog/may-2026-releases
+    breaking: not-stated
+    integration_surface: true
+    highlights:
+      - Regal MCP and platform extensions that let team members take Regal actions from tools like Claude.
+  - version: '2026-04'
+    date: '2026-05-13'
+    title: April 2026 Releases
+    url: https://www.regal.ai/blog/april-2026-releases
+    breaking: not-stated
+    integration_surface: true
+    highlights:
+      - >-
+        Headless WebRTC — embed Regal voice agents inside your own product UI via the
+        Conversations SDK widget loader; see components/regal-ai-components.yml.
+      - Copilot performs more troubleshooting autonomously.
+  - version: '2026-04'
+    date: '2026-04-08'
+    title: 'Announcing Copilot: Continuous Agent Improvement'
+    url: https://www.regal.ai/blog/announcing-copilot
+    breaking: not-stated
+    highlights:
+      - Copilot released for AI-assisted agent design, tuning and continuous improvement.
+  - version: '2026-03'
+    date: '2026-04-13'
+    title: March 2026 Releases
+    url: https://www.regal.ai/blog/march-2026-releases
+    breaking: not-stated
+    highlights:
+      - Copilot-driven build/launch/improve loop shortened for agent development.
+  - version: '2026-02'
+    date: '2026-03-12'
+    title: February 2026 Releases
+    url: https://www.regal.ai/blog/february-2026-releases
+    breaking: not-stated
+    highlights:
+      - More natural multi-step conversations with conditional logic in the agent builder.
+  - version: '2026-01'
+    date: '2026-02-19'
+    title: January 2026 Releases
+    url: https://www.regal.ai/blog/january-2026-releases
+    breaking: not-stated
+    highlights:
+      - Expanded language reach and contextual intelligence for agent conversations.
+  - version: '2026-01'
+    date: '2026-01-27'
+    title: 'Introducing WebRTC Voice: Click to Talk, Right From Your Website'
+    url: https://www.regal.ai/blog/introducing-webrtc-voice-click-to-talk-right-from-your-website
+    breaking: not-stated
+    integration_surface: true
+    highlights:
+      - WebRTC click-to-talk voice agent embeddable on a customer website.
+  - version: '2025-12'
+    date: '2026-01-14'
+    title: December 2025 Releases
+    url: https://www.regal.ai/blog/december-2025-releases
+    breaking: not-stated
+    integration_surface: true
+    highlights:
+      - New embeddable website widget for chat and WebRTC.
+      - Additional platform observability features.
+  - version: '2025-11'
+    date: '2025-12-08'
+    title: November 2025 Releases
+    url: https://www.regal.ai/blog/november-2025-releases
+    breaking: not-stated
+    highlights:
+      - Dialer pacing aligned to downstream agent capacity for transfer-heavy flows.
+      - More reliable post-call data extraction and disposition outcomes.
+gaps:
+  - No developer-facing API changelog; release notes live on the marketing site only.
+  - No entry marks a change as breaking or non-breaking.
+  - >-
+    Changes to the published OpenAPI (the /users, /callHandoffs and GET /brandedPhoneNumbers
+    operations that appeared on developer.regal.ai during 2026) are not announced in the
+    release notes at all.

@@ -1,0 +1,102 @@
+generated: '2026-08-14'
+method: probed
+source: live GET of /.well-known/* on every Regal host named in apis.yml and OpenAPI servers[]
+note: >-
+  Three real discovery documents were returned, all of them on the Regal MCP host
+  (mcp.regal.ai) which fronts the remote Model Context Protocol server documented at
+  https://developer.regal.ai/docs/regal-mcp. The REST API hosts (api.regal.ai,
+  events.regalvoice.com) are API Gateway surfaces that answer 403 "Missing Authentication
+  Token"/"Forbidden" for every path including /.well-known/*, so nothing can be read there
+  anonymously. www.regal.ai returns a 404 "Invalid .well-known request" page and
+  developer.regal.ai (ReadMe-hosted docs) returns 404. app.regal.io is a single-page
+  application whose catch-all answers HTTP 200 with the same HTML shell for EVERY
+  /.well-known/* path — those are recorded as html-shell misses, not documents.
+hosts:
+  - host: https://mcp.regal.ai
+    documents:
+      - path: /.well-known/oauth-authorization-server   # RFC 8414
+        status: 200
+        content_type: application/json
+        file: regal-ai-oauth-authorization-server.json
+      - path: /.well-known/openid-configuration          # OIDC discovery
+        status: 200
+        content_type: application/json
+        file: regal-ai-openid-configuration.json
+      - path: /.well-known/oauth-protected-resource/v1/external-mcp/mcp  # RFC 9728
+        status: 200
+        content_type: application/json
+        file: regal-ai-oauth-protected-resource.json
+        note: >-
+          Advertised by the MCP endpoint itself in its 401 WWW-Authenticate
+          resource_metadata parameter. The bare /.well-known/oauth-protected-resource
+          path returns 404; the resource-suffixed path is the served one.
+      - path: /.well-known/oauth-protected-resource
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+      - path: /.well-known/security.txt
+        status: 404
+  - host: https://api.regal.ai
+    note: AWS API Gateway; every path returns 403 {"message":"Missing Authentication Token"}
+    documents:
+      - {path: /.well-known/security.txt, status: 403}
+      - {path: /.well-known/openid-configuration, status: 403}
+      - {path: /.well-known/oauth-authorization-server, status: 403}
+      - {path: /.well-known/oauth-protected-resource, status: 403}
+      - {path: /.well-known/api-catalog, status: 403}
+      - {path: /.well-known/ai-plugin.json, status: 403}
+      - {path: /.well-known/agent-card.json, status: 403}
+      - {path: /.well-known/agent.json, status: 403}
+  - host: https://events.regalvoice.com
+    note: AWS API Gateway; every path returns 403 {"message":"Forbidden"}
+    documents:
+      - {path: /.well-known/security.txt, status: 403}
+      - {path: /.well-known/openid-configuration, status: 403}
+      - {path: /.well-known/oauth-authorization-server, status: 403}
+      - {path: /.well-known/oauth-protected-resource, status: 403}
+      - {path: /.well-known/api-catalog, status: 403}
+      - {path: /.well-known/ai-plugin.json, status: 403}
+      - {path: /.well-known/agent-card.json, status: 403}
+      - {path: /.well-known/agent.json, status: 403}
+  - host: https://www.regal.ai
+    documents:
+      - {path: /.well-known/security.txt, status: 404}
+      - {path: /.well-known/openid-configuration, status: 404}
+      - {path: /.well-known/oauth-authorization-server, status: 404}
+      - {path: /.well-known/oauth-protected-resource, status: 404}
+      - {path: /.well-known/api-catalog, status: 404}
+      - {path: /.well-known/ai-plugin.json, status: 404}
+      - {path: /.well-known/agent-card.json, status: 404}
+      - {path: /.well-known/agent.json, status: 404}
+  - host: https://developer.regal.ai
+    documents:
+      - {path: /.well-known/security.txt, status: 404}
+      - {path: /.well-known/openid-configuration, status: 404}
+      - {path: /.well-known/oauth-authorization-server, status: 404}
+      - {path: /.well-known/oauth-protected-resource, status: 404}
+      - {path: /.well-known/api-catalog, status: 404}
+      - {path: /.well-known/ai-plugin.json, status: 404}
+      - {path: /.well-known/agent-card.json, status: 404}
+      - {path: /.well-known/agent.json, status: 404}
+  - host: https://app.regal.io
+    note: >-
+      SPA catch-all. Every path returned HTTP 200 with the same text/html application
+      shell (<!doctype html><html lang="en"> ... ). None of these is a document; they are
+      recorded as html-shell so a later run does not mistake the 200s for discovery hits.
+    documents:
+      - {path: /.well-known/security.txt, status: 200, body: html-shell, document: false}
+      - {path: /.well-known/openid-configuration, status: 200, body: html-shell, document: false}
+      - {path: /.well-known/oauth-authorization-server, status: 200, body: html-shell, document: false}
+      - {path: /.well-known/oauth-protected-resource, status: 200, body: html-shell, document: false}
+      - {path: /.well-known/api-catalog, status: 200, body: html-shell, document: false}
+      - {path: /.well-known/ai-plugin.json, status: 200, body: html-shell, document: false}
+      - {path: /.well-known/agent-card.json, status: 200, body: html-shell, document: false}
+      - {path: /.well-known/agent.json, status: 200, body: html-shell, document: false}
+summary:
+  documents_found: 3
+  security_txt: false
+  agent_card: false
+  api_catalog: false
+  oauth_metadata: true
