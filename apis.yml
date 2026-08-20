@@ -16,6 +16,24 @@ description: >-
   Segment, mParticle, HubSpot, Salesforce, Zendesk, Kustomer, Klaviyo, Braze, Marketo, Customer.io, Iterable, Microsoft
   Dynamics 365, Zoho, Hightouch, Cal.com, Calendly, Snowflake, S3, Slack, Microsoft Teams, Five9, Talkdesk, and 8x8.
 tags:
+  - Artificial Intelligence
+  - AI Agents
+  - Voice AI
+  - Contact Center
+  - Outbound Calling
+  - Inbound Calling
+  - Phone Agents
+  - SMS
+  - Chat
+  - WebRTC
+  - Conversation Intelligence
+  - Journey Orchestration
+  - Branded Caller ID
+  - CCaaS
+  - CPaaS
+  - Sales Dialer
+  - Customer Engagement
+tags_raw:
   - AI
   - AI Agents
   - Voice AI
@@ -57,6 +75,12 @@ apis:
 - aid: regal-ai:regal-reporting-webhooks
   name: Regal Reporting Webhooks
   tags:
+  - Webhook
+  - Event
+  - Reporting
+  - Streaming
+  - AsyncAPI
+  tags_raw:
   - Webhooks
   - Events
   - Reporting
@@ -248,6 +272,8 @@ apis:
   description: Contact creation, update, and custom event tracking
   humanURL: https://developer.regal.ai/reference/api
   tags:
+  - Event
+  tags_raw:
   - Events
   properties:
   - type: OpenAPI
@@ -288,6 +314,8 @@ apis:
   description: The Messages API from Regal — 1 operation(s) for messages.
   humanURL: https://developer.regal.ai/reference/api
   tags:
+  - Message
+  tags_raw:
   - Messages
   properties:
   - type: OpenAPI
@@ -373,6 +401,10 @@ apis:
     email. Both operations are limited to 10 requests per second.
   humanURL: https://developer.regal.ai/reference/list-users
   tags:
+  - User
+  - Workforce
+  - Routing
+  tags_raw:
   - Users
   - Workforce
   - Routing
