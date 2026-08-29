@@ -465,6 +465,9 @@ apis:
     url: skills/regal-ai-resolve-call-handoff.md
     name: Resolve a Regal AI call handoff
 common:
+  - type: CapabilityMap
+    url: capabilities/regal-ai-capability-edges.yml
+    name: Regal Business Capability Map
   - type: PostmanWorkspace
     url: https://www.postman.com/kinlaneapi/regal/overview
   - type: AgenticAccess

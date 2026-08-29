@@ -1,0 +1,36 @@
+slug: regal-ai
+provider: Regal
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Telecommunications
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 2
+edges:
+- tag: Call Handoffs
+  spec_file: regal-ai-call-handoffs-api-openapi.yml
+  capability_id: BC-430.10
+  capability_id_l1: BC-430
+  capability_name: Customer Inquiry Management
+  confidence: 0.7
+  evidence: '"returns the routing decision and call context recorded when a Regal AI voice agent hands
+    a live call off ... route.type (skill, external, agent or hangup)"; "currently enabled only for inbound
+    calls"'
+  reason: The operation exposes routing/handoff decisions for inbound customer calls between AI and human
+    agents — inbound contact routing within customer service, not network-level call routing.
+- tag: Users
+  spec_file: regal-ai-users-api-openapi.yml
+  capability_id: BC-430.30
+  capability_id_l1: BC-430
+  capability_name: Contact Centre Operations Management
+  confidence: 0.7
+  evidence: '"return the user accounts in a brand — both human agents and AI agents — along with their
+    skills, teams, custom attributes and eligible routing queues"'
+  reason: Agent roster with skills, teams and routing-queue eligibility is contact centre agent administration/workforce
+    configuration rather than generic enterprise IAM or HR records.
