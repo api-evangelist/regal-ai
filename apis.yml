@@ -469,6 +469,8 @@ apis:
     url: skills/regal-ai-resolve-call-handoff.md
     name: Resolve a Regal AI call handoff
 common:
+  - type: Website
+    url: https://www.regal.ai/
   - type: CapabilityMap
     url: capabilities/regal-ai-capability-edges.yml
     name: Regal Business Capability Map
