@@ -122,86 +122,6 @@ apis:
     a common envelope (userId, traits, name, eventId, properties, originalTimestamp, eventSource) plus
     event-specific properties. Webhooks must respond within five seconds or the event is dropped (no retries);
     endpoint changes take up to five minutes to propagate.
-- aid: regal-ai:regal-ai-branded-phone-numbers-api
-  name: Regal Branded Phone Numbers API
-  baseURL: https://api.regal.ai/v1
-  description: Carrier-level branded caller ID and spam remediation
-  humanURL: https://developer.regal.ai/reference/api
-  tags:
-  - Branded Phone Numbers
-  properties:
-  - type: OpenAPI
-    url: openapi/regal-ai-branded-phone-numbers-api-openapi.yml
-  - type: Overlay
-    url: overlays/regal-ai-branded-phone-numbers-overlay.yaml
-  - type: Documentation
-    url: https://developer.regal.ai/reference/overview
-  - type: Documentation
-    url: https://developer.regal.ai/reference/api
-  - type: Documentation
-    url: https://developer.regal.ai/docs/send-custom-event-to-regal
-  - type: FAQ
-    url: https://developer.regal.ai/reference/faq
-  - type: JSONSchema
-    url: json-schema/regal-contact-schema.json
-  - type: JSONSchema
-    url: json-schema/regal-event-schema.json
-  - type: JSONLD
-    url: json-ld/regal-ai-context.jsonld
-  - type: Documentation
-    url: https://developer.regal.ai/reference/post-branded-phone-number
-  - type: Documentation
-    url: https://developer.regal.ai/reference/patch-branded-phone-number
-  - type: Documentation
-    url: https://developer.regal.ai/reference/delete-branded-phone-number
-  - type: JSONSchema
-    url: json-schema/regal-branded-phone-number-schema.json
-  - type: ChangeLog
-    url: https://www.regal.ai/blog/january-2025-releases
-  - type: Documentation
-    url: https://developer.regal.ai/reference/send-message
-  - type: JSONSchema
-    url: json-schema/regal-message-schema.json
-- aid: regal-ai:regal-ai-business-profiles-api
-  name: Regal Business Profiles API
-  baseURL: https://api.regal.ai/v1
-  description: The Business Profiles API from Regal — 1 operation(s) for business profiles.
-  humanURL: https://developer.regal.ai/reference/api
-  tags:
-  - Business Profiles
-  properties:
-  - type: OpenAPI
-    url: openapi/regal-ai-business-profiles-api-openapi.yml
-  - type: Overlay
-    url: overlays/regal-ai-business-profiles-overlay.yaml
-  - type: Documentation
-    url: https://developer.regal.ai/reference/overview
-  - type: Documentation
-    url: https://developer.regal.ai/reference/api
-  - type: Documentation
-    url: https://developer.regal.ai/docs/send-custom-event-to-regal
-  - type: FAQ
-    url: https://developer.regal.ai/reference/faq
-  - type: JSONSchema
-    url: json-schema/regal-contact-schema.json
-  - type: JSONSchema
-    url: json-schema/regal-event-schema.json
-  - type: JSONLD
-    url: json-ld/regal-ai-context.jsonld
-  - type: Documentation
-    url: https://developer.regal.ai/reference/post-branded-phone-number
-  - type: Documentation
-    url: https://developer.regal.ai/reference/patch-branded-phone-number
-  - type: Documentation
-    url: https://developer.regal.ai/reference/delete-branded-phone-number
-  - type: JSONSchema
-    url: json-schema/regal-branded-phone-number-schema.json
-  - type: ChangeLog
-    url: https://www.regal.ai/blog/january-2025-releases
-  - type: Documentation
-    url: https://developer.regal.ai/reference/send-message
-  - type: JSONSchema
-    url: json-schema/regal-message-schema.json
 - aid: regal-ai:regal-ai-campaigns-api
   name: Regal Campaigns API
   baseURL: https://api.regal.ai/v1
@@ -366,18 +286,47 @@ apis:
     url: https://developer.regal.ai/reference/send-message
   - type: JSONSchema
     url: json-schema/regal-message-schema.json
-- aid: regal-ai:regal-ai-phone-numbers-api
-  name: Regal Phone Numbers API
+- aid: regal-ai:regal-ai-users-api
+  name: Regal Users API
   baseURL: https://api.regal.ai/v1
-  description: The Phone Numbers API from Regal — 1 operation(s) for phone numbers.
-  humanURL: https://developer.regal.ai/reference/api
+  description: >-
+    List and retrieve Regal user accounts — both human agents and AI agents — with their skills, teams,
+    custom attributes and eligible routing queues. List Users supports cursor pagination and filtering
+    by email, skills, teams, queues and customAttributes; Get User resolves a single account by Regal
+    user UUID or exact (URL-encoded) login email. Both operations are limited to 10 requests per second.
+  humanURL: https://developer.regal.ai/reference/list-users
   tags:
-  - Phone Numbers
+  - User
+  - Workforce
+  - Routing
+  tags_raw:
+  - Users
+  - Workforce
+  - Routing
   properties:
   - type: OpenAPI
-    url: openapi/regal-ai-phone-numbers-api-openapi.yml
+    url: openapi/regal-ai-users-api-openapi.yml
   - type: Overlay
-    url: overlays/regal-ai-phone-numbers-overlay.yaml
+    url: overlays/regal-ai-users-overlay.yaml
+  - type: Documentation
+    url: https://developer.regal.ai/reference/list-users
+  - type: Documentation
+    url: https://developer.regal.ai/reference/get-user
+  - type: Documentation
+    url: https://developer.regal.ai/reference/overview
+  - type: AgentSkill
+    url: skills/regal-ai-resolve-call-handoff.md
+    name: Resolve a Regal AI call handoff
+- aid: regal-ai:regal-ai-activephonenumbers-api
+  name: Regal Active Phone Numbers API
+  description: The ActivePhoneNumbers API from Regal — 1 operation(s) for activephonenumbers.
+  humanURL: https://developer.regal.ai/docs/reporting-webhooks
+  baseURL: https://api.regal.ai/v1
+  tags:
+  - ActivePhoneNumbers
+  properties:
+  - type: OpenAPI
+    url: openapi/regal-ai-activephonenumbers-api-openapi.yml
   - type: Documentation
     url: https://developer.regal.ai/reference/overview
   - type: Documentation
@@ -406,69 +355,145 @@ apis:
     url: https://developer.regal.ai/reference/send-message
   - type: JSONSchema
     url: json-schema/regal-message-schema.json
-- aid: regal-ai:regal-ai-users-api
-  name: Regal Users API
-  baseURL: https://api.regal.ai/v1
-  description: >-
-    List and retrieve Regal user accounts — both human agents and AI agents — with their
-    skills, teams, custom attributes and eligible routing queues. List Users supports
-    cursor pagination and filtering by email, skills, teams, queues and customAttributes;
-    Get User resolves a single account by Regal user UUID or exact (URL-encoded) login
-    email. Both operations are limited to 10 requests per second.
-  humanURL: https://developer.regal.ai/reference/list-users
-  tags:
-  - User
-  - Workforce
-  - Routing
-  tags_raw:
-  - Users
-  - Workforce
-  - Routing
-  properties:
-  - type: OpenAPI
-    url: openapi/regal-ai-users-api-openapi.yml
-  - type: Overlay
-    url: overlays/regal-ai-users-overlay.yaml
-  - type: Documentation
-    url: https://developer.regal.ai/reference/list-users
-  - type: Documentation
-    url: https://developer.regal.ai/reference/get-user
-  - type: Documentation
-    url: https://developer.regal.ai/reference/overview
-  - type: AgentSkill
-    url: skills/regal-ai-resolve-call-handoff.md
-    name: Resolve a Regal AI call handoff
-- aid: regal-ai:regal-ai-call-handoffs-api
-  name: Regal Call Handoffs API
-  baseURL: https://api.regal.ai/v1
-  description: >-
-    Retrieve routing instructions and call metadata after a Regal AI voice agent leaves a
-    live call. The response carries the routing decision (route.type of skill, external,
-    agent or hangup, plus route.value and route.reason), static meta.* fields from the
-    integration and transfer-destination configuration, task.* attributes including the
-    task SID, and definedContactData.* values collected by Set Contact Data actions in the
-    Agent Builder. Regal documents this endpoint as currently enabled only for inbound
-    calls connected through the Five9 AI Agent Connect integration, at 10 requests per
-    second.
-  humanURL: https://developer.regal.ai/reference/call-handoff
-  tags:
-  - Call Handoff
-  - Routing
-  - Telephony
-  - Five9
-  properties:
-  - type: OpenAPI
-    url: openapi/regal-ai-call-handoffs-api-openapi.yml
-  - type: Overlay
-    url: overlays/regal-ai-call-handoffs-overlay.yaml
   - type: Documentation
     url: https://developer.regal.ai/reference/call-handoff
   - type: Documentation
     url: https://developer.regal.ai/docs/five9-ai-agent-connect
-  - type: AgentSkill
-    url: skills/regal-ai-resolve-call-handoff.md
-    name: Resolve a Regal AI call handoff
+- aid: regal-ai:regal-ai-brandedphonenumbers-api
+  name: Regal Branded Phone Numbers API
+  description: The BrandedPhoneNumbers API from Regal — 2 operation(s) for brandedphonenumbers.
+  humanURL: https://developer.regal.ai/docs/reporting-webhooks
+  baseURL: https://api.regal.ai/v1
+  tags:
+  - BrandedPhoneNumbers
+  properties:
+  - type: OpenAPI
+    url: openapi/regal-ai-brandedphonenumbers-api-openapi.yml
+  - type: Documentation
+    url: https://developer.regal.ai/reference/overview
+  - type: Documentation
+    url: https://developer.regal.ai/reference/api
+  - type: Documentation
+    url: https://developer.regal.ai/docs/send-custom-event-to-regal
+  - type: FAQ
+    url: https://developer.regal.ai/reference/faq
+  - type: JSONSchema
+    url: json-schema/regal-contact-schema.json
+  - type: JSONSchema
+    url: json-schema/regal-event-schema.json
+  - type: JSONLD
+    url: json-ld/regal-ai-context.jsonld
+  - type: Documentation
+    url: https://developer.regal.ai/reference/post-branded-phone-number
+  - type: Documentation
+    url: https://developer.regal.ai/reference/patch-branded-phone-number
+  - type: Documentation
+    url: https://developer.regal.ai/reference/delete-branded-phone-number
+  - type: JSONSchema
+    url: json-schema/regal-branded-phone-number-schema.json
+  - type: ChangeLog
+    url: https://www.regal.ai/blog/january-2025-releases
+  - type: Documentation
+    url: https://developer.regal.ai/reference/send-message
+  - type: JSONSchema
+    url: json-schema/regal-message-schema.json
+  - type: Documentation
+    url: https://developer.regal.ai/reference/call-handoff
+  - type: Documentation
+    url: https://developer.regal.ai/docs/five9-ai-agent-connect
+- aid: regal-ai:regal-ai-businessprofiles-api
+  name: Regal Business Profiles API
+  description: The BusinessProfiles API from Regal — 1 operation(s) for businessprofiles.
+  humanURL: https://developer.regal.ai/docs/reporting-webhooks
+  baseURL: https://api.regal.ai/v1
+  tags:
+  - BusinessProfiles
+  properties:
+  - type: OpenAPI
+    url: openapi/regal-ai-businessprofiles-api-openapi.yml
+  - type: Documentation
+    url: https://developer.regal.ai/reference/overview
+  - type: Documentation
+    url: https://developer.regal.ai/reference/api
+  - type: Documentation
+    url: https://developer.regal.ai/docs/send-custom-event-to-regal
+  - type: FAQ
+    url: https://developer.regal.ai/reference/faq
+  - type: JSONSchema
+    url: json-schema/regal-contact-schema.json
+  - type: JSONSchema
+    url: json-schema/regal-event-schema.json
+  - type: JSONLD
+    url: json-ld/regal-ai-context.jsonld
+  - type: Documentation
+    url: https://developer.regal.ai/reference/post-branded-phone-number
+  - type: Documentation
+    url: https://developer.regal.ai/reference/patch-branded-phone-number
+  - type: Documentation
+    url: https://developer.regal.ai/reference/delete-branded-phone-number
+  - type: JSONSchema
+    url: json-schema/regal-branded-phone-number-schema.json
+  - type: ChangeLog
+    url: https://www.regal.ai/blog/january-2025-releases
+  - type: Documentation
+    url: https://developer.regal.ai/reference/send-message
+  - type: JSONSchema
+    url: json-schema/regal-message-schema.json
+  - type: Documentation
+    url: https://developer.regal.ai/reference/call-handoff
+  - type: Documentation
+    url: https://developer.regal.ai/docs/five9-ai-agent-connect
+- aid: regal-ai:regal-ai-callhandoffs-api
+  name: Regal Call Handoffs API
+  description: The CallHandoffs API from Regal — 1 operation(s) for callhandoffs.
+  humanURL: https://developer.regal.ai/docs/reporting-webhooks
+  baseURL: https://api.regal.ai/v1
+  tags:
+  - CallHandoffs
+  properties:
+  - type: OpenAPI
+    url: openapi/regal-ai-callhandoffs-api-openapi.yml
+  - type: Documentation
+    url: https://developer.regal.ai/reference/overview
+  - type: Documentation
+    url: https://developer.regal.ai/reference/api
+  - type: Documentation
+    url: https://developer.regal.ai/docs/send-custom-event-to-regal
+  - type: FAQ
+    url: https://developer.regal.ai/reference/faq
+  - type: JSONSchema
+    url: json-schema/regal-contact-schema.json
+  - type: JSONSchema
+    url: json-schema/regal-event-schema.json
+  - type: JSONLD
+    url: json-ld/regal-ai-context.jsonld
+  - type: Documentation
+    url: https://developer.regal.ai/reference/post-branded-phone-number
+  - type: Documentation
+    url: https://developer.regal.ai/reference/patch-branded-phone-number
+  - type: Documentation
+    url: https://developer.regal.ai/reference/delete-branded-phone-number
+  - type: JSONSchema
+    url: json-schema/regal-branded-phone-number-schema.json
+  - type: ChangeLog
+    url: https://www.regal.ai/blog/january-2025-releases
+  - type: Documentation
+    url: https://developer.regal.ai/reference/send-message
+  - type: JSONSchema
+    url: json-schema/regal-message-schema.json
+  - type: Documentation
+    url: https://developer.regal.ai/reference/call-handoff
+  - type: Documentation
+    url: https://developer.regal.ai/docs/five9-ai-agent-connect
 common:
+  - type: Overlay
+    url: overlays/regal-ai-branded-phone-numbers-overlay.yaml
+  - type: Overlay
+    url: overlays/regal-ai-business-profiles-overlay.yaml
+  - type: Overlay
+    url: overlays/regal-ai-phone-numbers-overlay.yaml
+  - type: Overlay
+    url: overlays/regal-ai-call-handoffs-overlay.yaml
   - type: Website
     url: https://www.regal.ai/
   - type: CapabilityMap
