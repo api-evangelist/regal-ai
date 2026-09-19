@@ -2,14 +2,15 @@
 kin_checks:
   slug: regal-ai
   schema_version: 0.22.0
-  scored_at: '2026-09-15'
-  run_ts: 2026-09-15T230249
-  note: Actionable checks only (missed + partial). earned/na are every other check
-    in rubric/scoring-0.22.0.yml; counts below let you verify that.
+  scored_at: '2026-09-18'
+  run_ts: 2026-09-18T205255
+  note: Actionable checks (missed + partial) in `checks`, plus the ids that did not
+    apply in `na`. Everything else in rubric/scoring-0.22.0.yml was earned; counts
+    below let you verify that.
   counts:
     total: 136
-    earned: 69
-    partial: 18
+    earned: 70
+    partial: 17
     missed: 33
     na: 16
   checks:
@@ -87,13 +88,14 @@ kin_checks:
     status: missed
   - id: agentic_commerce
     status: missed
-  - id: examples_present
+  - id: info_complete
     status: partial
-    earned: 1.89
+    earned: 0.44
+    detail: 1 of 9 openapi documents pass
   - id: components_reuse
     status: partial
-    earned: 1.0
-    detail: 3 of 9 openapi documents pass
+    earned: 0.33
+    detail: 1 of 9 openapi documents pass
   - id: rules_present
     status: partial
     earned: 2.5
@@ -138,10 +140,6 @@ kin_checks:
     status: partial
     earned: 4.0
     detail: 'grade: documented'
-  - id: openapi_examples
-    status: partial
-    earned: 3.5
-    detail: 'grade: partial'
   - id: rate_limit_signal
     status: partial
     earned: 3.5
@@ -154,3 +152,20 @@ kin_checks:
     status: partial
     earned: 1.25
     detail: 'authorship: derived'
+  na:
+  - contract_self_operated
+  - fhir_capability_statement
+  - fhir_resource_coverage
+  - graphql_descriptions
+  - graphql_sdl_present
+  - graphql_type_depth
+  - os_code_of_conduct
+  - os_contribution_guide
+  - os_releases
+  - os_security_policy
+  - reg_entitlement_terms
+  - reg_fapi_profile
+  - reg_mandate_verified
+  - reg_pci_sca
+  - reg_smart_configuration
+  - reg_write_surface

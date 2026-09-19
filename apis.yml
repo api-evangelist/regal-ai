@@ -407,6 +407,8 @@ apis:
   humanURL: https://developer.regal.ai/docs/reporting-webhooks
   baseURL: https://api.regal.ai/v1
   tags:
+  - Business Profiles
+  tags_raw:
   - BusinessProfiles
   properties:
   - type: OpenAPI
