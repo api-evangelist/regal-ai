@@ -1,19 +1,19 @@
 openapi: 3.2.0
 info:
-  title: contact-center-apis Dispositions API
+  title: contact-center-apis Active Phone Numbers API
   version: '1.2'
 servers:
 - url: https://api.regal.ai/v1
 security:
 - sec0: []
 tags:
-- name: Dispositions
+- name: ActivePhoneNumbers
 paths:
-  /dispositions:
+  /activePhoneNumbers:
     get:
-      summary: List Dispositions
-      description: Retrieve a list of dispositions.
-      operationId: disposition-list-api
+      summary: List Active Phone Numbers
+      description: Retrieve a list of active phone numbers.
+      operationId: active-phone-number-api
       parameters:
       - name: nextCursor
         in: query
@@ -39,7 +39,7 @@ paths:
             application/json:
               examples:
                 Response Data:
-                  value: "{\n    \"items\": [\n        {\n            \"id\": \"09667559-3416-4c51-913e-e5e1ec26eb5c\",\n            \"disposition\": \"Move Forward\",\n            \"description\": \"Customer agreed to move to the next step\",\n            \"isSystem\": false,\n            \"conversationHappened\": true,\n            \"createdAt\": \"2022-08-15T16:32:23.319Z\",\n            \"updatedAt\": \"2025-02-07T16:12:06.267Z\"\n        },\n        {\n            \"id\": \"0f7c8be6-d27c-4090-bf44-3a02adae5fa1\",\n            \"disposition\": \"Need More Time\",\n            \"description\": \"Rate/Pricing too high\",\n            \"isSystem\": false,\n            \"conversationHappened\": true,\n            \"createdAt\": \"2022-08-15T16:31:48.245Z\",\n            \"updatedAt\": \"2022-08-15T16:31:48.245Z\"\n        },\n        {\n            \"id\": \"0f01cc88-ef7e-4076-bf74-836813bb4ea7\",\n            \"disposition\": \"\",\n            \"description\": \"No Answer\",\n            \"isSystem\": true,\n            \"conversationHappened\": false,\n            \"createdAt\": \"2022-08-15T16:31:54.518Z\",\n            \"updatedAt\": \"2022-08-15T16:31:54.518Z\"\n        },\n  ],\n  \"nextCursor\": \"xyz456\"\n}"
+                  value: "{\n    \"items\": [\n        {\n            \"id\": \"d461260a-e4e6-40d0-a667-f59f1a02195a\",\n            \"phoneNumber\": \"+17735550477\",\n            \"createdAt\": \"2021-07-16T13:51:45.853Z\",\n            \"updatedAt\": \"2024-08-14T18:42:00.600Z\",\n            \"internalDisplayName\": \"Sales IB Line\",\n            \"subBrand\": \"CA\",\n            \"ivrUuid\": \"fa3586f2-f737-4585-8b44-b1a1afc1f818\",\n            \"ivrName\": \"Main IVR\",\n            \"ivrFriendlyId\": 243\n        },\n        {\n            \"id\": \"e28f3a54-68ac-40d4-9f50-7bfc3a28fafb\",\n            \"phoneNumber\": \"+17735550101\",\n            \"createdAt\": \"2022-07-24T18:16:33.814Z\",\n            \"updatedAt\": \"2024-03-21T14:49:03.844Z\",\n            \"internalDisplayName\": \"UCLA Dedicated Number\",\n            \"subBrand\": \"UCLA\",\n            \"ivrUuid\": \"f40e5449-e4ae-4464-a4e1-da67e361ba5c\",\n            \"ivrName\": \"UCLA Inbound\",\n            \"ivrFriendlyId\": 62\n        },\n        {\n            \"id\": \"c6cdeb02-d6ec-4447-ac6a-1704881161ac\",\n            \"phoneNumber\": \"+17735550123\",\n            \"createdAt\": \"2022-07-24T18:16:33.814Z\",\n            \"updatedAt\": \"2022-07-24T18:16:33.814Z\",\n            \"internalDisplayName\": \"NY Local Presence OB\",\n            \"subBrand\": \"NY\",\n            \"ivrUuid\": null,\n            \"ivrName\": null,\n            \"ivrFriendlyId\": null\n        },\n  ],\n  \"nextCursor\": \"xyz456\"\n}"
         '400':
           description: '400'
           content:
@@ -78,13 +78,13 @@ paths:
       x-readme:
         code-samples:
         - language: curl
-          code: 'curl --location ''https://api.regal.ai/v1/dispositions'' \
+          code: 'curl --location ''https://api.regal.ai/v1/activePhoneNumbers'' \
 
             --header ''Authorization: YOUR API KEY'' \'
         samples-languages:
         - curl
       tags:
-      - Dispositions
+      - ActivePhoneNumbers
 components:
   securitySchemes:
     sec0:

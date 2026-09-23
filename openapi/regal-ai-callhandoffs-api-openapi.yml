@@ -1,28 +1,13 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Regal Call Handoffs API
+  title: contact-center-apis Call Handoffs API
   version: '1.2'
-  summary: Retrieve routing instructions and call metadata after a Regal AI agent leaves a live call.
-  description: The Call Handoff endpoint on the Regal v1 management API (contact-center-apis 1.2) returns the routing decision
-    and call context recorded when a Regal AI voice agent hands a live call off. The response carries route.type (skill, external,
-    agent or hangup), route.value, route.reason, static meta.* fields from the integration and transfer-destination configuration,
-    task.* attributes including the task SID, and definedContactData.* values collected by Set Contact Data actions in the
-    Agent Builder. Regal documents this endpoint as currently enabled only for inbound calls connected through the Five9 AI
-    Agent Connect integration, and limits it to 10 requests per second.
-  contact:
-    name: Regal Support
-    email: support@regal.ai
-    url: https://support.regal.ai
-  license:
-    name: Proprietary
-    url: https://www.regal.ai/terms-of-service
 servers:
 - url: https://api.regal.ai/v1
-  description: Production v1 Regal API
 security:
-- ApiKeyAuth: []
+- sec0: []
 tags:
-- name: Call Handoffs
+- name: CallHandoffs
 paths:
   /callHandoffs/{callKey}:
     get:
@@ -46,19 +31,15 @@ paths:
                   route.value:
                     type: string
                     example: support-queue
-                    description: Five 9 Exclusive - When "route.type" is hangup, it can be "agent_hangup", "user_hangup",
-                      "error". When it's a transfer, it will be the Five9 skill name, phone number or agent username that
-                      matches the selected route type
+                    description: Five 9 Exclusive - When "route.type" is hangup, it can be "agent_hangup", "user_hangup", "error". When it's a transfer, it will be the Five9 skill name, phone number or agent username that matches the selected route type
                   route.reason:
                     type: string
                     example: AI routed
-                    description: Five 9 Exclusive - On transfers, it will be your defined Transfer Destination reason, on
-                      hangups, it will be another descriptors on what happened.
+                    description: Five 9 Exclusive - On transfers, it will be your defined Transfer Destination reason, on hangups, it will be another descriptors on what happened.
                   meta.*:
                     type: string
                     example: high
-                    description: Static metadata fields added to the integration configuration and the transfer destination
-                      configuration (if the call ended with a cold transfer)
+                    description: Static metadata fields added to the integration configuration and the transfer destination configuration (if the call ended with a cold transfer)
                   task.*:
                     type: string
                     example: five9-session-abc123
@@ -66,8 +47,7 @@ paths:
                   definedContactData.*:
                     type: string
                     example: Jane
-                    description: The Defined Contact Data that was made available to the agent, with the variables collected
-                      through a "Set Contact Data" action, in the Agent Builder
+                    description: The Defined Contact Data that was made available to the agent, with the variables collected through a "Set Contact Data" action, in the Agent Builder
               examples:
                 OK:
                   summary: OK
@@ -131,8 +111,7 @@ paths:
         schema:
           type: string
         required: true
-        description: External call identifier. For Five9 AI Agent Connect, this is the value of the X-CallSessionId SIP header
-          Five9 sent on the original call to Regal.
+        description: External call identifier. For Five9 AI Agent Connect, this is the value of the X-CallSessionId SIP header Five9 sent on the original call to Regal.
       - in: query
         name: provider
         schema:
@@ -142,8 +121,14 @@ paths:
           default: five9
         required: true
         description: Provider response format. Only five9 is currently supported.
+      - in: header
+        name: Authorization
+        schema:
+          type: string
+        required: true
+        description: Your Regal API Key
       summary: Call Handoff
-      operationId: getCallHandoff
+      operationId: get_callhandoffs-callkey
       description: Retrieve routing instructions and call metadata after a Regal AI agent leaves a live call.
       x-readme:
         code-samples:
@@ -156,10 +141,10 @@ paths:
         - shell
       x-internal: false
       tags:
-      - Call Handoffs
+      - CallHandoffs
 components:
   securitySchemes:
-    ApiKeyAuth:
+    sec0:
       type: apiKey
-      in: header
       name: Authorization
+      in: header

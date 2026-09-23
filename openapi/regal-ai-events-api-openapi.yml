@@ -1,12 +1,9 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Regal Branded Phone Numbers Events API
+  title: Regal Events API
   version: '1.0'
-  summary: Register, update, and remove branded caller ID and spam remediation entries.
-  description: Branded Phone Numbers in Regal control how a tenant's outbound numbers appear on recipients' devices via carrier-level
-    branded caller ID and spam remediation. Each registration ties a phoneNumber to a businessProfileId and a carrierFeatures
-    array describing which features (spamRemediation or brandedCallerId) are enabled per carrier. POST is used for first-time
-    registration only; PATCH is used for partial updates; DELETE removes a registration once all carrier submissions are inactive.
+  summary: Custom Events ingestion endpoint for contacts and event tracking on Regal.
+  description: The Regal Events API is a single ingest endpoint that creates a contact, updates a contact, or adds a custom event to an existing contact profile.
   contact:
     name: Regal Support
     email: support@regal.ai
@@ -27,9 +24,7 @@ paths:
     post:
       summary: Post Custom Event
       operationId: postCustomEvent
-      description: Creates or updates a contact profile and records a custom event against the resolved profile. At least
-        one phone or email must be present in traits for the contact to be considered contactable. Events whose name matches
-        a Journey trigger will enroll the contact into that Journey.
+      description: Creates or updates a contact profile and records a custom event against the resolved profile. At least one phone or email must be present in traits for the contact to be considered contactable. Events whose name matches a Journey trigger will enroll the contact into that Journey.
       tags:
       - Events
       requestBody:
@@ -104,6 +99,83 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
   schemas:
+    ContactTraits:
+      type: object
+      description: Identifiers and attributes describing the contact.
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        phones:
+          type: array
+          items:
+            $ref: '#/components/schemas/PhoneTrait'
+        emails:
+          type: array
+          items:
+            $ref: '#/components/schemas/EmailTrait'
+        address:
+          $ref: '#/components/schemas/Address'
+      additionalProperties: true
+    EmailTrait:
+      type: object
+      required:
+      - emailAddress
+      properties:
+        emailAddress:
+          type: string
+        isPrimary:
+          type: boolean
+        label:
+          type: string
+        emailOptIn:
+          $ref: '#/components/schemas/OptInState'
+    Address:
+      type: object
+      properties:
+        street:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        zipcode:
+          type: string
+        country:
+          type: string
+    PhoneTrait:
+      type: object
+      required:
+      - phoneNumber
+      properties:
+        phoneNumber:
+          type: string
+        isPrimary:
+          type: boolean
+        label:
+          type: string
+          description: Label such as mobile, home, work.
+        voiceOptIn:
+          $ref: '#/components/schemas/OptInState'
+        smsOptIn:
+          $ref: '#/components/schemas/OptInState'
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: string
+    OptInState:
+      type: object
+      properties:
+        subscribed:
+          type: boolean
+        timestamp:
+          type: string
+        source:
+          type: string
     CustomEvent:
       type: object
       required:
@@ -127,85 +199,9 @@ components:
         eventSource:
           type: string
           description: Source system that emitted the event (e.g., Website, CRM, Backend).
-    Address:
-      type: object
-      properties:
-        street:
-          type: string
-        city:
-          type: string
-        state:
-          type: string
-        zipcode:
-          type: string
-        country:
-          type: string
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          type: string
-    EmailTrait:
-      type: object
-      required:
-      - emailAddress
-      properties:
-        emailAddress:
-          type: string
-        isPrimary:
-          type: boolean
-        label:
-          type: string
-        emailOptIn:
-          $ref: '#/components/schemas/OptInState'
-    OptInState:
-      type: object
-      properties:
-        subscribed:
-          type: boolean
-        timestamp:
-          type: string
-        source:
-          type: string
-    PhoneTrait:
-      type: object
-      required:
-      - phoneNumber
-      properties:
-        phoneNumber:
-          type: string
-        isPrimary:
-          type: boolean
-        label:
-          type: string
-          description: Label such as mobile, home, work.
-        voiceOptIn:
-          $ref: '#/components/schemas/OptInState'
-        smsOptIn:
-          $ref: '#/components/schemas/OptInState'
-    ContactTraits:
-      type: object
-      description: Identifiers and attributes describing the contact.
-      properties:
-        firstName:
-          type: string
-        lastName:
-          type: string
-        phones:
-          type: array
-          items:
-            $ref: '#/components/schemas/PhoneTrait'
-        emails:
-          type: array
-          items:
-            $ref: '#/components/schemas/EmailTrait'
-        address:
-          $ref: '#/components/schemas/Address'
-      additionalProperties: true
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
       in: header
       name: Authorization
+      description: API key issued by Regal Support (support@regal.ai). Must be sent in the Authorization header on every request.

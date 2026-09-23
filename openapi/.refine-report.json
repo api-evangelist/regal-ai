@@ -1,26 +1,63 @@
 {
   "provider": "regal-ai",
   "sources": [
-    "regal-ai-branded-phone-numbers-api-openapi.yml",
-    "regal-ai-business-profiles-api-openapi.yml",
-    "regal-ai-campaigns-api-openapi.yml",
-    "regal-ai-dispositions-api-openapi.yml",
-    "regal-ai-events-api-openapi.yml",
-    "regal-ai-messages-api-openapi.yml",
-    "regal-ai-phone-numbers-api-openapi.yml"
+    "_original/regal-contact-center-apis-openapi.yml",
+    "_original/regal-events-api-openapi.yml"
   ],
   "outputs": [
-    "regal-ai-branded-phone-numbers-api-openapi.yml",
-    "regal-ai-business-profiles-api-openapi.yml",
+    "regal-ai-activephonenumbers-api-openapi.yml",
+    "regal-ai-brandedphonenumbers-api-openapi.yml",
+    "regal-ai-businessprofiles-api-openapi.yml",
+    "regal-ai-callhandoffs-api-openapi.yml",
     "regal-ai-campaigns-api-openapi.yml",
     "regal-ai-dispositions-api-openapi.yml",
-    "regal-ai-events-api-openapi.yml",
     "regal-ai-messages-api-openapi.yml",
-    "regal-ai-phone-numbers-api-openapi.yml"
+    "regal-ai-users-api-openapi.yml",
+    "regal-ai-events-api-openapi.yml"
   ],
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "4 archived document(s) dropped as subsets of other archived documents",
+    "sourced from openapi/_original/ (2 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "regal-contact-center-apis-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "regal-contact-center-apis-openapi.yml: tagged paths GET /activePhoneNumbers -> ActivePhoneNumbers",
+    "regal-contact-center-apis-openapi.yml: tagged paths GET /businessProfiles -> BusinessProfiles",
+    "regal-contact-center-apis-openapi.yml: tagged paths GET /brandedPhoneNumbers -> BrandedPhoneNumbers",
+    "regal-contact-center-apis-openapi.yml: tagged paths POST /brandedPhoneNumbers -> BrandedPhoneNumbers",
+    "regal-contact-center-apis-openapi.yml: tagged paths GET /callHandoffs/{callKey} -> CallHandoffs",
+    "regal-contact-center-apis-openapi.yml: tagged paths GET /campaigns -> Campaigns",
+    "regal-contact-center-apis-openapi.yml: tagged paths DELETE /brandedPhoneNumbers/{phoneNumber} -> BrandedPhoneNumbers",
+    "regal-contact-center-apis-openapi.yml: tagged paths PATCH /brandedPhoneNumbers/{phoneNumber} -> BrandedPhoneNumbers",
+    "regal-contact-center-apis-openapi.yml: tagged paths GET /dispositions -> Dispositions",
+    "regal-contact-center-apis-openapi.yml: tagged paths GET /users/{userIdOrEmail} -> Users",
+    "regal-contact-center-apis-openapi.yml: tagged paths GET /users -> Users",
+    "regal-contact-center-apis-openapi.yml: tagged paths POST /messages/send -> Messages",
+    "regal-contact-center-apis-openapi.yml: declared missing tag: ActivePhoneNumbers",
+    "regal-contact-center-apis-openapi.yml: declared missing tag: BrandedPhoneNumbers",
+    "regal-contact-center-apis-openapi.yml: declared missing tag: BusinessProfiles",
+    "regal-contact-center-apis-openapi.yml: declared missing tag: CallHandoffs",
+    "regal-contact-center-apis-openapi.yml: declared missing tag: Campaigns",
+    "regal-contact-center-apis-openapi.yml: declared missing tag: Dispositions",
+    "regal-contact-center-apis-openapi.yml: declared missing tag: Messages",
+    "regal-contact-center-apis-openapi.yml: declared missing tag: Users",
+    "regal-events-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "_original/regal-voice-api-openapi.yml: archived document superseded by a larger archived document",
+    "_original/regal-messages-api-openapi.yml: archived document superseded by a larger archived document",
+    "_original/regal-management-api-openapi.yml: archived document superseded by a larger archived document",
+    "_original/regal-branded-phone-numbers-api-openapi.yml: archived document superseded by a larger archived document",
+    "regal-ai-activephonenumbers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "regal-ai-brandedphonenumbers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "regal-ai-businessprofiles-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "regal-ai-callhandoffs-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "regal-ai-campaigns-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "regal-ai-dispositions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "regal-ai-events-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "regal-ai-messages-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "regal-ai-users-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

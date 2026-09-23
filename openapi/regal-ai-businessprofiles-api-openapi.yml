@@ -1,0 +1,165 @@
+openapi: 3.2.0
+info:
+  title: contact-center-apis Business Profiles API
+  version: '1.2'
+servers:
+- url: https://api.regal.ai/v1
+security:
+- sec0: []
+tags:
+- name: BusinessProfiles
+paths:
+  /businessProfiles:
+    get:
+      summary: List Business Profiles
+      description: Retrieve your business profile(s).
+      operationId: active-phone-numbers-api
+      parameters:
+      - name: nextCursor
+        in: query
+        description: Used for pagination to retrieve the next page of data. Optional
+        schema:
+          type: string
+      - name: size
+        in: query
+        description: Specific the number of results per page, up to 100.
+        schema:
+          type: string
+          default: '25'
+      - name: Authorization
+        in: header
+        description: Your Regal API Key
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Response Data:
+                  value: "{\n    \"items\": [\n        {\n            \"id\": \"xxxxxxx-ec05-40a2-bd54-13e15786a4d7\",\n            \"createdAt\": \"2024-10-30T14:34:17.036Z\",\n            \"updatedAt\": \"2024-10-30T14:34:17.036Z\",\n            \"createdBy\": \"Rebecca Greene\",\n            \"updatedBy\": \"Rebecca Greene\",\n            \"businessName\": \"Circle Cab\",\n            \"status\": \"in review\",\n            \"taxId\": \"xxxxxxx\",\n            \"industry\": \"Transportation\",\n            \"size\": \"11 to 50\",\n            \"streetAddress\": \"245 5th Ave\",\n            \"city\": \"New York\",\n            \"country\": \"US\",\n            \"postalCode\": \"10128\",\n            \"state\": \"NY\",\n            \"businessProfileDBAs\": [\n                {\n                    \"id\": \"xxxxxx-512c-4df8-9c9d-08c5b7919a48\",\n                    \"createdAt\": \"2024-10-30T14:34:17.036Z\",\n                    \"updatedAt\": \"2024-10-30T14:34:17.036Z\",\n                    \"createdBy\": \"Rebecca Greene\",\n                    \"updatedBy\": \"Rebecca Greene\",\n                    \"name\": \"Circle Cab\",\n                    \"website\": \"circlecab.com\"\n                }\n            ]\n        }\n    ],\n    \"nextCursor\": null\n}"
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: xxxxxxx-ec05-40a2-bd54-13e15786a4d7
+                        createdAt:
+                          type: string
+                          example: '2024-10-30T14:34:17.036Z'
+                        updatedAt:
+                          type: string
+                          example: '2024-10-30T14:34:17.036Z'
+                        createdBy:
+                          type: string
+                          example: Rebecca Greene
+                        updatedBy:
+                          type: string
+                          example: Rebecca Greene
+                        businessName:
+                          type: string
+                          example: Circle Cab
+                        status:
+                          type: string
+                          example: in review
+                        taxId:
+                          type: string
+                          example: xxxxxxx
+                        industry:
+                          type: string
+                          example: Transportation
+                        size:
+                          type: string
+                          example: 11 to 50
+                        streetAddress:
+                          type: string
+                          example: 245 5th Ave
+                        city:
+                          type: string
+                          example: New York
+                        country:
+                          type: string
+                          example: US
+                        postalCode:
+                          type: string
+                          example: '10128'
+                        state:
+                          type: string
+                          example: NY
+                        businessProfileDBAs:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                example: xxxxxx-512c-4df8-9c9d-08c5b7919a48
+                              createdAt:
+                                type: string
+                                example: '2024-10-30T14:34:17.036Z'
+                              updatedAt:
+                                type: string
+                                example: '2024-10-30T14:34:17.036Z'
+                              createdBy:
+                                type: string
+                                example: Rebecca Greene
+                              updatedBy:
+                                type: string
+                                example: Rebecca Greene
+                              name:
+                                type: string
+                                example: Circle Cab
+                              website:
+                                type: string
+                                example: circlecab.com
+                  nextCursor: {}
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                Bad Request:
+                  value: ''
+        '401':
+          description: '401'
+          content:
+            application/json:
+              examples:
+                Unauthorized:
+                  value: "{\n    \"message\": \"Unauthorized\"\n}"
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorized
+        '403':
+          description: '403'
+          content:
+            text/plain:
+              examples:
+                Result:
+                  value: ''
+        '429':
+          description: '429'
+          content:
+            text/plain:
+              examples:
+                Rate Limit Exceeded:
+                  value: ''
+      deprecated: false
+      tags:
+      - BusinessProfiles
+components:
+  securitySchemes:
+    sec0:
+      type: apiKey
+      name: Authorization
+      in: header

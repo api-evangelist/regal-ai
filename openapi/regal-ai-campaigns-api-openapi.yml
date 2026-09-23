@@ -1,83 +1,135 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Regal Branded Phone Numbers Campaigns API
-  version: '1.0'
-  summary: Register, update, and remove branded caller ID and spam remediation entries.
-  description: Branded Phone Numbers in Regal control how a tenant's outbound numbers appear on recipients' devices via carrier-level branded caller ID and spam remediation. Each registration ties a phoneNumber to a businessProfileId and a carrierFeatures array describing which features (spamRemediation or brandedCallerId) are enabled per carrier. POST is used for first-time registration only; PATCH is used for partial updates; DELETE removes a registration once all carrier submissions are inactive.
-  contact:
-    name: Regal Support
-    email: support@regal.ai
-    url: https://support.regal.ai
-  license:
-    name: Proprietary
-    url: https://www.regal.ai/terms-of-service
+  title: contact-center-apis Campaigns API
+  version: '1.2'
 servers:
 - url: https://api.regal.ai/v1
-  description: Production v1 Regal API
 security:
-- ApiKeyAuth: []
+- sec0: []
 tags:
 - name: Campaigns
 paths:
   /campaigns:
     get:
       summary: List Campaigns
-      operationId: listCampaigns
-      description: List outbound campaigns configured in the tenant.
-      tags:
-      - Campaigns
+      description: Retrieve a list of your campaigns.
+      operationId: campaign-list-api
+      parameters:
+      - name: nextCursor
+        in: query
+        description: Used for pagination to retrieve the next page of data. Optional
+        schema:
+          type: string
+      - name: size
+        in: query
+        description: Specific the number of results per page, up to 100.
+        schema:
+          type: string
+          default: '25'
+      - name: Authorization
+        in: header
+        description: Your Regal API Key
+        required: true
+        schema:
+          type: string
       responses:
         '200':
-          description: List of campaigns.
+          description: '200'
           content:
             application/json:
+              examples:
+                Response Data:
+                  value: "{\n  \"items\": [\n    {\n      \"id\": \"a2b159af-9390-488c-b33d-67447242e3bf\",\n      \"friendlyId\": \"12\",\n      \"state\": \"ready\",\n      \"name\": \"Spring Promo Call\",\n      \"type\": \"agent-task\",\n      \"channel\": \"phone_call\",\n      \"dialingMode\": \"progressive\",\n      \"priority\": 100,\n      \"createdAt\": \"2024-02-07T12:00:00Z\",\n      \"updatedAt\": \"2024-02-07T12:30:00Z\"\n    },\n    {\n      \"id\": \"a2f9349a-941a-4707-a27c-748563b78af1\",\n      \"friendlyId\": \"14\",\n      \"state\": \"draft\",\n      \"name\": \"Spring Promo SMS\",\n      \"type\": \"automated\",\n      \"channel\": \"sms\",\n      \"dialingMode\": null,\n      \"priority\": null,\n      \"createdAt\": \"2024-02-07T12:00:00Z\",\n      \"updatedAt\": \"2024-02-07T12:30:00Z\"\n    }\n  ],\n  \"nextCursor\": \"xyz456\"\n}"
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Campaign'
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: a2b159af-9390-488c-b33d-67447242e3bf
+                        friendlyId:
+                          type: string
+                          example: '12'
+                        state:
+                          type: string
+                          example: ready
+                        name:
+                          type: string
+                          example: Spring Promo Call
+                        type:
+                          type: string
+                          example: agent-task
+                        channel:
+                          type: string
+                          example: phone_call
+                        dialingMode:
+                          type: string
+                          example: progressive
+                        priority:
+                          type: integer
+                          example: 100
+                          default: 0
+                        createdAt:
+                          type: string
+                          example: '2024-02-07T12:00:00Z'
+                        updatedAt:
+                          type: string
+                          example: '2024-02-07T12:30:00Z'
+                  nextCursor:
+                    type: string
+                    example: xyz456
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                Bad Request:
+                  value: ''
         '401':
-          $ref: '#/components/responses/Unauthorized'
+          description: '401'
+          content:
+            application/json:
+              examples:
+                Unauthorized:
+                  value: "{\n    \"message\": \"Unauthorized\"\n}"
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorized
+        '403':
+          description: '403'
+          content:
+            text/plain:
+              examples:
+                Result:
+                  value: ''
         '429':
-          $ref: '#/components/responses/RateLimited'
+          description: '429'
+          content:
+            text/plain:
+              examples:
+                Rate Limit Exceeded:
+                  value: ''
+      deprecated: false
+      x-readme:
+        code-samples:
+        - language: curl
+          code: 'curl --location ''https://api.regal.ai/v1/campaigns'' \
+
+            --header ''Authorization: YOUR API KEY'' \'
+        samples-languages:
+        - curl
+      tags:
+      - Campaigns
 components:
-  schemas:
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          type: string
-    Campaign:
-      type: object
-      properties:
-        campaignId:
-          type: integer
-          format: int32
-        campaignFriendlyId:
-          type: string
-        name:
-          type: string
-        channel:
-          type: string
-          description: voice or sms
-        status:
-          type: string
-  responses:
-    Unauthorized:
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    RateLimited:
-      description: Rate Limit Exceeded
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
-    ApiKeyAuth:
+    sec0:
       type: apiKey
-      in: header
       name: Authorization
+      in: header

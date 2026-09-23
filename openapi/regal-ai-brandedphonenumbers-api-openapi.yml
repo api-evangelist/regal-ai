@@ -1,0 +1,702 @@
+openapi: 3.2.0
+info:
+  title: contact-center-apis Branded Phone Numbers API
+  version: '1.2'
+servers:
+- url: https://api.regal.ai/v1
+security:
+- sec0: []
+tags:
+- name: BrandedPhoneNumbers
+paths:
+  /brandedPhoneNumbers:
+    get:
+      summary: List Branded Phone Numbers
+      description: Retrieve a list of phone numbers submitted for branding and/or spam remediation.
+      operationId: branded-phone-numbers
+      parameters:
+      - name: nextCursor
+        in: query
+        description: Used for pagination to retrieve the next page of data. Optional
+        schema:
+          type: string
+      - name: size
+        in: query
+        description: Specific the number of results per page, up to 100.
+        schema:
+          type: string
+          default: '25'
+      - name: Authorization
+        in: header
+        description: The API key used to authenticate requests.
+        required: true
+        schema:
+          type: string
+      - name: phoneNumber
+        in: query
+        description: Filter by exact phone number (E.164 format, e.g., "%2B15551234567") - supports only one value at a time, not multiple. Optional
+        schema:
+          type: string
+      - name: businessProfileId
+        in: query
+        description: Filter by business profile UUID - supports only one value at a time, not multiple. You can retrieve your business profile uuid by making a GET request to businessProfiles. Optional
+        schema:
+          type: string
+      - name: carrier
+        in: query
+        description: Filter by carrier. Optional
+        schema:
+          type: string
+          enum:
+          - AT%26T
+          - T-Mobile
+          - Verizon
+      - name: feature
+        in: query
+        description: Filter by feature. Optional
+        schema:
+          type: string
+          enum:
+          - brandedCallerId
+          - spamRemediation
+      - name: status
+        in: query
+        description: Filter by phone number level status. Optional
+        schema:
+          type: string
+          enum:
+          - submitted for review
+          - approved
+          - rejected
+          - unregistered
+      - name: detailedStatus
+        in: query
+        description: Filter by carrier/feature level status. Optional
+        schema:
+          type: string
+          enum:
+          - pending.initialOptIn
+          - pending.optIn
+          - approved.optIn
+          - rejected.optIn
+          - submitted.optOut
+          - pending.optOut
+          - approved.optOut
+          - rejected.optOut
+      - name: internalName
+        in: query
+        description: Filter by internal name. Optional
+        schema:
+          type: string
+      - name: reportingGroup
+        in: query
+        description: Filter by reporting group. Optional
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Response Data:
+                  value: "{\n    \"items\": [\n        {\n            \"id\": \"xxxx-xxx-xxxx-xxxx-xxxx\",\n            \"phoneNumber\": \"+1555123456\",\n            \"businessProfile\": {\n                \"id\": \"zzzzz-zzzz-zzzzzz-zzzz-zzzz\",\n                \"businessName\": \"Circle Bank\",\n                \"status\": \"approved\"\n            },\n            \"internalName\": \"Mortgage Sales Line\",\n            \"brandingNameShort\": \"Circle Bank\",\n            \"brandingNameLong\": \"Circle Bank Financial\",\n            \"reportingGroup\": \"Control\",\n            \"status\": \"submitted for review\",\n            \"carrierStatuses\": [\n                {\n                    \"carrier\": \"T-Mobile\",\n                    \"feature\": \"brandedCallerId\",\n                    \"detailedStatus\": \"pending.initialOptIn\",\n                    \"createdAt\": \"2026-02-03T16:49:03.043Z\"\n                },\n                {\n                    \"carrier\": \"T-Mobile\",\n                    \"feature\": \"spamRemediation\",\n                    \"detailedStatus\": \"pending.initialOptIn\",\n                    \"createdAt\": \"2026-02-03T16:49:03.043Z\"\n                },\n                {\n                    \"carrier\": \"Verizon\",\n                    \"feature\": \"brandedCallerId\",\n                    \"detailedStatus\": \"pending.initialOptIn\",\n                    \"createdAt\": \"2026-02-03T16:49:03.043Z\"\n                },\n                {\n                    \"carrier\": \"Verizon\",\n                    \"feature\": \"spamRemediation\",\n                    \"detailedStatus\": \"approved.optIn\",\n                    \"createdAt\": \"2026-02-05T18:51:51.868Z\"\n                },\n                {\n                    \"carrier\": \"AT&T\",\n                    \"feature\": \"brandedCallerId\",\n                    \"detailedStatus\": \"pending.initialOptIn\",\n                    \"createdAt\": \"2026-02-03T16:49:03.043Z\"\n                },\n                {\n                    \"carrier\": \"AT&T\",\n                    \"feature\": \"spamRemediation\",\n                    \"detailedStatus\": \"approved.optIn\",\n                    \"createdAt\": \"2026-02-05T18:31:30.590Z\"\n                }\n            ],\n            \"createdAt\": \"2026-02-03T16:49:02.748Z\",\n            \"updatedAt\": \"2026-02-03T16:49:02.748Z\"\n        },\n        {\n            \"id\": \"yyyy-xxx-xxxx-xxxx-xxxx\",\n            \"phoneNumber\": \"+1555123456\",\n            \"businessProfile\": {\n                \"id\": \"zzzzz-zzzz-zzzzzz-zzzz-zzzz\",\n                \"businessName\": \"Circle Bank\",\n                \"status\": \"approved\"\n            },\n            \"internalName\": \"Circle Bank Main Line\",\n            \"brandingNameShort\": \"Circle Bank\",\n            \"brandingNameLong\": \"Circle Bank Financial\",\n            \"reportingGroup\": \"Control\",\n            \"status\": \"approved\",\n            \"carrierStatuses\": [\n                {\n                    \"carrier\": \"T-Mobile\",\n                    \"feature\": \"brandedCallerId\",\n                    \"detailedStatus\": \"approved.optIn\",\n                    \"createdAt\": \"2026-02-03T16:49:03.043Z\"\n                },\n                {\n                    \"carrier\": \"T-Mobile\",\n                    \"feature\": \"spamRemediation\",\n                    \"detailedStatus\": \"approved.optInn\",\n                    \"createdAt\": \"2026-02-03T16:49:03.043Z\"\n                },\n                {\n                    \"carrier\": \"Verizon\",\n                    \"feature\": \"brandedCallerId\",\n                    \"detailedStatus\": \"approved.optInn\",\n                    \"createdAt\": \"2026-02-03T16:49:03.043Z\"\n                },\n                {\n                    \"carrier\": \"Verizon\",\n                    \"feature\": \"spamRemediation\",\n                    \"detailedStatus\": \"approved.optIn\",\n                    \"createdAt\": \"2026-02-05T18:51:51.886Z\"\n                },\n                {\n                    \"carrier\": \"AT&T\",\n                    \"feature\": \"brandedCallerId\",\n                    \"detailedStatus\": \"approved.optIn\",\n                    \"createdAt\": \"2026-02-03T16:49:03.043Z\"\n                },\n                {\n                    \"carrier\": \"AT&T\",\n                    \"feature\": \"spamRemediation\",\n                    \"detailedStatus\": \"approved.optIn\",\n                    \"createdAt\": \"2026-02-05T18:31:30.604Z\"\n                }\n            ],\n            \"createdAt\": \"2026-02-03T16:49:02.748Z\",\n            \"updatedAt\": \"2026-02-03T16:49:02.748Z\"\n        }\n    ],\n    \"nextCursor\": \"xyz456\"\n}"
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: xxxx-xxx-xxxx-xxxx-xxxx
+                        phoneNumber:
+                          type: string
+                          example: '+1555123456'
+                        businessProfile:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              example: zzzzz-zzzz-zzzzzz-zzzz-zzzz
+                            businessName:
+                              type: string
+                              example: Circle Bank
+                            status:
+                              type: string
+                              example: approved
+                        internalName:
+                          type: string
+                          example: Mortgage Sales Line
+                        brandingNameShort:
+                          type: string
+                          example: Circle Bank
+                        brandingNameLong:
+                          type: string
+                          example: Circle Bank Financial
+                        reportingGroup:
+                          type: string
+                          example: Control
+                        status:
+                          type: string
+                          example: submitted for review
+                        carrierStatuses:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              carrier:
+                                type: string
+                                example: T-Mobile
+                              feature:
+                                type: string
+                                example: brandedCallerId
+                              detailedStatus:
+                                type: string
+                                example: pending.initialOptIn
+                              createdAt:
+                                type: string
+                                example: '2026-02-03T16:49:03.043Z'
+                        createdAt:
+                          type: string
+                          example: '2026-02-03T16:49:02.748Z'
+                        updatedAt:
+                          type: string
+                          example: '2026-02-03T16:49:02.748Z'
+                  nextCursor:
+                    type: string
+                    example: xyz456
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                Bad Request:
+                  value: "{\n    \"message\": \"Bad Request\"\n}"
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Bad Request
+        '401':
+          description: '401'
+          content:
+            application/json:
+              examples:
+                Unauthorized:
+                  value: "{\n    \"message\": \"Unauthorized\"\n}"
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorized
+        '403':
+          description: '403'
+          content:
+            application/json:
+              examples:
+                Forbidden:
+                  value: "{\n    \"message\": \"Forbidden\"\n}"
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Forbidden
+        '429':
+          description: '429'
+          content:
+            application/json:
+              examples:
+                Rate Limit Exceeded:
+                  value: "{\n    \"message\": \"Rate Limit Exceeded\"\n}"
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Rate Limit Exceeded
+      deprecated: false
+      tags:
+      - BrandedPhoneNumbers
+    post:
+      summary: Post Branded Phone Number
+      description: Post a phone number for spam remediation and/or branding.
+      operationId: post-branded-phone-number
+      parameters:
+      - name: Authorization
+        in: header
+        description: The API key used to authenticate requests.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - phoneNumber
+              - businessProfileId
+              - carrierFeatures
+              properties:
+                phoneNumber:
+                  type: string
+                  description: E.164 format (e.g., +15551234567)
+                businessProfileId:
+                  type: string
+                  description: Business profile id phone number is associated with. Use GET business profiles API to retrieve your business profile ID(s) or copy from the Business Profiles page in Regal app
+                carrierFeatures:
+                  type: array
+                  description: Array of carrier configurations (at least one carrier required)
+                  items:
+                    properties:
+                      carrier:
+                        type: string
+                        description: Name of carrier
+                        enum:
+                        - AT&T
+                        - T-Mobile
+                        - Verizon
+                      features:
+                        type: object
+                        description: Features are brandedCallerId and spamRemediation
+                        properties:
+                          brandedCallerId:
+                            type: boolean
+                            description: Optional, defaults to false
+                          spamRemediation:
+                            type: boolean
+                            description: Optional, defaults to false
+                    type: object
+                brandingNameShort:
+                  type: string
+                  description: Display name (max 15 characters)
+                brandingNameLong:
+                  type: string
+                  description: Display name (max 32 characters)
+                internalName:
+                  type: string
+                  description: Internal friendly name for your phone number (e.g. Main Line, NE Region). Optional
+                reportingGroup:
+                  type: string
+                  description: Name of reporting group for analytics. Optional
+      responses:
+        '201':
+          description: '201'
+          content:
+            application/json:
+              examples:
+                Response Data:
+                  value: "{\n    \"id\": \"xxxx-xxxx-xxxx-xxxxx-xxxx\",\n    \"phoneNumber\": \"+19545555555\",\n    \"businessProfile\": {\n        \"id\": \"yyyy-yyyy-yyyy-yyyy-yyyy\",\n        \"businessName\": \"Circle Financial Services\",\n        \"status\": \"approved\"\n    },\n    \"internalName\": \"Sales Line\",\n    \"brandingNameShort\": \"Circle Financial\",\n    \"brandingNameLong\": \"Circle Financial Services\",\n    \"reportingGroup\": \"\",\n    \"status\": \"submitted for review\",\n    \"carrierStatuses\": [\n        {\n            \"carrier\": \"AT&T\",\n            \"feature\": \"brandedCallerId\",\n            \"detailedStatus\": \"pending.initialOptIn\",\n            \"createdAt\": \"2026-02-11T15:32:00.907Z\"\n        },\n        {\n            \"carrier\": \"AT&T\",\n            \"feature\": \"spamRemediation\",\n            \"detailedStatus\": \"pending.initialOptIn\",\n            \"createdAt\": \"2026-02-11T15:32:00.907Z\"\n        },\n        {\n            \"carrier\": \"T-Mobile\",\n            \"feature\": \"brandedCallerId\",\n            \"detailedStatus\": \"pending.initialOptIn\",\n            \"createdAt\": \"2026-02-11T15:32:00.907Z\"\n        },\n        {\n            \"carrier\": \"T-Mobile\",\n            \"feature\": \"spamRemediation\",\n            \"detailedStatus\": \"pending.initialOptIn\",\n            \"createdAt\": \"2026-02-11T15:32:00.907Z\"\n        },\n\t\t\t\t{\n            \"carrier\": \"Verizon\",\n            \"feature\": \"brandedCallerId\",\n            \"detailedStatus\": \"pending.initialOptIn\",\n            \"createdAt\": \"2026-02-11T15:32:00.907Z\"\n        },\n        {\n            \"carrier\": \"Verizon\",\n            \"feature\": \"spamRemediation\",\n            \"detailedStatus\": \"pending.initialOptIn\",\n            \"createdAt\": \"2026-02-11T15:32:00.907Z\"\n        }\n    ],\n    \"createdAt\": \"2026-02-11T15:32:00.850Z\",\n    \"updatedAt\": \"2026-02-11T15:32:00.850Z\"\n}"
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: xxxx-xxxx-xxxx-xxxxx-xxxx
+                  phoneNumber:
+                    type: string
+                    example: '+19545555555'
+                  businessProfile:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: yyyy-yyyy-yyyy-yyyy-yyyy
+                      businessName:
+                        type: string
+                        example: Circle Financial Services
+                      status:
+                        type: string
+                        example: approved
+                  internalName:
+                    type: string
+                    example: Sales Line
+                  brandingNameShort:
+                    type: string
+                    example: Circle Financial
+                  brandingNameLong:
+                    type: string
+                    example: Circle Financial Services
+                  reportingGroup:
+                    type: string
+                    example: ''
+                  status:
+                    type: string
+                    example: submitted for review
+                  carrierStatuses:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        carrier:
+                          type: string
+                          example: AT&T
+                        feature:
+                          type: string
+                          example: brandedCallerId
+                        detailedStatus:
+                          type: string
+                          example: pending.initialOptIn
+                        createdAt:
+                          type: string
+                          example: '2026-02-11T15:32:00.907Z'
+                  createdAt:
+                    type: string
+                    example: '2026-02-11T15:32:00.850Z'
+                  updatedAt:
+                    type: string
+                    example: '2026-02-11T15:32:00.850Z'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                Bad Request:
+                  value: "{\n    \"statusCode\": 400,\n      \"message\": [\n        \"Business profile 8cba47fe-2d84-4476-b9b1-edeb8ad99c3f not found for this brand\",\n\t\t\t\t\"businessProfileId must be a UUID\",\n\t\t\t\t\"phoneNumber must be in E.164 format (e.g., +15551234567)\",\n        \"Carrier 'madeupcarrier' is not valid. Valid carriers are: att, tmobile, verizon\",\n        \"Phone number +12123333333 is already in use by another brand\",\n\t\t\t\t\"brandingNameShort must not exceed 15 characters”,\n\t\t\t\t\"brandingNameLong must not exceed 32 characters”,\n    ],\n    \"error\": \"Bad Request\"\n}"
+        '403':
+          description: '403'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n    \"statusCode\": 403,\n    \"message\": \"Invalid API Key\",\n    \"error\": \"Forbidden\"\n}"
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 403
+                    default: 0
+                  message:
+                    type: string
+                    example: Invalid API Key
+                  error:
+                    type: string
+                    example: Forbidden
+        '409':
+          description: '409'
+          content:
+            application/json:
+              examples:
+                Unauthorized:
+                  value: "{\n    \"statusCode\": 409,\n    \"message\": \"Phone number +17378888888 already exists for this brand. Use PATCH to update.\",\n    \"error\": \"Conflict\"\n}"
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 409
+                    default: 0
+                  message:
+                    type: string
+                    example: Phone number +17378888888 already exists for this brand. Use PATCH to update.
+                  error:
+                    type: string
+                    example: Conflict
+        '429':
+          description: '429'
+          content:
+            application/json:
+              examples:
+                Rate Limit Exceeded:
+                  value: "{\n    \"statusCode\": 429,\n    \"message\": \"Too many requests\",\n    \"error\": \"Rate Limit Exceeded\"\n}"
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 429
+                    default: 0
+                  message:
+                    type: string
+                    example: Too many requests
+                  error:
+                    type: string
+                    example: Rate Limit Exceeded
+      deprecated: false
+      tags:
+      - BrandedPhoneNumbers
+  /brandedPhoneNumbers/{phoneNumber}:
+    delete:
+      summary: Delete Branded Phone Number
+      description: Delete an existing phone number from spam remediation and/or branding.
+      operationId: delete-branded-phone-number
+      parameters:
+      - name: Authorization
+        in: header
+        description: The API key used to authenticate requests.
+        required: true
+        schema:
+          type: string
+      - name: phoneNumber
+        in: path
+        description: E.164 format (e.g., +15551234567)
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Response Data:
+                  value: '{ "message": "+15551234567 has been deleted"}'
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: +15551234567 has been deleted
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                Bad Request:
+                  value: "{\n    \"statusCode\": 400,\n      \"message\": [\n        \"Phone number not in valid status for removal\",\n        \"Phone number +asdfasdf is not valid\"\n    ],\n    \"error\": \"Bad Request\"\n}"
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                    default: 0
+                  message:
+                    type: array
+                    items:
+                      type: string
+                      example: Phone number not in valid status for removal
+                  error:
+                    type: string
+                    example: Bad Request
+        '403':
+          description: '403'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n    \"statusCode\": 403,\n    \"message\": \"Invalid API Key\",\n    \"error\": \"Forbidden\"\n}"
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 403
+                    default: 0
+                  message:
+                    type: string
+                    example: Invalid API Key
+                  error:
+                    type: string
+                    example: Forbidden
+        '404':
+          description: '404'
+          content:
+            application/json:
+              examples:
+                Not Found:
+                  value: "{\n    \"statusCode\": 404,\n    \"message\": \"Phone number +12123333333 not found for this brand\",\n    \"error\": \"Not Found\"\n}"
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 404
+                    default: 0
+                  message:
+                    type: string
+                    example: Phone number +12123333333 not found for this brand
+                  error:
+                    type: string
+                    example: Not Found
+        '429':
+          description: '429'
+          content:
+            application/json:
+              examples:
+                Rate Limit Exceeded:
+                  value: "{\n    \"statusCode\": 429,\n    \"message\": \"Too many requests\",\n    \"error\": \"Rate Limit Exceeded\"\n}"
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 429
+                    default: 0
+                  message:
+                    type: string
+                    example: Too many requests
+                  error:
+                    type: string
+                    example: Rate Limit Exceeded
+      deprecated: false
+      tags:
+      - BrandedPhoneNumbers
+    patch:
+      summary: Update Branded Phone Number
+      description: Update an existing phone number for spam remediation and/or branding.
+      operationId: patch-branded-phone-number
+      parameters:
+      - name: Authorization
+        in: header
+        description: The API key used to authenticate requests.
+        required: true
+        schema:
+          type: string
+      - name: phoneNumber
+        in: path
+        description: E.164 format (e.g., +15551234567)
+        schema:
+          type: string
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                businessProfileId:
+                  type: string
+                  description: Business profile id. Optional
+                carrierFeatures:
+                  type: array
+                  description: Array of carrier configurations. Optional
+                  items:
+                    properties:
+                      carrier:
+                        type: string
+                        description: Name of carrier
+                        enum:
+                        - AT&T
+                        - T-Mobile
+                        - Verizon
+                      features:
+                        type: object
+                        description: Features are brandedCallerId and spamRemediation
+                        properties:
+                          brandedCallerId:
+                            type: boolean
+                            description: Optional, defaults to false
+                          spamRemediation:
+                            type: boolean
+                            description: Optional, defaults to false
+                    type: object
+                brandingNameShort:
+                  type: string
+                  description: Display name (max 15 characters). Optional
+                brandingNameLong:
+                  type: string
+                  description: Display name (max 32 characters). Optional
+                internalName:
+                  type: string
+                  description: Internal friendly name for your phone number (e.g. Main Line, NE Region). Optional
+                reportingGroup:
+                  type: string
+                  description: Name of reporting group for analytics. Optional
+            examples:
+              Request Example:
+                value:
+                  brandingNameShort: New Name Short
+                  brandingNameLong: New Name Long Long
+                  internalName: Sales Line
+                  reportingGroup: Experiment
+                  carrierFeatures:
+                  - carrier: AT&T
+                    features:
+                      brandedCallerId: true
+                  - carrier: Verizon
+                    features:
+                      brandedCallerId: true
+                  - carrier: T-Mobile
+                    features:
+                      brandedCallerId: true
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Response Data:
+                  value: "{\n    \"id\": \"xxxx-xxxx-xxxx-xxxxx-xxxx\",\n    \"phoneNumber\": \"+19545555555\",\n    \"businessProfile\": {\n        \"id\": \"yyyy-yyyy-yyyy-yyyy-yyyy\",\n        \"businessName\": \"Circle Financial Services\",\n        \"status\": \"approved\"\n    },\n    \"internalName\": \"Sales Line\",\n    \"brandingNameShort\": \"New Name Short\",\n    \"brandingNameLong\": \"New Name Long Long\",\n    \"reportingGroup\": \"Experiment\",\n    \"status\": \"submitted for review\",\n    \"carrierStatuses\": [\n        {\n            \"carrier\": \"AT&T\",\n            \"feature\": \"brandedCallerId\",\n            \"detailedStatus\": \"pending.initialOptIn\",\n            \"createdAt\": \"2026-02-11T15:32:00.907Z\"\n        },\n        {\n            \"carrier\": \"AT&T\",\n            \"feature\": \"spamRemediation\",\n            \"detailedStatus\": \"approved.OptIn\",\n            \"createdAt\": \"2026-02-11T15:32:00.907Z\"\n        },\n        {\n            \"carrier\": \"T-Mobile\",\n            \"feature\": \"brandedCallerId\",\n            \"detailedStatus\": \"pending.initialOptIn\",\n            \"createdAt\": \"2026-02-11T15:32:00.907Z\"\n        },\n        {\n            \"carrier\": \"T-Mobile\",\n            \"feature\": \"spamRemediation\",\n            \"detailedStatus\": \"approved.OptIn\",\n            \"createdAt\": \"2026-02-11T15:32:00.907Z\"\n        },\n\t\t\t\t{\n            \"carrier\": \"Verizon\",\n            \"feature\": \"brandedCallerId\",\n            \"detailedStatus\": \"pending.initialOptIn\",\n            \"createdAt\": \"2026-02-11T15:32:00.907Z\"\n        },\n        {\n            \"carrier\": \"Verizon\",\n            \"feature\": \"spamRemediation\",\n            \"detailedStatus\": \"approved.OptIn\"\",\n            \"createdAt\": \"2026-02-11T15:32:00.907Z\"\n        }\n    ],\n    \"createdAt\": \"2026-02-11T15:32:00.850Z\",\n    \"updatedAt\": \"2026-02-11T15:32:00.850Z\"\n}"
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                Bad Request:
+                  value: "{\n    \"statusCode\": 400,\n      \"message\": [\n        \"Business profile 8cba47fe-2d84-4476-b9b1-edeb8ad99c3f not found for this brand\",\n        \"businessProfileId must be a UUID\",\n        \"Phone number +asdfasdf is not valid\",\n        \"Carrier 'madeupcarrier' is not valid. Valid carriers are: att, tmobile, verizon\",\n        \"Phone number +12123333333 is already in use by another brand\",\n\t\t\t\t\"brandingNameShort must not exceed 15 characters”,\n\t\t\t\t\"brandingNameLong must not exceed 32 characters”,\n    ],\n    \"error\": \"Bad Request\"\n}"
+        '403':
+          description: '403'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n    \"statusCode\": 403,\n    \"message\": \"Invalid API Key\",\n    \"error\": \"Forbidden\"\n}"
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 403
+                    default: 0
+                  message:
+                    type: string
+                    example: Invalid API Key
+                  error:
+                    type: string
+                    example: Forbidden
+        '404':
+          description: '404'
+          content:
+            application/json:
+              examples:
+                Not Found:
+                  value: "{\n    \"statusCode\": 404,\n    \"message\": \"Phone number +12123333333 not found for this brand\",\n    \"error\": \"Not Found\"\n}"
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 404
+                    default: 0
+                  message:
+                    type: string
+                    example: Phone number +12123333333 not found for this brand
+                  error:
+                    type: string
+                    example: Not Found
+        '429':
+          description: '429'
+          content:
+            application/json:
+              examples:
+                Rate Limit Exceeded:
+                  value: "{\n    \"statusCode\": 429,\n    \"message\": \"Too many requests\",\n    \"error\": \"Rate Limit Exceeded\"\n}"
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 429
+                    default: 0
+                  message:
+                    type: string
+                    example: Too many requests
+                  error:
+                    type: string
+                    example: Rate Limit Exceeded
+      tags:
+      - BrandedPhoneNumbers
+components:
+  securitySchemes:
+    sec0:
+      type: apiKey
+      name: Authorization
+      in: header
