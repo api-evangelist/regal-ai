@@ -86,7 +86,7 @@ access: 3rd-Party
 position: Consuming
 specificationVersion: '0.23'
 created: '2026-05-24'
-modified: '2026-08-14'
+modified: '2026-10-06'
 apis:
 - aid: regal-ai:regal-reporting-webhooks
   name: Regal Reporting Webhooks
@@ -488,6 +488,8 @@ apis:
   - type: Documentation
     url: https://developer.regal.ai/docs/five9-ai-agent-connect
 common:
+  - url: https://www.regal.ai/blog/rss.xml
+    type: BlogRSS
   - type: Overlay
     url: overlays/regal-ai-branded-phone-numbers-overlay.yaml
   - type: Overlay
