@@ -80,6 +80,22 @@ paths:
           $ref: '#/components/responses/RateLimited'
 components:
   schemas:
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: string
+    OptInState:
+      type: object
+      properties:
+        subscribed:
+          type: boolean
+        timestamp:
+          type: string
+        source:
+          type: string
     CustomEvent:
       type: object
       required:
@@ -103,38 +119,6 @@ components:
         eventSource:
           type: string
           description: Source system that emitted the event (e.g., Website, CRM, Backend).
-    PhoneTrait:
-      type: object
-      required:
-      - phoneNumber
-      properties:
-        phoneNumber:
-          type: string
-        isPrimary:
-          type: boolean
-        label:
-          type: string
-          description: Label such as mobile, home, work.
-        voiceOptIn:
-          $ref: '#/components/schemas/OptInState'
-        smsOptIn:
-          $ref: '#/components/schemas/OptInState'
-    OptInState:
-      type: object
-      properties:
-        subscribed:
-          type: boolean
-        timestamp:
-          type: string
-        source:
-          type: string
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          type: string
     ContactTraits:
       type: object
       description: Identifiers and attributes describing the contact.
@@ -180,6 +164,22 @@ components:
           type: string
         country:
           type: string
+    PhoneTrait:
+      type: object
+      required:
+      - phoneNumber
+      properties:
+        phoneNumber:
+          type: string
+        isPrimary:
+          type: boolean
+        label:
+          type: string
+          description: Label such as mobile, home, work.
+        voiceOptIn:
+          $ref: '#/components/schemas/OptInState'
+        smsOptIn:
+          $ref: '#/components/schemas/OptInState'
   responses:
     RateLimited:
       description: Rate Limit Exceeded (300 RPS default)
@@ -187,14 +187,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad Request
+    Unauthorized:
+      description: Unauthorized
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Unauthorized
+    BadRequest:
+      description: Bad Request
       content:
         application/json:
           schema:
