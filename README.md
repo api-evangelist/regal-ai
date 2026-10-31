@@ -1,4 +1,4 @@
-# Regal (regal-ai)
+# Regal
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,237 +66,275 @@
 
 Regal is a New York City-based AI Agent Platform purpose-built for contact center operations. The Regal platform lets enterprises design, test, deploy, monitor, and continuously improve AI Phone Agents, SMS Agents, Chat Agents, and WebRTC Voice Agents for inbound and outbound use cases including sales, customer support, scheduling, collections, and lead qualification. The product surface includes an Agent Builder (no-code prompts, actions, knowledge base, variants, languages, LLM models), a Sales Dialer, Journey Builder for orchestrating multi-channel customer experiences, Conversation Intelligence for QA and analytics, and a Copilot that automates agent design. Regal exposes a public REST API spanning a Custom Events ingest endpoint (events.regalvoice.com/events) for contact and event ingestion plus a v1 management API (api.regal.ai/v1) covering Branded Phone Numbers, Business Profiles, Active Phone Numbers, Campaigns, Dispositions, and outbound SMS message sending. The platform also publishes 40+ reporting webhook event types covering calls, SMS, MMS, email, voicemail, agent activity, contacts, and journey state, plus a Custom Actions framework that lets voice agents call out to customer-owned HTTP endpoints during conversations. Regal integrates natively with Segment, mParticle, HubSpot, Salesforce, Zendesk, Kustomer, Klaviyo, Braze, Marketo, Customer.io, Iterable, Microsoft Dynamics 365, Zoho, Hightouch, Cal.com, Calendly, Snowflake, S3, Slack, Microsoft Teams, Five9, Talkdesk, and 8x8.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/regal-ai/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/regal-ai/refs/heads/main/apis.yml)
+**Areas:** Artificial Intelligence · AI Agents · Voice AI · Contact Center · Outbound Calling · Inbound Calling · Phone Agents · SMS · Chat · WebRTC · Conversation Intelligence · Journey Orchestration
 
-## Scope
+## Regal on APIs.io
 
-- **Position:** Consuming
-- **Access:** 3rd-Party
+Everything profiled for Regal is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/regal-ai/](https://apis.io/providers/regal-ai/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (10)
 
-- AI
-- AI Agents
-- Voice AI
-- Contact Center
-- Outbound Calling
-- Inbound Calling
-- Phone Agents
-- SMS
-- Chat
-- WebRTC
-- Conversation Intelligence
-- Journey Orchestration
-- Branded Caller ID
-- CCaaS
-- CPaaS
-- Sales Dialer
-- Customer Engagement
+- [Regal Reporting Webhooks](https://apis.io/apis/regal-ai/regal-reporting-webhooks/) — Regal publishes 40+ reporting webhook event types covering agent activity, call lifecycle (placed, completed, IVR triggered, wrapup), call recording and…
+- [Regal Campaigns API](https://apis.io/apis/regal-ai/regal-ai-campaigns-api/) — The Campaigns API from Regal — 1 operation(s) for campaigns.
+- [Regal Dispositions API](https://apis.io/apis/regal-ai/regal-ai-dispositions-api/) — The Dispositions API from Regal — 1 operation(s) for dispositions.
+- [Regal Events API](https://apis.io/apis/regal-ai/regal-ai-events-api/) — Contact creation, update, and custom event tracking
+- [Regal Messages API](https://apis.io/apis/regal-ai/regal-ai-messages-api/) — The Messages API from Regal — 1 operation(s) for messages.
+- [Regal Users API](https://apis.io/apis/regal-ai/regal-ai-users-api/) — List and retrieve Regal user accounts — both human agents and AI agents — with their skills, teams, custom attributes and eligible routing queues. List…
+- [Regal Active Phone Numbers API](https://apis.io/apis/regal-ai/regal-ai-activephonenumbers-api/) — The ActivePhoneNumbers API from Regal — 1 operation(s) for activephonenumbers.
+- [Regal Branded Phone Numbers API](https://apis.io/apis/regal-ai/regal-ai-brandedphonenumbers-api/) — The BrandedPhoneNumbers API from Regal — 2 operation(s) for brandedphonenumbers.
+- [Regal Business Profiles API](https://apis.io/apis/regal-ai/regal-ai-businessprofiles-api/) — The BusinessProfiles API from Regal — 1 operation(s) for businessprofiles.
+- [Regal Call Handoffs API](https://apis.io/apis/regal-ai/regal-ai-callhandoffs-api/) — The CallHandoffs API from Regal — 1 operation(s) for callhandoffs.
 
-## Timestamps
+### Published properties
 
-- **Created:** 2026-05-24
-- **Modified:** 2026-05-24
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### AsyncAPI (1)
 
-### Regal Events API
+Event-driven and webhook contracts.
 
-The Regal Events API is a single high-throughput ingest endpoint (POST https://events.regalvoice.com/events) that creates or updates a contact and records a custom event on the contact profile. The body uses a userId plus a traits object (phones, emails, firstName, lastName, address, custom properties) and a top-level name/properties pair describing the event. Identity resolution iterates identifiers in the order primary phone > any other phone > primary email > any other email > userId. A contact must have at least one phone or email to be considered contactable. Authenticated via API key in the Authorization header. Rate limited to 300 requests per second by default. This is the same endpoint that triggers Journeys (and therefore outbound calls, SMS journeys, and reminder sequences) when paired with the correct event name and TCPA opt-in flags.
+- [Regal Reporting Webhooks](https://apis.io/asyncapis/regal-ai/regal-reporting-webhooks-asyncapi/)
 
-- **Human URL:** [https://developer.regal.ai/reference/api](https://developer.regal.ai/reference/api)
+#### Event channels (40)
 
-#### Tags
+Individual events and webhooks the provider emits.
 
-- Events
-- Contacts
-- Identity Resolution
-- Ingestion
-- Custom Events
+- [/](https://apis.io/channels/regal-ai/agent-activity-updated/)
+- [/](https://apis.io/channels/regal-ai/call-analysis-available/)
+- [/](https://apis.io/channels/regal-ai/call-completed/)
+- [/](https://apis.io/channels/regal-ai/call-ivr-triggered/)
+- [/](https://apis.io/channels/regal-ai/call-placed/)
+- [/](https://apis.io/channels/regal-ai/call-recording-available/)
+- [/](https://apis.io/channels/regal-ai/call-transcript-available/)
+- [/](https://apis.io/channels/regal-ai/call-wrapup/)
+- [/](https://apis.io/channels/regal-ai/cancel-all-automated-tasks/)
+- [/](https://apis.io/channels/regal-ai/contact-attribute-edited/)
+- [/](https://apis.io/channels/regal-ai/contact-created/)
+- [/](https://apis.io/channels/regal-ai/contact-email-created/)
+- [/](https://apis.io/channels/regal-ai/contact-experiment-assigned/)
+- [/](https://apis.io/channels/regal-ai/contact-phone-created/)
+- [/](https://apis.io/channels/regal-ai/contact-subscribed/)
+- [/](https://apis.io/channels/regal-ai/contact-unsubscribed/)
+- [/](https://apis.io/channels/regal-ai/contacted-after-hours/)
+- [/](https://apis.io/channels/regal-ai/custom-task-completed/)
+- [/](https://apis.io/channels/regal-ai/email-conversation-completed/)
+- [/](https://apis.io/channels/regal-ai/email-received/)
+- [/](https://apis.io/channels/regal-ai/email-sent/)
+- [/](https://apis.io/channels/regal-ai/mms-received/)
+- [/](https://apis.io/channels/regal-ai/mms-sent/)
+- [/](https://apis.io/channels/regal-ai/object-attribute-edited/)
+- [/](https://apis.io/channels/regal-ai/object-created/)
+- …and 15 more published on APIs.io
 
-#### Properties
+#### MCP servers (1)
 
-- [Documentation](https://developer.regal.ai/reference/overview)
-- [Documentation](https://developer.regal.ai/reference/api)
-- [Documentation](https://developer.regal.ai/docs/send-custom-event-to-regal)
-- [F A Q](https://developer.regal.ai/reference/faq)
-- [OpenAPI](openapi/regal-events-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/regal-events-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/regal-events-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [JSON Schema](json-schema/regal-contact-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/regal-event-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON-LD](json-ld/regal-ai-context.jsonld) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
+Model Context Protocol servers that expose the API to agents.
 
-### Regal Branded Phone Numbers API
+- [RegalMCP](https://apis.io/servers/regal-ai/regalmcp/)
 
-The Branded Phone Numbers API at api.regal.ai/v1/brandedPhoneNumbers lets you register, update, and remove branded caller ID and spam remediation entries on a per-carrier, per-feature basis. POST creates a new registration tying a phoneNumber to a businessProfileId and a carrierFeatures array (with brandingNameShort, brandingNameLong, internalName, reportingGroup, and one of spamRemediation or brandedCallerId enabled). PATCH updates the registration partially. DELETE removes it once all carrier submissions are inactive. The surface is rate limited to 10 requests per second.
+#### Agentic access (1)
 
-- **Human URL:** [https://developer.regal.ai/reference/post-branded-phone-number](https://developer.regal.ai/reference/post-branded-phone-number)
+Which operations an agent can call, which act, and which need a human in the loop.
 
-#### Tags
+- [Regal Ai Agentic Access](https://apis.io/agentic-access/regal-ai/regal-ai-agentic-access/)
 
-- Branded Caller ID
-- Phone Numbers
-- Trust Center
-- Carrier Registration
+#### JSON Schema (4)
 
-#### Properties
+The data models the API reads and writes.
 
-- [Documentation](https://developer.regal.ai/reference/post-branded-phone-number)
-- [Documentation](https://developer.regal.ai/reference/patch-branded-phone-number)
-- [Documentation](https://developer.regal.ai/reference/delete-branded-phone-number)
-- [OpenAPI](openapi/regal-branded-phone-numbers-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/regal-branded-phone-numbers-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/regal-branded-phone-numbers-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [JSON Schema](json-schema/regal-branded-phone-number-schema.json) — [JSON Schema](https://json-schema.org/specification)
+- [RegalBrandedPhoneNumber](https://apis.io/schemas/regal-ai/regal-branded-phone-number/)
+- [RegalContact](https://apis.io/schemas/regal-ai/regal-contact/)
+- [RegalEvent](https://apis.io/schemas/regal-ai/regal-event/)
+- [RegalMessage](https://apis.io/schemas/regal-ai/regal-message/)
 
-### Regal Management API
+#### JSON Structure (2)
 
-The Management API exposes read-only listing endpoints over api.regal.ai/v1 covering Business Profiles (used to drive branded caller ID), Active Phone Numbers in your tenant, Outbound Campaigns, and AI Call Dispositions. These endpoints were introduced in the January 2025 release to enable programmatic onboarding, audit, and reporting against the tenant's configuration without screen-scraping the Regal app UI.
+Data models expressed in JSON Structure.
 
-- **Human URL:** [https://developer.regal.ai/reference/overview](https://developer.regal.ai/reference/overview)
+- [Regal Contact Structure](https://apis.io/json-structure/regal-ai/regal-contact-structure/)
+- [Regal Event Structure](https://apis.io/json-structure/regal-ai/regal-event-structure/)
 
-#### Tags
+#### JSON-LD (1)
 
-- Business Profiles
-- Phone Numbers
-- Campaigns
-- Dispositions
-- Account
+Linked-data contexts for the provider's vocabulary.
 
-#### Properties
+- [Regal Ai Context](https://apis.io/jsonld/regal-ai/regal-ai-context/)
 
-- [Documentation](https://developer.regal.ai/reference/overview)
-- [Changelog](https://www.regal.ai/blog/january-2025-releases)
-- [OpenAPI](openapi/regal-management-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/regal-management-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/regal-management-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### Vocabulary (1)
 
-### Regal Messages API
+The provider's domain terms, defined.
 
-The Messages API at POST https://api.regal.ai/v1/messages/send delivers outbound SMS messages tied to a Regal SMS campaign. The body requires a to recipient object, a channel value of "sms", and either a campaignId (which supplies default from-number and content) or an explicit from object and content object. Unknown destination numbers are automatically resolved to new contact profiles. Returns 202 Accepted for queued messages and is rate limited to 10 requests per second.
+- [Regal AI Vocabulary](https://apis.io/vocabularies/regal-ai/regal-ai-vocabulary/)
 
-- **Human URL:** [https://developer.regal.ai/reference/send-message](https://developer.regal.ai/reference/send-message)
+#### Examples (5)
 
-#### Tags
+Example requests and responses.
 
-- SMS
-- Messaging
-- Outbound
-- Campaigns
+- [Regal Call Completed Webhook Example](https://apis.io/examples/regal-ai/regal-call-completed-webhook-example/)
+- [Regal List Campaigns Example](https://apis.io/examples/regal-ai/regal-list-campaigns-example/)
+- [Regal Post Branded Phone Number Example](https://apis.io/examples/regal-ai/regal-post-branded-phone-number-example/)
+- [Regal Post Custom Event Example](https://apis.io/examples/regal-ai/regal-post-custom-event-example/)
+- [Regal Send Message Example](https://apis.io/examples/regal-ai/regal-send-message-example/)
 
-#### Properties
+#### Collections (18)
 
-- [Documentation](https://developer.regal.ai/reference/send-message)
-- [OpenAPI](openapi/regal-messages-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/regal-messages-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/regal-messages-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [JSON Schema](json-schema/regal-message-schema.json) — [JSON Schema](https://json-schema.org/specification)
+Postman and Open Collection request collections.
 
-### Regal Reporting Webhooks
+- [Regal Branded Phone Numbers API](https://apis.io/collections/regal-ai/open-regal-ai-branded-phone-numbers-api/)
+- [Regal Branded Phone Numbers Business Profiles API](https://apis.io/collections/regal-ai/open-regal-ai-business-profiles-api/)
+- [Regal Branded Phone Numbers Campaigns API](https://apis.io/collections/regal-ai/open-regal-ai-campaigns-api/)
+- [Regal Branded Phone Numbers Dispositions API](https://apis.io/collections/regal-ai/open-regal-ai-dispositions-api/)
+- [Regal Branded Phone Numbers Events API](https://apis.io/collections/regal-ai/open-regal-ai-events-api/)
+- [Regal Branded Phone Numbers Messages API](https://apis.io/collections/regal-ai/open-regal-ai-messages-api/)
+- [Regal Branded Phone Numbers API](https://apis.io/collections/regal-ai/open-regal-ai-phone-numbers-api/)
+- [Regal Branded Phone Numbers API](https://apis.io/collections/regal-ai/open-regal-branded-phone-numbers-api/)
+- [Regal Events API](https://apis.io/collections/regal-ai/open-regal-events-api/)
+- [Regal Management API](https://apis.io/collections/regal-ai/open-regal-management-api/)
+- [Regal Messages API](https://apis.io/collections/regal-ai/open-regal-messages-api/)
+- [Regal Branded Phone Numbers API](https://apis.io/collections/regal-ai/postman-regal-ai-branded-phone-numbers-api/)
+- [Regal Branded Phone Numbers Business Profiles API](https://apis.io/collections/regal-ai/postman-regal-ai-business-profiles-api/)
+- [Regal Branded Phone Numbers Campaigns API](https://apis.io/collections/regal-ai/postman-regal-ai-campaigns-api/)
+- [Regal Branded Phone Numbers Dispositions API](https://apis.io/collections/regal-ai/postman-regal-ai-dispositions-api/)
+- [Regal Branded Phone Numbers Events API](https://apis.io/collections/regal-ai/postman-regal-ai-events-api/)
+- [Regal Branded Phone Numbers Messages API](https://apis.io/collections/regal-ai/postman-regal-ai-messages-api/)
+- [Regal Branded Phone Numbers API](https://apis.io/collections/regal-ai/postman-regal-ai-phone-numbers-api/)
 
-Regal publishes 40+ reporting webhook event types covering agent activity, call lifecycle (placed, completed, IVR triggered, wrapup), call recording and transcript availability, AI call analysis, task reservations, SMS lifecycle (queued, sent, received, failed, undelivered, conversation completed), MMS, email, voicemail (recording and transcript availability, completion), contact lifecycle (created, subscribed, unsubscribed, attribute and phone/email edits, experiment assignment), scheduled callbacks and reminders, custom tasks, custom objects, and cancel-all-automated-tasks signals. Each event carries a common envelope (userId, traits, name, eventId, properties, originalTimestamp, eventSource) plus event-specific properties. Webhooks must respond within five seconds or the event is dropped (no retries); endpoint changes take up to five minutes to propagate.
+#### Overlays (18)
 
-- **Human URL:** [https://developer.regal.ai/docs/reporting-webhooks](https://developer.regal.ai/docs/reporting-webhooks)
+OpenAPI overlays, including conversational phrasing for each operation.
 
-#### Tags
+- [Regal Ai Activephonenumbers Api Phrasing Overlay](https://apis.io/overlays/regal-ai/regal-ai-activephonenumbers-api-phrasing-overlay/)
+- [Regal Ai Branded Phone Numbers Overlay](https://apis.io/overlays/regal-ai/regal-ai-branded-phone-numbers-overlay/)
+- [Regal Ai Brandedphonenumbers Api Phrasing Overlay](https://apis.io/overlays/regal-ai/regal-ai-brandedphonenumbers-api-phrasing-overlay/)
+- [Regal Ai Business Profiles Overlay](https://apis.io/overlays/regal-ai/regal-ai-business-profiles-overlay/)
+- [Regal Ai Businessprofiles Api Phrasing Overlay](https://apis.io/overlays/regal-ai/regal-ai-businessprofiles-api-phrasing-overlay/)
+- [Regal Ai Call Handoffs Overlay](https://apis.io/overlays/regal-ai/regal-ai-call-handoffs-overlay/)
+- [Regal Ai Callhandoffs Api Phrasing Overlay](https://apis.io/overlays/regal-ai/regal-ai-callhandoffs-api-phrasing-overlay/)
+- [Regal Ai Campaigns Api Phrasing Overlay](https://apis.io/overlays/regal-ai/regal-ai-campaigns-api-phrasing-overlay/)
+- [Regal Ai Campaigns Overlay](https://apis.io/overlays/regal-ai/regal-ai-campaigns-overlay/)
+- [Regal Ai Dispositions Api Phrasing Overlay](https://apis.io/overlays/regal-ai/regal-ai-dispositions-api-phrasing-overlay/)
+- [Regal Ai Dispositions Overlay](https://apis.io/overlays/regal-ai/regal-ai-dispositions-overlay/)
+- [Regal Ai Events Api Phrasing Overlay](https://apis.io/overlays/regal-ai/regal-ai-events-api-phrasing-overlay/)
+- [Regal Ai Events Overlay](https://apis.io/overlays/regal-ai/regal-ai-events-overlay/)
+- [Regal Ai Messages Api Phrasing Overlay](https://apis.io/overlays/regal-ai/regal-ai-messages-api-phrasing-overlay/)
+- [Regal Ai Messages Overlay](https://apis.io/overlays/regal-ai/regal-ai-messages-overlay/)
+- [Regal Ai Phone Numbers Overlay](https://apis.io/overlays/regal-ai/regal-ai-phone-numbers-overlay/)
+- [Regal Ai Users Api Phrasing Overlay](https://apis.io/overlays/regal-ai/regal-ai-users-api-phrasing-overlay/)
+- [Regal Ai Users Overlay](https://apis.io/overlays/regal-ai/regal-ai-users-overlay/)
 
-- Webhooks
-- Events
-- Reporting
-- Streaming
-- AsyncAPI
+#### Governance rules (3)
 
-#### Properties
+Spectral rulesets for the provider's contracts.
 
-- [Documentation](https://developer.regal.ai/docs/reporting-webhooks)
-- [Documentation](https://support.regal.ai/hc/en-us/articles/5725272620187-How-to-Use-Journey-Webhooks)
-- [AsyncAPI](asyncapi/regal-reporting-webhooks-asyncapi.yml) — [AsyncAPI Specification](https://www.asyncapi.com/docs/reference/specification/latest)
-- [Postman Collection](collections/regal-branded-phone-numbers-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/regal-branded-phone-numbers-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/regal-events-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/regal-events-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/regal-management-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/regal-management-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/regal-messages-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/regal-messages-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Regal — asyncapi rules](https://apis.io/rules/regal-ai/regal-ai-asyncapi-spectral-rules/)
+- [Regal — jsonschema rules](https://apis.io/rules/regal-ai/regal-ai-jsonschema-spectral-rules/)
+- [Regal — regal rules](https://apis.io/rules/regal-ai/regal-rules/)
 
-## Common Properties
+#### Security (4)
 
-- [Portal](https://www.regal.ai)
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Regal Ai Authentication](https://apis.io/security/regal-ai/regal-ai-authentication/)
+- [Regal Ai Domain Security](https://apis.io/security/regal-ai/regal-ai-domain-security/)
+- [Regal Ai Trust Center](https://apis.io/security/regal-ai/regal-ai-trust-center/)
+- [Regal Ai Vulnerability Disclosure](https://apis.io/security/regal-ai/regal-ai-vulnerability-disclosure/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Regal Ai Scopes](https://apis.io/scopes/regal-ai/regal-ai-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Regal Ai Plans Pricing](https://apis.io/plans/regal-ai/regal-ai-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Regal Ai Rate Limits](https://apis.io/rate-limits/regal-ai/regal-ai-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Regal Ai Finops](https://apis.io/finops/regal-ai/regal-ai-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.regal.ai/)
 - [Documentation](https://developer.regal.ai)
-- [Documentation](https://developer.regal.ai/docs)
-- [Documentation](https://developer.regal.ai/reference/overview)
-- [Getting Started](https://developer.regal.ai/docs/plan-your-implementation)
-- [Documentation](https://developer.regal.ai/llms.txt)
-- [F A Q](https://developer.regal.ai/reference/faq)
-- [Support Portal](https://support.regal.ai/hc/en-us)
-- [Documentation](https://support.regal.ai/hc/en-us/articles/5725458229531-Integration-Guides-API-Docs)
-- [Login](https://app.regal.io)
-- [Sign Up](https://www.regal.ai/get-a-demo)
+- [Getting started](https://developer.regal.ai/docs/plan-your-implementation)
+- [API reference](https://developer.regal.ai/reference/api)
 - [Pricing](https://www.regal.ai/pricing)
-- [Plans](plans/regal-ai-plans-pricing.yml)
-- [Rate Limits](rate-limits/regal-ai-rate-limits.yml)
-- [Fin Ops](finops/regal-ai-finops.yml)
-- [Blog](https://www.regal.ai/blog)
+- [Sign up](https://www.regal.ai/get-a-demo)
+- [Support](https://support.regal.ai/hc/en-us)
 - [Changelog](https://www.regal.ai/blog/january-2025-releases)
-- [Customers](https://www.regal.ai/customers)
-- [Product](https://www.regal.ai/ai-agents)
-- [Product](https://www.regal.ai/sales-dialer)
-- [Product](https://www.regal.ai/journey-builder)
-- [Product](https://www.regal.ai/conversation-intelligence)
-- [Careers](https://www.regal.ai/careers)
-- [Company](https://www.regal.ai/about)
-- [Contact](https://www.regal.ai/contact)
-- [Trust Center](https://www.regal.ai/security)
-- [Privacy Policy](https://www.regal.ai/privacy-policy)
-- [Terms of Service](https://www.regal.ai/terms-of-service)
-- [LinkedIn](https://www.linkedin.com/company/regal-ai-official)
-- [Twitter](https://twitter.com/regalio)
-- [YouTube](https://www.youtube.com/@regalio)
-- [Integrations](https://developer.regal.ai/docs/salesforce)
-- [Integrations](https://developer.regal.ai/docs/hubspot)
-- [Integrations](https://developer.regal.ai/docs/segment)
-- [Integrations](https://developer.regal.ai/docs/mparticle)
-- [Integrations](https://developer.regal.ai/docs/zendesk)
-- [Integrations](https://developer.regal.ai/docs/kustomer)
-- [Integrations](https://developer.regal.ai/docs/klaviyo)
-- [Integrations](https://developer.regal.ai/docs/braze)
-- [Integrations](https://developer.regal.ai/docs/marketo)
-- [Integrations](https://developer.regal.ai/docs/customerio)
-- [Integrations](https://developer.regal.ai/docs/iterable)
-- [Integrations](https://developer.regal.ai/docs/microsoft-dynamics-365)
-- [Integrations](https://developer.regal.ai/docs/zoho)
-- [Integrations](https://developer.regal.ai/docs/hightouch)
-- [Integrations](https://developer.regal.ai/docs/calcom)
-- [Integrations](https://developer.regal.ai/docs/calendly)
-- [Integrations](https://developer.regal.ai/docs/zapier)
-- [Integrations](https://developer.regal.ai/docs/sendgrid)
-- [Integrations](https://developer.regal.ai/docs/slack)
-- [Integrations](https://developer.regal.ai/docs/microsoft-teams)
-- [Integrations](https://developer.regal.ai/docs/8x8)
-- [Integrations](https://developer.regal.ai/docs/five9)
-- [Integrations](https://developer.regal.ai/docs/talkdesk)
-- [Integrations](https://developer.regal.ai/docs/snowflake-data-share)
-- [Integrations](https://developer.regal.ai/docs/amazon-s3)
-- [Integrations](https://developer.regal.ai/docs/freshdesk)
-- [Integrations](https://developer.regal.ai/docs/assembled)
-- [Integrations](https://developer.regal.ai/docs/gong)
-- [Integrations](https://developer.regal.ai/docs/balto)
-- [Integrations](https://developer.regal.ai/docs/kindlyai)
-- [Embed](https://developer.regal.ai/docs/salesforce-embed)
-- [Embed](https://developer.regal.ai/docs/kustomer-embed)
-- [Embed](https://developer.regal.ai/docs/retool)
-- [Embed](https://developer.regal.ai/docs/chrome-extension)
-- [Single Sign On](https://developer.regal.ai/docs/google-sso)
-- [Single Sign On](https://developer.regal.ai/docs/okta-sso)
-- [Single Sign On](https://developer.regal.ai/docs/azure-sso)
-- [S C I M](https://developer.regal.ai/docs/okta-scim)
-- [Vocabulary](vocabulary/regal-ai-vocabulary.yml)
-- [Features](undefined)
+- [Blog](https://www.regal.ai/blog)
+- [Security](https://www.regal.ai/security)
+- [Compliance](https://www.regal.ai/security)
+- [Trust centre](https://www.regal.ai/security)
+- [Terms of service](https://www.regal.ai/terms-of-service)
+- [Privacy policy](https://www.regal.ai/privacy-policy)
+- [GitHub](https://github.com/regal-ai)
+- [Status](https://status.regal.ai)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
-**URL:** https://apievangelist.com
+**Kin Score 70.0** — exemplar · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 71.7 |
+| Contract quality | 72.8 |
+| Contract governance | 45.5 |
+| Operational transparency | 84.2 |
+| Developer ergonomics | 63.7 |
+| Access clarity | 64.5 |
+
+**Agent readiness 54.9** — agent-ready (gated down from agent-native)
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | verified |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | derived (partial credit) |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | derived (partial credit) |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | verified |
+| Dynamic Client Registration | yes |
+| Agentic Commerce | — |
+| Pagination Ratio | paginated |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 42.2** — Telecommunications
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/regal-ai/](https://apis.io/providers/regal-ai/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Regal: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/regal-ai/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
